@@ -67,34 +67,40 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         /// </summary>
          public void CreateNewApplication(string applicationType,string applyingfor,string applicationSource,string accountNumber)
        // public void CreateNewApplication(string applicationType, Dictionary<string, string> validationTestData)
-       {           
-            ClickOnCreate();
-            driver.SwitchToNewWindow();
-            SimulateThinkTimeInMilliSecs(1000);
-            driver.WaitElementPresent(formNewApplication);
-            driver.WaitElementExistsAndVisible(lblNewApplication);
-            driver.SelectByVisibleText(dropdownApplicationType, applicationType, "Application Type");
-            if (applicationType.Equals("Approve"))
+        {
+            try
             {
-                driver.SelectByVisibleText(dropdownApplyingFor, applyingfor, "Applying For");
+                ClickOnCreate();
+                driver.SwitchToNewWindow();
+                SimulateThinkTimeInMilliSecs(1000);
+                driver.WaitElementPresent(formNewApplication);
+                driver.WaitElementExistsAndVisible(lblNewApplication);
+                driver.SelectByVisibleText(dropdownApplicationType, applicationType, "Application Type");
+                if (applicationType.Equals("Approve"))
+                {
+                    driver.SelectByVisibleText(dropdownApplyingFor, applyingfor, "Applying For");
+                }
+                else if (applicationType.Equals("Reject"))
+                {
+                    driver.SelectByVisibleText(dropdownApplyingFor, applyingfor, "Applying For");
+                }
+                else if (applicationType.Equals("Review"))
+                {
+                    driver.SelectByVisibleText(dropdownApplyingFor, applyingfor, "Applying For");
+                }
+                SimulateThinkTimeInMilliSecs(2000);
+                driver.SelectByVisibleText(dropdownApplicationSource, applicationSource, "Application Source");
+                driver.SendKeysToElement(txtAccountType, accountNumber, "Account Number");
+                ClickOnStartApplication();
+                // SimulateThinkTimeInMilliSecs(10000);           
+                ClickOnCreateNewApplication();
+                SimulateThinkTimeInMilliSecs(10000);
+                driver.SwitchBackToMainWindow();
             }
-            else if (applicationType.Equals("Reject"))
+            catch (Exception ex)
             {
-                driver.SelectByVisibleText(dropdownApplyingFor, applyingfor, "Applying For");
+                throw ex;
             }
-            else if (applicationType.Equals("Review"))
-            {
-                driver.SelectByVisibleText(dropdownApplyingFor, applyingfor, "Applying For");
-            }
-            SimulateThinkTimeInMilliSecs(2000);
-            driver.SelectByVisibleText(dropdownApplicationSource, applicationSource, "Application Source");
-            driver.SendKeysToElement(txtAccountType, accountNumber, "Account Number");
-            ClickOnStartApplication();
-            // SimulateThinkTimeInMilliSecs(10000);           
-            ClickOnCreateNewApplication();
-            SimulateThinkTimeInMilliSecs(10000);
-            driver.SwitchBackToMainWindow();
-
 
         }
 
@@ -254,9 +260,18 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         /// Click on create new application
         /// </summary>
         private void ClickOnCreate()
-        {
-            driver.WaitElementPresent(btnCreate);
-            driver.ClickElement(btnCreate, "Create");
+        {            
+            try
+            {
+                driver.WaitElementPresent(btnCreate);
+                driver.ClickElement(btnCreate, "Create");
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
+            
         }
 
 

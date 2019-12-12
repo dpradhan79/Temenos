@@ -30,26 +30,40 @@ namespace AutomatedTest.FunctionalTests
         [TestMethod]
         //[TestCategory("DecisionTests")]
         public void ManualReject()
-        {       
+        {
+            var testcaseStatus = 0;
             #region ManualReject
-            string approveApplicationNumber = null;
-            this.TESTREPORT.InitTestCase("ManualReject", "ManualReject");
-            LoginPage.SignIn(EngineSetup.UserName, EngineSetup.Password);
-            //HomePage.CreateNewApplication("Approve",this.validationTestData);
-            HomePage.CreateNewApplication("Loan", "Auto: Automation Auto Approve", "Branch - In Person", "100120");
-            approveApplicationNumber = HomePage.GetApplicationNumber();
-            HomePage.SwitchToTabAppFrame();          
-            HomePage.NavigateToScreen(Constants.LoanTermsAutomation);
-            HomePage.SwitchToCentralFrame();
-            HomePage.VerifyScreenHeading(Constants.LoanTermsAutomation);
-            LoanTermsAutomation.EnterFieldValuesInLoanTermPanel("Payment", "Monthly", "25000", "36");
-            HomePage.SwitchToParentFrame();
-            HomePage.VerifyDecisioningApplication("LO Rejected",true);
-            HomePage.SwitchToDefaultContent();
-            HomePage.CloseAndVerifyApplication(approveApplicationNumber);
-            HomePage.ClickLogOff();           
-            TESTREPORT.LogInfo("Test Execution Completed");
-            this.TESTREPORT.UpdateTestCaseStatus();
+            try
+            {
+                string approveApplicationNumber = null;
+                this.TESTREPORT.InitTestCase("ManualReject", "ManualReject");
+                LoginPage.SignIn(EngineSetup.UserName, EngineSetup.Password);
+                //HomePage.CreateNewApplication("Approve",this.validationTestData);
+                HomePage.CreateNewApplication("Loan", "Auto: Automation Auto Approve", "Branch - In Person", "100120");
+                approveApplicationNumber = HomePage.GetApplicationNumber();
+                HomePage.SwitchToTabAppFrame();
+                HomePage.NavigateToScreen(Constants.LoanTermsAutomation);
+                HomePage.SwitchToCentralFrame();
+                HomePage.VerifyScreenHeading(Constants.LoanTermsAutomation);
+                LoanTermsAutomation.EnterFieldValuesInLoanTermPanel("Payment", "Monthly", "25000", "36");
+                HomePage.SwitchToParentFrame();
+                HomePage.VerifyDecisioningApplication("LO Rejected", true);
+                HomePage.SwitchToDefaultContent();
+                HomePage.CloseAndVerifyApplication(approveApplicationNumber);
+                HomePage.ClickLogOff();
+                TESTREPORT.LogInfo("Test Execution Completed");
+                testcaseStatus = 1;
+            }
+            catch (Exception ex)
+            {
+                TESTREPORT.LogInfo("Failed because of the exception "+ex);
+                testcaseStatus = 5;
+            }
+            finally
+            {
+
+                this.TESTREPORT.UpdateTestCaseStatus();
+            }
             #endregion
         }
     }
