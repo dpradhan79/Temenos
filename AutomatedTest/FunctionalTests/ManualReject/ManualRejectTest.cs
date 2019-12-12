@@ -31,7 +31,8 @@ namespace AutomatedTest.FunctionalTests
         //[TestCategory("DecisionTests")]
         public void ManualReject()
         {
-            var testcaseStatus = 0;
+            //status for pass
+			int testcaseStatus = 0;
             #region ManualReject
             try
             {
@@ -57,6 +58,7 @@ namespace AutomatedTest.FunctionalTests
             catch (Exception ex)
             {
                 TESTREPORT.LogInfo("Failed because of the exception "+ex);
+				//status for fail
                 testcaseStatus = 5;
             }
             finally
