@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <configSections>
+    <sectionGroup name="webDriverConfiguration">
+      <section name="webDriver" type="Amido.WebDriver.Utilities.Configuration.WebDriverConfigurationSection, Amido.WebDriver.Utilities" />
+    </sectionGroup>
+  </configSections>
+  <webDriverConfiguration>
+    <webDriver>
+      <remoteDriver address="http://hub.browserstack.com/wd/hub/">
+        <desiredCapabilities>
+          <capability key="browserstack.user" value="MY_USER" />
+          <capability key="browserstack.key" value="MY_KEY" />
+          <!--<capability key="browserstack.debug" value="true" />-->
+        </desiredCapabilities>
+      </remoteDriver>
+      <globalBrowserOptions>
+        <browser name="Chrome">
+          <browserSwitches>
+            <switch key="ignoreCertErrors" value="--ignore-certificate-errors"></switch>
+            <switch key="disableApplicationCache" value="--disable-application-cache"></switch>
+            <switch key="allowNoSandboxJob" value="--allow-no-sandbox-job"></switch>
+            <switch key="specifyIsTestType" value="--test-type"></switch>
+          </browserSwitches>
+        </browser>
+        <browser name="Firefox">
+          <desiredCapabilities>
+            <capability key="javascriptEnabled" value="true" />
+          </desiredCapabilities>
+        </browser>
+      </globalBrowserOptions>
+      <supportedBrowsers>
+        <supportedBrowser key="chrome" name="Chrome" driverLocation="local">
+        </supportedBrowser>
+        <supportedBrowser key="firefox" name="Firefox" driverLocation="local">
+        </supportedBrowser>
+        <!-- Internet Explorer -->
+        <supportedBrowser key="bs-IE8-win7" name="IE" version="8.0" driverLocation="remote">
+          <desiredCapabilities>
+            <capability key="os" value="Windows" />
+            <capability key="os_version" value="7" />
+          </desiredCapabilities>
+        </supportedBrowser>
+      </supportedBrowsers>
+    </webDriver>
+  </webDriverConfiguration>
+</configuration>

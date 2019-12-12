@@ -1,0 +1,16 @@
+C:\Cigniti\POCs\Prospects\Temenos\TemenosAutomation\Temenos\target\bin\Debug\logos\failed.ico
+C:\Cigniti\POCs\Prospects\Temenos\TemenosAutomation\Temenos\target\bin\Debug\logos\gallop_logo.png
+C:\Cigniti\POCs\Prospects\Temenos\TemenosAutomation\Temenos\target\bin\Debug\logos\logo.png
+C:\Cigniti\POCs\Prospects\Temenos\TemenosAutomation\Temenos\target\bin\Debug\logos\Minus.ico
+C:\Cigniti\POCs\Prospects\Temenos\TemenosAutomation\Temenos\target\bin\Debug\logos\passed.ico
+C:\Cigniti\POCs\Prospects\Temenos\TemenosAutomation\Temenos\target\bin\Debug\logos\Plus.ico
+C:\Cigniti\POCs\Prospects\Temenos\TemenosAutomation\Temenos\target\bin\Debug\logos\warning.ico
+C:\Cigniti\POCs\Prospects\Temenos\TemenosAutomation\Temenos\target\bin\Debug\Reporter.properties
+C:\Cigniti\POCs\Prospects\Temenos\TemenosAutomation\Temenos\target\bin\Debug\client_logo.png
+C:\Cigniti\POCs\Prospects\Temenos\TemenosAutomation\Temenos\target\bin\Debug\extentConfig.xml
+C:\Cigniti\POCs\Prospects\Temenos\TemenosAutomation\Temenos\target\bin\Debug\gallop_logo.png
+C:\Cigniti\POCs\Prospects\Temenos\TemenosAutomation\Temenos\target\bin\Debug\TestReporter.dll
+C:\Cigniti\POCs\Prospects\Temenos\TemenosAutomation\Temenos\target\bin\Debug\TestReporter.pdb
+C:\Cigniti\POCs\Prospects\Temenos\TemenosAutomation\Temenos\TestReporter\obj\Debug\TestReporter.csprojResolveAssemblyReference.cache
+C:\Cigniti\POCs\Prospects\Temenos\TemenosAutomation\Temenos\TestReporter\obj\Debug\TestReporter.dll
+C:\Cigniti\POCs\Prospects\Temenos\TemenosAutomation\Temenos\TestReporter\obj\Debug\TestReporter.pdb
