@@ -41,16 +41,16 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         /// <param name="description">The descrition.</param>
         /// <param name="comments">The comments.</param>
         /// </summary>
-        public void AddStipulations(string stipulation, string requiredFor,string description,string comments,bool met=true)
+        public void AddStipulations( Dictionary<string, string> validationTestData,bool met=true,int index=0)
         {           
             ClickOnAddStipulation();
             VerifyButtons();
             driver.WaitElementPresent(tableNewstipulations);
-            driver.ClickElementWithJavascript(tableNewstipulations,"New Stipulations");            
-            driver.SelectByVisibleText(dropdownStipulation,stipulation,"Stipulation");
-            driver.SelectByVisibleText(dropdownRequiredFor, requiredFor, "Required For");
-            driver.SendKeysToElement(txtDescription, description, "Description");
-            driver.SendKeysToElement(txtComments, comments, "Comments");
+            driver.ClickElementWithJavascript(tableNewstipulations,"New Stipulations");
+            driver.SelectByVisibleText(dropdownStipulation, validationTestData["Stipulation"+index], "Stipulation");
+            driver.SelectByVisibleText(dropdownRequiredFor, validationTestData["RequiredFor" + index], "Required For");
+            driver.SendKeysToElement(txtDescription, validationTestData["Description" + index], "Description");
+            driver.SendKeysToElement(txtComments, validationTestData["Comments" + index], "Comments");
             if (met)
             {
                 driver.ClickElement(checkBoxMet, "Met");

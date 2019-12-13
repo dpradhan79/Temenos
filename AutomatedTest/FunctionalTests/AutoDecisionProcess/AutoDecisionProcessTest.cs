@@ -29,7 +29,7 @@ namespace AutomatedTest.FunctionalTests
         /// </summary>
         public void LoadBusinessTestData()
         {
-           // this.validationTestData = this.loadValidationTestData(TestContext.TestName, "");
+            this.validationTestData = this.loadValidationTestData(TestContext.TestName, "");
         }
 
         /// <summary>
@@ -57,8 +57,8 @@ namespace AutomatedTest.FunctionalTests
             this.TESTREPORT.InitTestCase("AutoDecisionProcess", "AutoDecisionProcess");
 
             LoginPage.SignIn(EngineSetup.UserName, EngineSetup.Password);
-            //HomePage.CreateNewApplication("Approve",this.validationTestData);
-            HomePage.CreateNewApplication("Loan", "Auto: Automation Auto Approve", "Branch - In Person", "100120");
+            HomePage.CreateNewApplication("Approve",this.validationTestData);
+           // HomePage.CreateNewApplication("Loan", "Auto: Automation Auto Approve", "Branch - In Person", "100120");
             approveApplicationNumber = HomePage.GetApplicationNumber();
             HomePage.SwitchToTabAppFrame();
             HomePage.NavigateToScreen(Constants.PrimaryApplicationAutomation);
@@ -70,9 +70,11 @@ namespace AutomatedTest.FunctionalTests
             HomePage.NavigateToScreen(Constants.LoanTermsAutomation);
             HomePage.SwitchToCentralFrame();
             HomePage.VerifyScreenHeading(Constants.LoanTermsAutomation);
-            LoanTermsAutomation.EnterFieldValuesInLoanTermPanel("Payment", "Monthly", "25000", "36");
+           // LoanTermsAutomation.EnterFieldValuesInLoanTermPanel("Payment", "Monthly", "25000", "36");
+            LoanTermsAutomation.EnterFieldValuesInLoanTermPanel(this.validationTestData);
             HomePage.SwitchToParentFrame();
-            HomePage.VerifyDecisioningOfApplication();
+            HomePage.VerifyDecisioningApplication(Constants.LoRejected,true);
+            HomePage.VerifyDecisioningApplication(Constants.AutoApproved, true);
             HomePage.NavigateToScreen(Constants.PrimaryApplicationAutomation);
             HomePage.SwitchToCentralFrame();
             HomePage.VerifyScreenHeading(Constants.PrimaryApplicationAutomation);
@@ -86,34 +88,37 @@ namespace AutomatedTest.FunctionalTests
             HomePage.CloseAndVerifyApplication(approveApplicationNumber);
             #endregion
 
-            #region Reject           
-             HomePage.CreateNewApplication("Loan", "Auto: Automation Auto Reject", "Branch - In Person", "100120");
-            //HomePage.CreateNewApplication("Reject", this.validationTestData);
+            #region Reject
+           // HomePage.CreateNewApplication("Loan", "Auto: Automation Auto Reject", "Branch - In Person", "100120");
+            HomePage.CreateNewApplication("Reject", this.validationTestData);
             rejectApplicationNumber = HomePage.GetApplicationNumber();
             HomePage.SwitchToTabAppFrame();
             HomePage.NavigateToScreen(Constants.LoanTermsAutomation);
             HomePage.SwitchToCentralFrame();
             HomePage.VerifyScreenHeading(Constants.LoanTermsAutomation);
-            LoanTermsAutomation.EnterFieldValuesInLoanTermPanel("Payment", "Monthly", "25000", "36");
+            //LoanTermsAutomation.EnterFieldValuesInLoanTermPanel("Payment", "Monthly", "25000", "36");
+            LoanTermsAutomation.EnterFieldValuesInLoanTermPanel(this.validationTestData);
             HomePage.SwitchToParentFrame();
-            HomePage.VerifyDecisioningOfApplication();
+            HomePage.VerifyDecisioningApplication(Constants.AutoRejected,true);
             HomePage.NavigateToScreen(Constants.StipulationsAutomation);
             HomePage.SwitchToCentralFrame();
             HomePage.VerifyScreenHeading(Constants.StipulationsAutomation);
-            StipulationsAutomation.AddStipulations("2 years tax returns", "Approval", "Testing", "Akcelerant");
+           // StipulationsAutomation.AddStipulations("2 years tax returns", "Approval", "Testing", "Akcelerant");
+            StipulationsAutomation.AddStipulations(this.validationTestData);
             HomePage.SwitchToDefaultContent();
             HomePage.CloseAndVerifyApplication(rejectApplicationNumber);
             #endregion
 
             #region review
-             HomePage.CreateNewApplication("Loan", "Auto: Automation Pending Review", "Branch - In Person", "100120");
-            //HomePage.CreateNewApplication("Review", this.validationTestData);
+           // HomePage.CreateNewApplication("Loan", "Auto: Automation Pending Review", "Branch - In Person", "100120");
+            HomePage.CreateNewApplication("Review", this.validationTestData);
             reviewApplicationNumber = HomePage.GetApplicationNumber();
             HomePage.SwitchToTabAppFrame();
             HomePage.NavigateToScreen(Constants.LoanTermsAutomation);
             HomePage.SwitchToCentralFrame();
             HomePage.VerifyScreenHeading(Constants.LoanTermsAutomation);
-            LoanTermsAutomation.EnterFieldValuesInLoanTermPanel("Payment", "Monthly", "25000", "36");
+           // LoanTermsAutomation.EnterFieldValuesInLoanTermPanel("Payment", "Monthly", "25000", "36");
+            LoanTermsAutomation.EnterFieldValuesInLoanTermPanel(this.validationTestData);
             HomePage.SwitchToParentFrame();
             HomePage.VerifyDecisioningOfApplication();
             HomePage.NavigateToScreen(Constants.DecisionProcessAutomation);
@@ -134,7 +139,7 @@ namespace AutomatedTest.FunctionalTests
             HomePage.NavigateToScreen(Constants.PrimaryApplicationAutomation);
             HomePage.SwitchToCentralFrame();
             HomePage.VerifyScreenHeading(Constants.PrimaryApplicationAutomation);
-            PrimaryApplicantAutomationScreen.SelectCurrentAddressState("Illinois");           
+            PrimaryApplicantAutomationScreen.SelectCurrentAddressState("Illinois");
             HomePage.SwitchToDefaultContent();
             HomePage.CloseAndVerifyApplication(reviewApplicationNumber);
 

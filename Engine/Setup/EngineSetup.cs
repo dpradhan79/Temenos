@@ -15,7 +15,8 @@ namespace Engine.Setup
     {
         private static string randomString = null;
         private const string FILETESTCONFIGURATION = "TestConfiguration.properties";
-        private static string executablePath = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "executablePath");
+        public const string VALIDATIONTESTDATASHEETNAME = "ValidationTestData";
+        private static string executablePath = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "testexecutablePath");
         private static string reportType = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "reportType"); 
         private static string testReportFile = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "testReportFile");
         private static IReporter testReportInternal = null;
@@ -26,8 +27,8 @@ namespace Engine.Setup
         public const int TimeOutConstant = 60;
         private static string webUrl = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "webUrl");
         private static string userName = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "userName");
-        private static string password = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "password");     
-
+        private static string password = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "password");
+        private static string testDataFileName = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "testDataFileName");
 
         /// <summary>
         /// Initializes the <see cref="EngineSetup"/> class.
@@ -114,6 +115,21 @@ namespace Engine.Setup
                     EngineSetup.testReportInternal = ReportFactory.GetReport(EngineSetup.TestReportType,true, true);
                 }
                 return EngineSetup.testReportInternal;
+            }
+        }
+
+        /// <summary>
+        /// Test Data File Name
+        /// </summary>
+        public static string TestDataFileName
+        {
+            get
+            {
+                return EngineSetup.testDataFileName;
+            }
+            set
+            {
+                EngineSetup.testDataFileName = value;
             }
         }
 

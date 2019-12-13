@@ -37,12 +37,12 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         /// <param name="requestedAmount"></param>
         /// <param name="term"></param>
         /// </summary>
-        public void EnterFieldValuesInLoanTermPanel(string solveFor, string paymentFrequency, string requestedAmount, string term)
+        public void EnterFieldValuesInLoanTermPanel(Dictionary<string, string> validationTestData)
         {
-            driver.SelectByVisibleText(dropdownSolveFor, solveFor, "Solve For");
-            driver.SelectByVisibleText(dropdownPaymentFrequency, paymentFrequency, "Payment Frequency");
-            driver.SendKeysToElementClearFirst(txtRequestedAmount, requestedAmount, "Requested Amount");
-            driver.SendKeysToElementClearFirst(txtTerm, term, "Term");
+            driver.SelectByVisibleText(dropdownSolveFor, validationTestData["SolveFor"], "Solve For");
+            driver.SelectByVisibleText(dropdownPaymentFrequency, validationTestData["PaymentFrequency"], "Payment Frequency");
+            driver.SendKeysToElementClearFirst(txtRequestedAmount,validationTestData["RequestedAmount"], "Requested Amount");
+            driver.SendKeysToElementClearFirst(txtTerm, validationTestData["Term"], "Term");
             ClickOnSave();
             HandleSuccessPopup();
         }

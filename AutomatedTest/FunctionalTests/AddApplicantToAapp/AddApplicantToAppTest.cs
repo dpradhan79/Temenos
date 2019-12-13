@@ -19,24 +19,17 @@ namespace AutomatedTest.FunctionalTests
 
      [TestClass]
     /// <summary>
-    /// Temenos Decision Process Tests
+    /// Temenos Application Tests
     /// </summary>
     /// <seealso cref="AutomatedTest.FunctionalTests.TestBaseTemplate" />
-    public class ManualRejectTest : TestBaseTemplate
-    {
+    public class AddApplicantToAppTest : TestBaseTemplate
+    {    
         /// <summary>
-        /// Loads the business test data.
-        /// </summary>
-        public void LoadBusinessTestData()
-        {
-            this.validationTestData = this.loadValidationTestData(TestContext.TestName, "");
-        }
-        /// <summary>
-        /// Test case for Manual Reject.
+        /// Test case for Add Applicant to App.
         /// </summary>
         [TestMethod]
         //[TestCategory("DecisionTests")]
-        public void ManualReject()
+         public void AddApplicantToApp()
         {
             //status for pass
 			int testcaseStatus = 0;
@@ -44,20 +37,18 @@ namespace AutomatedTest.FunctionalTests
             try
             {
                 string approveApplicationNumber = null;
-                this.TESTREPORT.InitTestCase("ManualReject", "ManualReject");
-                this.LoadBusinessTestData();
+                this.TESTREPORT.InitTestCase("AddApplicantToApp", "AddApplicantToApp");
                 LoginPage.SignIn(EngineSetup.UserName, EngineSetup.Password);
-                HomePage.CreateNewApplication("Approve",this.validationTestData);
-                //HomePage.CreateNewApplication("Loan", "Auto: Automation Auto Approve", "Branch - In Person", "100120");
+                //HomePage.CreateNewApplication("Approve",this.validationTestData);
+                //HomePage.CreateNewApplication("Loan", "Auto: Automation Auto Approve", "Branch - In Person", "100119");
                 approveApplicationNumber = HomePage.GetApplicationNumber();
                 HomePage.SwitchToTabAppFrame();
-                HomePage.NavigateToScreen(Constants.LoanTermsAutomation);
+                HomePage.NavigateToScreen(Constants.Applicants);
                 HomePage.SwitchToCentralFrame();
-                HomePage.VerifyScreenHeading(Constants.LoanTermsAutomation);
-                LoanTermsAutomation.EnterFieldValuesInLoanTermPanel(this.validationTestData);
+                HomePage.VerifyScreenHeading(Constants.Applicants);
                // LoanTermsAutomation.EnterFieldValuesInLoanTermPanel("Payment", "Monthly", "25000", "36");
                 HomePage.SwitchToParentFrame();
-                HomePage.VerifyDecisioningApplication(Constants.LoRejected, true);
+                HomePage.VerifyDecisioningApplication("LO Rejected", true);
                 HomePage.SwitchToDefaultContent();
                 HomePage.CloseAndVerifyApplication(approveApplicationNumber);
                 HomePage.ClickLogOff();
@@ -66,7 +57,7 @@ namespace AutomatedTest.FunctionalTests
             }
             catch (Exception ex)
             {
-                TESTREPORT.LogFailure("Failed","because of the exception "+ex);
+                TESTREPORT.LogInfo("Failed because of the exception "+ex);
 				//status for fail
                 testcaseStatus = 5;
             }

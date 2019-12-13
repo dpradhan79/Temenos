@@ -28,5 +28,26 @@ namespace Engine.Setup
         ///// </summary>
         public const string StipulationsAutomation = "Stipulations - Automation";
 
+        ///// <summary>
+        ////The stipulations automation
+        ///// </summary>
+        public const string Applicants = "Applicants";
+
+        ///// <summary>
+        ////The Lo rejected
+        ///// </summary>
+        public const string LoRejected = "LO Rejected";
+
+        ///// <summary>
+        ////The auto approved
+        ///// </summary>
+        public const string AutoApproved = "Auto Approved";
+
+        ///// <summary>
+        ////The auto approved
+        ///// </summary>
+        public const string AutoRejected = "Auto Rejected";
+
+
       }
 }

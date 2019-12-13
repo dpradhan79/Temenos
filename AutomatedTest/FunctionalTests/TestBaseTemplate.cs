@@ -14,6 +14,8 @@ using OpenQA.Selenium;
 using StandardUtilities;
 using Engine.Factories;
 using AUT.Selenium.ApplicationSpecific.Pages;
+using System.Data;
+using System.Linq;
 
 namespace AutomatedTest.FunctionalTests
 {
@@ -210,6 +212,42 @@ namespace AutomatedTest.FunctionalTests
                 this.TESTREPORT.LogFailure("readCSV", ex.Message);
             }
             return data;
+        }
+
+        protected string TESTDATAFILENAME
+        {
+            get
+            {
+                string testDataFileName = EngineSetup.TestDataFileName + ".xlsx";
+                Console.WriteLine("testDataFileName : " + testDataFileName);
+                return testDataFileName;
+            }
+        }
+
+        protected string TESTDATAFOLDERPATH
+        {
+            get
+            {
+                string testDataFolderPath = EngineSetup.ApplicationPath + "\\";
+                Console.WriteLine("testDataFolderPath " + testDataFolderPath);
+                return testDataFolderPath;
+            }
+        }
+
+        public Dictionary<string, string> loadValidationTestData(string testScriptName, string testCategory)
+        {
+            return LoadTestData(testScriptName, testCategory, EngineSetup.VALIDATIONTESTDATASHEETNAME);
+        }
+
+        public Dictionary<string, string> LoadTestData(string testScriptName, string testCategory, string sheetName)
+        {
+            Dictionary<string, string> inputTestData = new Dictionary<String, String>();
+            var testDataFileName = (string)null;
+            testDataFileName = (testCategory == EngineSetup.ApplicationPath) ? this.TESTDATAFILENAME : testScriptName + ".xlsx";
+            DataTable inputTestDataTable = ExcelReader.ReadExcelFile(this.TESTDATAFOLDERPATH, testDataFileName, sheetName, false, 2);
+            DataRow[] testDataRows = inputTestDataTable.Select("TestScriptName = '" + testScriptName + "'");
+            inputTestData = (testDataRows.Length > 0) ? testDataRows[0].Table.Columns.Cast<DataColumn>().ToDictionary(c => c.ColumnName, c => testDataRows[0][c].ToString()) : inputTestData;
+            return inputTestData;
         }
     }
 }

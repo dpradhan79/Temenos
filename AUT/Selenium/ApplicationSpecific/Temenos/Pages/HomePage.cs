@@ -65,8 +65,8 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         /// <param name="applicationSource"></param>
         /// <param name="accountNumber"></param>
         /// </summary>
-         public void CreateNewApplication(string applicationType,string applyingfor,string applicationSource,string accountNumber)
-       // public void CreateNewApplication(string applicationType, Dictionary<string, string> validationTestData)
+         //public void CreateNewApplication(string applicationType,string applyingfor,string applicationSource,string accountNumber)
+        public void CreateNewApplication(string applyingfor, Dictionary<string, string> validationTestData)
         {
             try
             {
@@ -75,22 +75,22 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
                 SimulateThinkTimeInMilliSecs(1000);
                 driver.WaitElementPresent(formNewApplication);
                 driver.WaitElementExistsAndVisible(lblNewApplication);
-                driver.SelectByVisibleText(dropdownApplicationType, applicationType, "Application Type");
-                if (applicationType.Equals("Approve"))
+                driver.SelectByVisibleText(dropdownApplicationType, validationTestData["ApplicationType"], "Application Type");
+                if (applyingfor.Equals("Approve"))
                 {
-                    driver.SelectByVisibleText(dropdownApplyingFor, applyingfor, "Applying For");
+                    driver.SelectByVisibleText(dropdownApplyingFor, validationTestData["ApproveApplyingfor"], "Applying For");
                 }
-                else if (applicationType.Equals("Reject"))
+                else if (applyingfor.Equals("Reject"))
                 {
-                    driver.SelectByVisibleText(dropdownApplyingFor, applyingfor, "Applying For");
+                    driver.SelectByVisibleText(dropdownApplyingFor, validationTestData["RejectApplyingfor"], "Applying For");
                 }
-                else if (applicationType.Equals("Review"))
+                else if (applyingfor.Equals("Review"))
                 {
-                    driver.SelectByVisibleText(dropdownApplyingFor, applyingfor, "Applying For");
+                    driver.SelectByVisibleText(dropdownApplyingFor, validationTestData["ReviewApplyingfor"], "Applying For");
                 }
                 SimulateThinkTimeInMilliSecs(2000);
-                driver.SelectByVisibleText(dropdownApplicationSource, applicationSource, "Application Source");
-                driver.SendKeysToElement(txtAccountType, accountNumber, "Account Number");
+                driver.SelectByVisibleText(dropdownApplicationSource, validationTestData["ApplicationSource"], "Application Source");
+                driver.SendKeysToElement(txtAccountType, validationTestData["AccountNumber"], "Account Number");
                 ClickOnStartApplication();
                 // SimulateThinkTimeInMilliSecs(10000);           
                 ClickOnCreateNewApplication();
@@ -113,10 +113,11 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         {          
 
             try
-            {                
+            {
+                Thread.Sleep(4000);            
                 By screen = By.XPath("//a[@class='dynatree-title' and text()='" + screenName + "']");
                 driver.WaitElementPresent(screen,120);
-                //driver.MoveToElement(screen, screenName, 30);
+               // driver.MoveToElement(screen, screenName, 30);
                 driver.ClickElementWithJavascript(screen, screenName, 30);                             
                // driver.SwitchToDefaultFrame();
             }
@@ -140,8 +141,8 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 
         public void SwitchToTabAppFrame()
         {
-            SimulateThinkTimeInMilliSecs(3000);
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(120));
+            SimulateThinkTimeInMilliSecs(7000);
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(180));
             var element = wait.Until(ExpectedConditions.FrameToBeAvailableAndSwitchToIt(frameTabApp));
            // ExpectedConditions.FrameToBeAvailableAndSwitchToIt(frameTabApp);
             //WebDriverWait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
@@ -239,11 +240,20 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
                 driver.VerifyTextValue(lblDecisionSuccessMsg, "The application was automatically approved");
                 driver.ClickElement(btnOk, "OK");
             }
+            else if (postDecisionStatus.Equals("Auto Rejected"))
+            {
+                driver.ClickElement(btnDecision, "Decision");
+                driver.WaitElementPresent(lblSuccess);
+                driver.VerifyTextValue(lblDecisionSuccessMsg, "The application was automatically approved");
+                driver.ClickElement(btnOk, "OK");
+            }
+
 
             if (removeDecision)
             {
                 driver.WaitElementPresent(btnMore);
-                driver.ClickElement(btnMore, "More");
+                driver.ClickElementWithJavascript(btnMore, "More");
+                driver.WaitElementExistsAndVisible(lnkRemoveDecision);
                 driver.ClickElement(lnkRemoveDecision, "Remove Decision");
                 driver.WaitElementPresent(lblConfirmRemoveDecision);
                 driver.ClickElement(btnRemoveDecisionYes, "Yes");
