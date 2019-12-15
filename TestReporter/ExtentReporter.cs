@@ -9,6 +9,8 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 using StandardUtilities;
+using TestRail;
+using TestRail.Types;
 
 namespace TestReporter
 {
@@ -208,6 +210,16 @@ namespace TestReporter
             this.objExtentReport.EndTest(this.objExtentTest);
             this.objExtentReport.Flush();
         }
+
+        /// <summary>
+        /// Updates the test case status in HTML/TestRail In Test Management Tool
+        /// </summary>
+        public void UpdateTestCaseStatus(TestRailClient trClient, int runId, String testCaseTitle, ResultStatus resultStatus)
+        {
+            this.UpdateTestCaseStatus();
+            TestRailAPIWrapper.UpdateTestCaseStatus(trClient, runId, testCaseTitle, resultStatus);
+        }
+
 
         /// <summary>
         /// Closes this instance.

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestRail;
+using TestRail.Types;
 
 namespace TestReporter
 {
@@ -61,9 +63,16 @@ namespace TestReporter
         /// Updates the test case status.
         /// </summary>
         void UpdateTestCaseStatus();
+
+        /// <summary>
+        /// Updates the test case status in HTML/TestRail In Test Management Tool
+        /// </summary>
+        void UpdateTestCaseStatus(TestRailClient trClient, int runId, String testCaseTitle, ResultStatus resultStatus);
+
         /// <summary>
         /// Closes this instance.
         /// </summary>
+        /// 
         void Close();
         /// <summary>
         /// Manipulates the test report.

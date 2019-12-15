@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GallopReporter;
+using TestRail;
+using TestRail.Types;
+using StandardUtilities;
 
 namespace TestReporter
 {
@@ -103,6 +106,15 @@ namespace TestReporter
             this.cReporter.calculateTestCaseExecutionTime();
             this.cReporter.closeDetailedReport();
             this.cReporter.updateTestCaseStatus();
+        }
+
+        /// <summary>
+        /// Updates the test case status in HTML/TestRail In Test Management Tool
+        /// </summary>
+        public void UpdateTestCaseStatus(TestRailClient trClient, int runId, String testCaseTitle, ResultStatus resultStatus)
+        {
+            this.UpdateTestCaseStatus();
+            TestRailAPIWrapper.UpdateTestCaseStatus(trClient, runId, testCaseTitle, resultStatus);
         }
 
         /// <summary>
