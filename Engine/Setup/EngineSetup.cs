@@ -29,6 +29,7 @@ namespace Engine.Setup
         private static string userName = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "userName");
         private static string password = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "password");
         private static string testDataFileName = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "testDataFileName");
+        private static int testRailRunId = Convert.ToInt16(StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "runId"));
 
         /// <summary>
         /// Initializes the <see cref="EngineSetup"/> class.
@@ -245,6 +246,22 @@ namespace Engine.Setup
         {
             get { return EngineSetup.password; }
             set { EngineSetup.password = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the Test Rail RunId.
+        /// </summary>
+        /// <value>
+        /// RunId.
+        /// </value>
+        public static int TESTRAILRUNID
+        {
+            get
+            {
+                //environment variable will be read in case of Jenkins parameterized build execution
+                return Environment.GetEnvironmentVariable("runId") != null ? Convert.ToInt16(Environment.GetEnvironmentVariable("runId")) : EngineSetup.testRailRunId;
+            }
+            set { EngineSetup.testRailRunId = value; }
         }
 
     }

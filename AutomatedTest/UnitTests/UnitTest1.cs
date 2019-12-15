@@ -4,6 +4,7 @@ using TestRail;
 using TestRail.Types;
 using StandardUtilities;
 using AutomatedTest.FunctionalTests;
+using Engine.Setup;
 namespace AutomatedTest.UnitTests
 {
     [TestClass]
@@ -29,12 +30,12 @@ namespace AutomatedTest.UnitTests
             const String testRailUrl = "https://cignitipoc.testrail.io/";
             const String userName = "debasish.pradhan@cigniti.com";
             const String password = "Temp1234";
-            const int runId = 3;
+            int runId = 3;
             this.TESTREPORT.InitTestCase(TestContext.Properties["name"] as String, TestContext.Properties["name"] as String);
             TestRailClient testRail = null;
             testRail = new TestRailClient(testRailUrl, userName, password);
             ResultStatus testCaseResult = ResultStatus.Passed;
-            this.TESTREPORT.UpdateTestCaseStatus(testRail, runId, TestContext.Properties["name"] as String, testCaseResult);
+            this.TESTREPORT.UpdateTestCaseStatus(testRail, EngineSetup.TESTRAILRUNID, TestContext.Properties["name"] as String, testCaseResult);
         }
 
         [TestMethod]
@@ -48,8 +49,8 @@ namespace AutomatedTest.UnitTests
             this.TESTREPORT.InitTestCase(TestContext.Properties["name"] as String, TestContext.Properties["name"] as String);
             TestRailClient testRail = null;
             testRail = new TestRailClient(testRailUrl, userName, password);
-            ResultStatus testCaseResult = ResultStatus.Passed;
-            this.TESTREPORT.UpdateTestCaseStatus(testRail, runId, TestContext.Properties["name"] as String, testCaseResult);
+            ResultStatus testCaseResult = ResultStatus.Failed;
+            this.TESTREPORT.UpdateTestCaseStatus(testRail, EngineSetup.TESTRAILRUNID, TestContext.Properties["name"] as String, testCaseResult);
         }
         
     }
