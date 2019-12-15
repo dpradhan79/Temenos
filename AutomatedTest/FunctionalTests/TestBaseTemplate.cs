@@ -61,7 +61,7 @@ namespace AutomatedTest.FunctionalTests
         public static void BeforeAllTestsExecution(TestContext testContext)
         {
            
-            #region WebApplication - EdgeNet
+            #region WebApplication - Launch
             //EngineSetup.TestReport.InitTestCase("Launch Application", "Verify Application Is Launched Successfully");
             driver = WebDriverFactory.getWebDriver(EngineSetup.BROWSER);
             driver.Navigate().GoToUrl(EngineSetup.WEBURL);
