@@ -77,18 +77,19 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
                 SimulateThinkTimeInMilliSecs(1000);
                 driver.WaitElementPresent(formNewApplication);
                 driver.WaitElementExistsAndVisible(lblNewApplication);
-                driver.SelectByVisibleText(dropdownApplicationType, validationTestData["ApplicationType"], "Application Type");
+                driver.SelectDropdownItemByText(dropdownApplicationType, validationTestData["ApplicationType"], "Application Type");
+                SimulateThinkTimeInMilliSecs(1000);
                 if (applyingfor.Equals("Approve"))
                 {
-                    driver.SelectByVisibleText(dropdownApplyingFor, validationTestData["ApproveApplyingFor"], "Applying For");
+                    driver.SelectDropdownItemByText(dropdownApplyingFor, validationTestData["ApproveApplyingFor"], "Applying For");
                 }
                 else if (applyingfor.Equals("Reject"))
                 {
-                    driver.SelectByVisibleText(dropdownApplyingFor, validationTestData["RejectApplyingFor"], "Applying For");
+                    driver.SelectDropdownItemByText(dropdownApplyingFor, validationTestData["RejectApplyingFor"], "Applying For");
                 }
                 else if (applyingfor.Equals("Review"))
                 {
-                    driver.SelectByVisibleText(dropdownApplyingFor, validationTestData["ReviewApplyingFor"], "Applying For");
+                    driver.SelectDropdownItemByText(dropdownApplyingFor, validationTestData["ReviewApplyingFor"], "Applying For");
                 }
                 //SimulateThinkTimeInMilliSecs(2000);
                 driver.WaitElementPresent(dropdownApplicationSource);
@@ -160,17 +161,21 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 
         }
 
-        public void SwitchToTabAppFrame()
+        public void SwitchAndVerifyHomePageFullyDisplayed()
         {
             try
             {
-                SimulateThinkTimeInMilliSecs(7000);
+                Thread.Sleep(8000);
                 WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(180));
                 var element = wait.Until(ExpectedConditions.FrameToBeAvailableAndSwitchToIt(frameTabApp));
                 // ExpectedConditions.FrameToBeAvailableAndSwitchToIt(frameTabApp);
                 //WebDriverWait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
                 //wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.FrameToBeAvailableAndSwitchToIt(By.Id("FRAMEID")));
                 //driver.SwitchToFrameByLocator(frameTabApp);
+                driver.WaitElementPresent(By.Id("divToolbar"));
+                driver.WaitElementExistsAndVisible(By.Id("summary"));
+                driver.WaitElementExistsAndVisible(By.Id("centerFrameContainer"));
+
             }
             catch (Exception ex)
             {
@@ -308,6 +313,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
             }
             else if (postDecisionStatus.Equals("Auto Approved"))
             {
+                driver.WaitElementExistsAndVisible(btnDecision);
                 driver.ClickElement(btnDecision, "Decision");
                 driver.WaitElementPresent(lblSuccess);
                 driver.VerifyTextValue(lblDecisionSuccessMsg, "The application was automatically approved");
@@ -315,6 +321,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
             }
             else if (postDecisionStatus.Equals("Auto Rejected"))
             {
+                driver.WaitElementExistsAndVisible(btnDecision);
                 driver.ClickElement(btnDecision, "Decision");
                 driver.WaitElementPresent(lblSuccess);
                 driver.VerifyTextValue(lblDecisionSuccessMsg, "The application was automatically approved");
@@ -327,6 +334,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
                 driver.WaitElementPresent(btnMore);
                 driver.ClickElementWithJavascript(btnMore, "More");
                 driver.WaitElementExistsAndVisible(lnkRemoveDecision);
+                driver.WaitElementPresent(lnkRemoveDecision);
                 driver.ClickElement(lnkRemoveDecision, "Remove Decision");
                 driver.WaitElementPresent(lblConfirmRemoveDecision);
                 driver.ClickElement(btnRemoveDecisionYes, "Yes");

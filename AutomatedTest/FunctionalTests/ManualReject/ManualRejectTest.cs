@@ -36,7 +36,8 @@ namespace AutomatedTest.FunctionalTests
         /// Test case for Manual Reject.
         /// </summary>
         [TestMethod]
-        [TestCategory("DecisionTests")]
+        [TestCategory("ManualReject")]
+        [TestCategory("DecisionProcess")]
         [TestProperty("name", "Manual Reject")]
         public void ManualReject()
         {
@@ -50,7 +51,7 @@ namespace AutomatedTest.FunctionalTests
                 LoginPage.SignIn(EngineSetup.UserName, EngineSetup.Password);
                 HomePage.CreateNewApplication("Approve", this.validationTestData);
                 approveApplicationNumber = HomePage.GetApplicationNumber();
-                HomePage.SwitchToTabAppFrame();
+                HomePage.SwitchAndVerifyHomePageFullyDisplayed();
                 HomePage.NavigateToScreen(Constants.LoanTermsAutomation);
                 HomePage.SwitchToCentralFrame();
                 HomePage.VerifyScreenHeading(Constants.LoanTermsAutomation);

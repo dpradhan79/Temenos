@@ -41,7 +41,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
             try
             {
                 String date = DateTime.Now.Date.ToString("dd");
-                int day = Convert.ToInt32(date) - 1;
+                int day = Convert.ToInt32(date);
                 String dayNumeric = Convert.ToString(day);
                 String Month = DateTime.Now.Month.ToString();
                 String Year = DateTime.Now.Year.ToString();

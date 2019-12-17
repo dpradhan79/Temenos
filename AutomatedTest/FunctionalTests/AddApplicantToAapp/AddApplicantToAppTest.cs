@@ -42,7 +42,7 @@ namespace AutomatedTest.FunctionalTests
                 //HomePage.CreateNewApplication("Approve",this.validationTestData);
                 //HomePage.CreateNewApplication("Loan", "Auto: Automation Auto Approve", "Branch - In Person", "100119");
                 approveApplicationNumber = HomePage.GetApplicationNumber();
-                HomePage.SwitchToTabAppFrame();
+                //HomePage.SwitchToTabAppFrame();
                 HomePage.NavigateToScreen(Constants.Applicants);
                 HomePage.SwitchToCentralFrame();
                 HomePage.VerifyScreenHeading(Constants.Applicants);
