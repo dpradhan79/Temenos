@@ -7,7 +7,7 @@
     <DeploymentItem filename="TestReporter\extentConfig.xml" />
     <DeploymentItem filename="Engine\SeleniumDrivers\chromedriver.exe" />
     <DeploymentItem filename="TestReporter\client_logo.png" />
-    <DeploymentItem filename="AutomatedTest\TestData\EdgeNet\" />
+    <DeploymentItem filename="AutomatedTest\TestData\Temenos\" />
     <DeploymentItem filename="Engine\SeleniumDrivers\IEDriverServer.exe" />
     <DeploymentItem filename="GallopReporter\logos\" />
     <DeploymentItem filename="TestReporter\gallop_logo.png" />
@@ -34,4 +34,5 @@
     <AgentRule name="LocalMachineDefaultRole">
     </AgentRule>
   </Execution>
+  <Properties />
 </TestSettings>

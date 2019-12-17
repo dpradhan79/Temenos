@@ -115,9 +115,15 @@
     <None Include="TestConfiguration\TestConfiguration.properties">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="TestData\Temenos\AutoDecisionProcess.xlsx" />
-    <None Include="TestData\Temenos\Disbursement.xlsx" />
-    <None Include="TestData\Temenos\ManualReject.xlsx" />
+    <None Include="TestData\Temenos\AutoDecisionProcess.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\Temenos\Disbursement.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\Temenos\ManualReject.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <Choose>
