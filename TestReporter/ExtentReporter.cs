@@ -52,8 +52,8 @@ namespace TestReporter
             if(this.isGallopLogoRequired == true)
             {
                 //copy gallop logo
-                string sourceGallopLogo = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "gallop_logo.png";
-                string destGallopLogo = new FileInfo(this.filePath).Directory.ToString() + Path.DirectorySeparatorChar + "gallop_logo.png";
+                string sourceGallopLogo = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "cigniti_logo.png";
+                string destGallopLogo = new FileInfo(this.filePath).Directory.ToString() + Path.DirectorySeparatorChar + "cigniti_logo.png";
 
                 //copy client logo
                 string sourceClientLogo = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "client_logo.png";

@@ -176,7 +176,7 @@ namespace AutomatedTest.FunctionalTests
 
 
                 //Text1ToReplace
-                str = "<div class='logo-container' style='height:50px;width:200px;'>\r\n                                    <a href='http://www.gallop.net/'>\r\n                                        <img border='0' alt='Gallop' src='gallop_logo.png' width='200' height='35'>\r\n                                    </a>\r\n                                    <a href='#' data-activates='slide-out' class='button-collapse hide-on-large-only'><i class='mdi-navigation-apps'></i></a>\r\n                                </div>";
+                str = "<div class='logo-container' style='height:50px;width:200px;'>\r\n                                    <a href='http://www.cigniti.com/'>\r\n                                        <img border='2' alt='Cigniti' src='cigniti_logo.png' width='200' height='35'>\r\n                                    </a>\r\n                                    <a href='#' data-activates='slide-out' class='button-collapse hide-on-large-only'><i class='mdi-navigation-apps'></i></a>\r\n                                </div>";
 
                 keyValuePair["Text1ToReplace"] = str;
 

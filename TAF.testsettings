@@ -2,15 +2,15 @@
 <TestSettings name="TestSetting" id="9d72674f-6aa0-4420-a2dc-7e2e5dbd0a48" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
   <Description>These are default test settings for a local test run.</Description>
   <Deployment>
-    <DeploymentItem filename="GallopReporter\Reporter.properties" />
+    <DeploymentItem filename="TestReporter\cigniti_logo.png" />
     <DeploymentItem filename="AutomatedTest\TestConfiguration\" />
     <DeploymentItem filename="TestReporter\extentConfig.xml" />
     <DeploymentItem filename="Engine\SeleniumDrivers\chromedriver.exe" />
     <DeploymentItem filename="TestReporter\client_logo.png" />
     <DeploymentItem filename="AutomatedTest\TestData\Temenos\" />
+    <DeploymentItem filename="GallopReporter\Reporter.properties" />
     <DeploymentItem filename="Engine\SeleniumDrivers\IEDriverServer.exe" />
     <DeploymentItem filename="GallopReporter\logos\" />
-    <DeploymentItem filename="TestReporter\gallop_logo.png" />
   </Deployment>
   <Execution>
     <Timeouts testTimeout="0" />
