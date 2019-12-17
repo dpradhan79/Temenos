@@ -15,7 +15,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 {
     public class StipulationsAutomation : AbstractTemplatePage
     {
-       
+
         #region UI Object Repository
         private By btnAdd = By.Id("btnAddStip");
         private By btnAddMultiple = By.Id("btnAddMultiple");
@@ -41,22 +41,30 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         /// <param name="description">The descrition.</param>
         /// <param name="comments">The comments.</param>
         /// </summary>
-        public void AddStipulations( Dictionary<string, string> validationTestData,bool met=true,int index=0)
-        {           
-            ClickOnAddStipulation();
-            VerifyButtons();
-            driver.WaitElementPresent(tableNewstipulations);
-            driver.ClickElementWithJavascript(tableNewstipulations,"New Stipulations");
-            driver.SelectByVisibleText(dropdownStipulation, validationTestData["Stipulation"+index], "Stipulation");
-            driver.SelectByVisibleText(dropdownRequiredFor, validationTestData["RequiredFor" + index], "Required For");
-            driver.SendKeysToElement(txtDescription, validationTestData["Description" + index], "Description");
-            driver.SendKeysToElement(txtComments, validationTestData["Comments" + index], "Comments");
-            if (met)
+        public void AddStipulations(Dictionary<string, string> validationTestData, bool met = true, int index = 0)
+        {
+            try
             {
-                driver.ClickElement(checkBoxMet, "Met");
+                ClickOnAddStipulation();
+                VerifyButtons();
+                driver.WaitElementPresent(tableNewstipulations);
+                driver.ClickElementWithJavascript(tableNewstipulations, "New Stipulations");
+                driver.SelectByVisibleText(dropdownStipulation, validationTestData["Stipulation" + index], "Stipulation");
+                driver.SelectByVisibleText(dropdownRequiredFor, validationTestData["RequiredFor" + index], "Required For");
+                driver.SendKeysToElement(txtDescription, validationTestData["Description" + index], "Description");
+                driver.SendKeysToElement(txtComments, validationTestData["Comments" + index], "Comments");
+                if (met)
+                {
+                    driver.ClickElement(checkBoxMet, "Met");
+                }
+                ClickOnSave();
+                HandleSuccessPopup();
             }
-            ClickOnSave();
-            HandleSuccessPopup();
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
         #endregion
 
@@ -67,8 +75,16 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         /// </summary>
         private void ClickOnSave()
         {
+            try
+            {
+                driver.ClickElement(btnSave, "Save");
+            }
+            catch (Exception ex)
+            {
 
-            driver.ClickElement(btnSave, "Save");
+                throw ex;
+            }
+
         }
 
         /// <summary>
@@ -76,56 +92,78 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         /// </summary>
         private void HandleSuccessPopup()
         {
-            //if()
-            //driver.WaitElementPresent(lblSuccess, "Success");
-            By ok = By.XPath("//div[text()='Validation Error']/../../following-sibling::div//button[text()='OK']");
-            driver.ClickElement(ok, "OK");
+            try
+            {
+                By ok = By.XPath("//div[text()='Validation Error']/../../following-sibling::div//button[text()='OK']");
+                driver.ClickElement(ok, "OK");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         /// <summary>
         /// Method to click on add stipulation
         /// </summary>
         private void ClickOnAddStipulation()
-        {          
-            driver.WaitElementPresent(btnAdd);
-            driver.ClickElement(btnAdd, "Add");           
+        {
+            try
+            {
+                driver.WaitElementPresent(btnAdd);
+                driver.ClickElement(btnAdd, "Add");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
-       
+
 
         /// <summary>
         /// Method to verify buttons
         /// </summary>
         private void VerifyButtons()
-        {            
-            VerifyButtonIsPresent(btnDelete, "Delete");
-            VerifyButtonIsPresent(btnEdit, "Edit");
+        {
+            try
+            {
+                VerifyButtonIsPresent(btnDelete, "Delete");
+                VerifyButtonIsPresent(btnEdit, "Edit");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         /// <summary>
         /// Method of verify button is present
         /// <param name="buttonName">The buttonName.</param>
         ///  /// <param name="name">The name.</param>
-        private void VerifyButtonIsPresent(By buttonName,string name)
-
+        private void VerifyButtonIsPresent(By buttonName, string name)
         {
             try
             {
                 if (driver.FindElement(buttonName).Displayed)
                 {
-                    this.TESTREPORT.LogSuccess(name +" button", String.Format(name +": <mark>{0}</mark> button is displayed", name));
+                    this.TESTREPORT.LogSuccess(name + " button", String.Format(name + ": <mark>{0}</mark> button is displayed", name));
                 }
                 else
                 {
                     this.TESTREPORT.LogSuccess(name + " button", String.Format(name + ": <mark>{0}</mark> button is not displayed", name));
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 this.TESTREPORT.LogSuccess(name + " button", String.Format(name + ": <mark>{0}</mark> button is not displayed", name));
+                throw ex;
             }
-            
+
         }
         #endregion
     }

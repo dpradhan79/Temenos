@@ -54,6 +54,8 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         private By btnConfirmLogoffYes = By.XPath("//button[text()='Yes']");
         private By formNewApplication = By.Id("frmNewApplication");
         private By lblNewApplication = By.XPath("//span[text()='New Application']");
+        private By dialogSelectAplication = By.Id("dialogSelectApplication");
+        private By lblReviewActiveAppAndPromotionalOffers = By.XPath("//span[text()='Review Active Applications and/or Promotional Offers']");
         #endregion
 
         #region Public Methods
@@ -88,13 +90,14 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
                 {
                     driver.SelectByVisibleText(dropdownApplyingFor, validationTestData["ReviewApplyingFor"], "Applying For");
                 }
-                SimulateThinkTimeInMilliSecs(2000);
+                //SimulateThinkTimeInMilliSecs(2000);
+                driver.WaitElementPresent(dropdownApplicationSource);
                 driver.SelectByVisibleText(dropdownApplicationSource, validationTestData["ApplicationSource"], "Application Source");
                 driver.SendKeysToElement(txtAccountType, validationTestData["AccountNumber"], "Account Number");
                 ClickOnStartApplication();
                 // SimulateThinkTimeInMilliSecs(10000);           
                 ClickOnCreateNewApplication();
-                SimulateThinkTimeInMilliSecs(10000);
+               // SimulateThinkTimeInMilliSecs(10000);
                 driver.SwitchBackToMainWindow();
             }
             catch (Exception ex)
@@ -110,49 +113,85 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         /// <param name="screenName">Name of the screen</param>
         /// </summary>
         public void NavigateToScreen(string screenName)
-        {          
+        {
 
             try
             {
-                Thread.Sleep(4000);            
+                Thread.Sleep(4000);
                 By screen = By.XPath("//a[@class='dynatree-title' and text()='" + screenName + "']");
-                driver.WaitElementPresent(screen,120);
-               // driver.MoveToElement(screen, screenName, 30);
-                driver.ClickElementWithJavascript(screen, screenName, 30);                             
-               // driver.SwitchToDefaultFrame();
+                driver.WaitElementPresent(screen, 120);
+                // driver.MoveToElement(screen, screenName, 30);
+                driver.ClickElementWithJavascript(screen, screenName, 30);
+                // driver.SwitchToDefaultFrame();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
-            
+
         }
 
         public void SwitchToCentralFrame()
         {
-            driver.SwitchToFrameById("centerFrame");
+            try
+            {
+                driver.SwitchToFrameById("centerFrame");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
         }
 
         public void SwitchToParentFrame()
         {
-            driver.SwitchTo().ParentFrame();
+            try
+            {
+                driver.SwitchTo().ParentFrame();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
         }
 
         public void SwitchToTabAppFrame()
         {
-            SimulateThinkTimeInMilliSecs(7000);
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(180));
-            var element = wait.Until(ExpectedConditions.FrameToBeAvailableAndSwitchToIt(frameTabApp));
-           // ExpectedConditions.FrameToBeAvailableAndSwitchToIt(frameTabApp);
-            //WebDriverWait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            //wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.FrameToBeAvailableAndSwitchToIt(By.Id("FRAMEID")));
-            //driver.SwitchToFrameByLocator(frameTabApp);
+            try
+            {
+                SimulateThinkTimeInMilliSecs(7000);
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(180));
+                var element = wait.Until(ExpectedConditions.FrameToBeAvailableAndSwitchToIt(frameTabApp));
+                // ExpectedConditions.FrameToBeAvailableAndSwitchToIt(frameTabApp);
+                //WebDriverWait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+                //wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.FrameToBeAvailableAndSwitchToIt(By.Id("FRAMEID")));
+                //driver.SwitchToFrameByLocator(frameTabApp);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
         }
 
         public void SwitchToDefaultContent()
         {
-            driver.SwitchOutOfTheFrame();
+            try
+            {
+                driver.SwitchOutOfTheFrame();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
         }
 
         public void VerifyScreenHeading(string screenName)
@@ -173,33 +212,57 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 
         public void VerifyDecisioningOfApplication()
         {
-            driver.ClickElement(btnDecision, "Decision");
-            driver.WaitElementPresent(lblSuccess);
-            driver.VerifyTextValue(lblDecisionSuccessMsg, "The application was automatically approved");
-            driver.ClickElement(btnOk, "OK");
+            try
+            {
+                driver.ClickElement(btnDecision, "Decision");
+                driver.WaitElementPresent(lblSuccess);
+                driver.VerifyTextValue(lblDecisionSuccessMsg, "The application was automatically approved");
+                driver.ClickElement(btnOk, "OK");
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
         }
 
         public String GetApplicationNumber()
         {
-            String applicationNumber = "";
+            try
+            {
+                 String applicationNumber = "";
             driver.WaitElementPresent(lblApplicationNumber,120);
             applicationNumber = driver.GetElementText(lblApplicationNumber);
             return applicationNumber;
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
             
         }
 
         public void CloseAndVerifyApplication(string applicationNumber)
         {
-            String appNum = applicationNumber.Split('#')[1].Trim();
-            By closeApplication = By.XPath("//li[@id='DesktopPages__app"+ appNum + "']/a[@class='x-tab-strip-close']");
-            driver.ClickElementWithJavascript(closeApplication, "Close the application for" + applicationNumber);
-            if (!driver.IsWebElementDisplayed(closeApplication)) 
+            try
             {
+                String appNum = applicationNumber.Split('#')[1].Trim();
+                By closeApplication = By.XPath("//li[@id='DesktopPages__app"+ appNum + "']/a[@class='x-tab-strip-close']");
+                driver.ClickElementWithJavascript(closeApplication, "Close the application for" + applicationNumber);
+                if (!driver.IsWebElementDisplayed(closeApplication)) 
+                {
                 this.TESTREPORT.LogSuccess("Close And verify Application", String.Format("Application Number : <mark>{0}</mark> is not present in desktop pages",applicationNumber));
-            }
-            else
-            {
+                }
+                else
+                {
                 this.TESTREPORT.LogFailure("Close And verify Application", String.Format("Application Number : <mark>{0}</mark> is present in desktop pages,not closed", applicationNumber));
+                }
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
             }
         }
 
@@ -208,11 +271,19 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         /// </summary>
         public void ClickLogOff()
         {
-            driver.WaitElementPresent(btnUserProfile);
-            driver.ClickElement(btnUserProfile,"User Profile");
-            driver.ClickElementWithJavascript(linkLogoff, "Logoff");
-            driver.WaitElementPresent(btnConfirmLogoffYes);
-            driver.ClickElement(btnConfirmLogoffYes,"Yes");
+            try
+            {
+                driver.WaitElementPresent(btnUserProfile);
+                driver.ClickElement(btnUserProfile,"User Profile");
+                driver.ClickElementWithJavascript(linkLogoff, "Logoff");
+                driver.WaitElementPresent(btnConfirmLogoffYes);
+                driver.ClickElement(btnConfirmLogoffYes,"Yes");
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -220,7 +291,9 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         /// </summary>
         public void VerifyDecisioningApplication(string postDecisionStatus,bool removeDecision)
         {
-            if (postDecisionStatus.Equals("LO Rejected"))
+            try
+            {
+                if (postDecisionStatus.Equals("LO Rejected"))
             {
                 driver.ClickElement(btnDecline, "Decline");
                 driver.WaitElementPresent(lblDeclineLone);
@@ -259,6 +332,12 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
                 driver.ClickElement(btnRemoveDecisionYes, "Yes");
                 HandleSuccessPopup();
             }
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
            
         }
 
@@ -291,18 +370,38 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         /// </summary>
         private void ClickOnCreateNewApplication()
         {
-            driver.WaitElementPresent(btnCreateNewApplication);
+            try
+            {
+                driver.WaitElementPresent(btnCreateNewApplication);
             driver.ClickElement(btnCreateNewApplication, "Create New Application");
-            WaitTillElementDisappeared(lblCreateNewApplication);
+           // WaitTillElementDisappeared(lblCreateNewApplication);
+             WebDriverWait webDriverCondWait = new WebDriverWait(this.driver, TimeSpan.FromSeconds(180));
+             webDriverCondWait.Until(ExpectedConditions.InvisibilityOfElementLocated(lblCreateNewApplication));
                 // WaitTillElementDisappeared(lblCreateNewApplication, "Create New Application...", 180);
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
         }
 
         /// <summary>
         /// Method to click on start application
         /// </summary>
         private void ClickOnStartApplication()
-        {            
-            driver.ClickElement(btnStartApplication, "Start Application");
+        {
+            try
+            {
+                driver.ClickElement(btnStartApplication, "Start Application");
+                driver.WaitElementExistsAndVisible(dialogSelectAplication);
+                driver.WaitElementPresent(lblReviewActiveAppAndPromotionalOffers);
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -310,8 +409,16 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         /// </summary>
         private void HandleSuccessPopup()
         {
-            driver.WaitElementPresent(lblSuccess);
-            driver.ClickElement(btnOk, "OK");
+            try
+            {
+                driver.WaitElementPresent(lblSuccess);
+                driver.ClickElement(btnOk, "OK");
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
         }
         #endregion
     }

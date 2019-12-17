@@ -17,7 +17,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 {
     public class PrimaryApplicantAutomationScreen : AbstractTemplatePage
     {
-       
+
         #region UI Object Repository
         private By txtMembershipStartDate = By.Name("edit-PA-Field-MembershipStartDate");
         private By checkBoxDoNotPullCredit = By.Name("CheckboxNamePA-Field-DoNotPullCredit");
@@ -34,27 +34,43 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         /// Enter field values in primary application panel 
         /// <param name="FieldsAndValuesToEnter">Enter the fields and values.</param>
         /// </summary>
-        public void EnterFieldValuesInPrimaryAppliciantPanel(string FieldsAndValuesToEnter,string value="")
+        public void EnterFieldValuesInPrimaryAppliciantPanel(string FieldsAndValuesToEnter, string value = "")
         {
-            if (FieldsAndValuesToEnter.Equals("MemeberShipStartDate"))
+            try
             {
-                EnterMemberShipStartDate(value);
+                if (FieldsAndValuesToEnter.Equals("MemeberShipStartDate"))
+                {
+                    EnterMemberShipStartDate(value);
+                }
+                else if (FieldsAndValuesToEnter.Equals("DoNotPullCredit"))
+                {
+                    ClickOnDoNotPullCredit();
+                }
+                ClickOnSave();
+                HandleSuccessPopup();
             }
-            else if (FieldsAndValuesToEnter.Equals("DoNotPullCredit"))
+            catch (Exception ex)
             {
-                ClickOnDoNotPullCredit();
+
+                throw ex;
             }
-            ClickOnSave();
-            HandleSuccessPopup();
         }
 
         /// <summary>
-       /// Enter membership start date
-       /// <param name="startDate"></param>
-       /// </summary>
+        /// Enter membership start date
+        /// <param name="startDate"></param>
+        /// </summary>
         public void EnterMemberShipStartDate(string startDate)
         {
-            driver.SendKeysToElementClearFirst(txtMembershipStartDate, startDate, "Membership Start Date");  
+            try
+            {
+                driver.SendKeysToElementClearFirst(txtMembershipStartDate, startDate, "Membership Start Date");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -63,23 +79,47 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         /// </summary>
         public void VerifyMemberShipStartDate(string startDate)
         {
-            driver.VerifyTextValue(txtMembershipStartDate, startDate);
+            try
+            {
+                driver.VerifyTextValue(txtMembershipStartDate, startDate);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         /// <summary>
         /// Method to click on do not pull credit
-       /// </summary>
+        /// </summary>
         public void ClickOnDoNotPullCredit()
         {
-            driver.ClickElement(checkBoxDoNotPullCredit, "DoNotPullCredit");
+            try
+            {
+                driver.ClickElement(checkBoxDoNotPullCredit, "DoNotPullCredit");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public void SelectCurrentAddressState(String state)
         {
-            driver.WaitElementPresent(dropdownCurrentAddressState);
-            driver.SelectDropdownItemByText(dropdownCurrentAddressState, state, "Current Address State:");
-            ClickOnSave();
-            HandleSuccessPopup();
+            try
+            {
+                driver.WaitElementPresent(dropdownCurrentAddressState);
+                driver.SelectDropdownItemByText(dropdownCurrentAddressState, state, "Current Address State:");
+                ClickOnSave();
+                HandleSuccessPopup();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         #endregion
@@ -91,8 +131,16 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         /// </summary>
         private void HandleSuccessPopup()
         {
-            driver.WaitElementPresent(lblSuccess);
-            driver.ClickElement(btnOk, "OK");
+            try
+            {
+                driver.WaitElementPresent(lblSuccess);
+                driver.ClickElement(btnOk, "OK");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -100,17 +148,18 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         /// </summary>
         private void ClickOnSave()
         {
-            
-            driver.ClickElement(btnSave, "Save");
+
+            try
+            {
+                driver.ClickElement(btnSave, "Save");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
-        /// <summary>
-        /// Method to click on start application 
-        /// </summary>
-        private void ClickOnStartApplication()
-        {            
-            //driver.ClickElement(btnStartApplication, "Start Application");
-        }
         #endregion
     }
 }

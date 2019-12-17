@@ -16,7 +16,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 {
     public class LoanTermsAutomation : AbstractTemplatePage
     {
-       
+
         #region UI Object Repository
         private By dropdownSolveFor = By.Name("Field-SolveForId");
         private By dropdownPaymentFrequency = By.Name("Field-PaymentFrequencyId");
@@ -39,12 +39,21 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         /// </summary>
         public void EnterFieldValuesInLoanTermPanel(Dictionary<string, string> validationTestData)
         {
-            driver.SelectByVisibleText(dropdownSolveFor, validationTestData["SolveFor"], "Solve For");
-            driver.SelectByVisibleText(dropdownPaymentFrequency, validationTestData["PaymentFrequency"], "Payment Frequency");
-            driver.SendKeysToElementClearFirst(txtRequestedAmount,validationTestData["RequestedAmount"], "Requested Amount");
-            driver.SendKeysToElementClearFirst(txtTerm, validationTestData["Term"], "Term");
-            ClickOnSave();
-            HandleSuccessPopup();
+            try
+            {
+                driver.SelectByVisibleText(dropdownSolveFor, validationTestData["SolveFor"], "Solve For");
+                driver.SelectByVisibleText(dropdownPaymentFrequency, validationTestData["PaymentFrequency"], "Payment Frequency");
+                driver.SendKeysToElementClearFirst(txtRequestedAmount, validationTestData["RequestedAmount"], "Requested Amount");
+                driver.SendKeysToElementClearFirst(txtTerm, validationTestData["Term"], "Term");
+                ClickOnSave();
+                HandleSuccessPopup();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
         }
         #endregion
 
@@ -55,8 +64,16 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         /// </summary>
         private void HandleSuccessPopup()
         {
-            driver.WaitElementPresent(lblSuccess);
-            driver.ClickElement(btnOk, "OK");
+            try
+            {
+                driver.WaitElementPresent(lblSuccess);
+                driver.ClickElement(btnOk, "OK");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -64,16 +81,16 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         /// </summary>
         private void ClickOnSave()
         {
-            
-            driver.ClickElement(btnSave, "Save");
-        }
+            try
+            {
+                driver.ClickElement(btnSave, "Save");
+            }
+            catch (Exception ex)
+            {
 
-        /// <summary>
-        /// Method to click on start application
-        /// </summary>
-        private void ClickOnStartApplication()
-        {            
-            //driver.ClickElement(btnStartApplication, "Start Application");
+                throw ex;
+            }
+
         }
         #endregion
     }

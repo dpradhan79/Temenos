@@ -16,7 +16,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 {
     public class LoginPage : AbstractTemplatePage
     {
-       
+
         #region UI Object Repository
         private By txtUserName = By.Id("Username");
         private By txtPassword = By.Id("Password");
@@ -27,21 +27,10 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         private By btnContinue = By.XPath("//button[text()='Continue']");
         private By spanHomePageLabel = By.XPath("//span[contains(@class,'x-tab-strip-text icon-home')]");
         private By lblCreate = By.XPath("//span[text()='Create']");
-        
+
         #endregion
 
-        #region Public Methodsc 
-        /// <summary>
-        /// Method to navigate to login page
-        /// </summary>
-        /// <param name="url"></param>
-        public void NavigateToHome(string url)
-        {
-            driver.Navigate().GoToUrl(url);
-            //driver.sleepTime(2000);
-            this.TESTREPORT.LogSuccess("NavigateToHome", String.Format("Navigated to url: <mark>{0}</mark> successfully", url));
-            // driver.CheckElementExists(btnLogin, "Login");
-        }
+        #region Public Methodsc
 
         /// <summary>
         /// Method to SignIn
@@ -50,15 +39,23 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         /// <param name="password"></param>
         public void SignIn(string userName, string password)
         {
-            driver.WaitElementPresent(txtUserName);
-            driver.SendKeysToElement(txtUserName, userName, "User Name");
-            driver.SendKeysToElement(txtPassword, password, "Password");
-            driver.ClickElement(btnLogin, "Login Button");
-            if (driver.IsWebElementDisplayed(btnContinue))
+            try
             {
-                driver.ClickElement(btnContinue, "Continue");
+                driver.WaitElementPresent(txtUserName);
+                driver.SendKeysToElement(txtUserName, userName, "User Name");
+                driver.SendKeysToElement(txtPassword, password, "Password");
+                driver.ClickElement(btnLogin, "Login Button");
+                if (driver.IsWebElementDisplayed(btnContinue))
+                {
+                    driver.ClickElement(btnContinue, "Continue");
+                }
+                WaitForHomePage();
             }
-            WaitForHomePage();
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -73,10 +70,11 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
                 driver.WaitElementPresent(lblCreate);
                 this.TESTREPORT.LogSuccess("Home Page", "Sucessfully login to the application");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 this.TESTREPORT.LogFailure("Home Page", "Failed to login to the application");
+                throw ex;
             }
         }
         #endregion

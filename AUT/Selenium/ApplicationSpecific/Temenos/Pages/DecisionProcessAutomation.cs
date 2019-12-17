@@ -15,7 +15,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 {
     public class DecisionProcessAutomation : AbstractTemplatePage
     {
-       
+
         #region UI Object Repository
         private By reviewIndicatorsTableRow = By.XPath("//table[@id='ReviewIndicatorLoanGrid-data-table']//tbody/tr/td[1]");
 
@@ -31,18 +31,26 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         /// </summary>
         public void VerifyReviewIndicators(string name, string description)
         {
-            int row = GetReviewIndicatorNamePosition(name);
-            if (row > 0)
+            try
             {
-                this.TESTREPORT.LogSuccess("Review Indicators Name", String.Format("Name : <mark>{0}</mark> is present under Name column in Review Indicators grid", name));
-                By nameColumn = By.XPath("//table[@id='ReviewIndicatorLoanGrid-data-table']//tbody/tr[" + row + "]/td[2]/span");
-                driver.VerifyTextValue(nameColumn, description);
+                int row = GetReviewIndicatorNamePosition(name);
+                if (row > 0)
+                {
+                    this.TESTREPORT.LogSuccess("Review Indicators Name", String.Format("Name : <mark>{0}</mark> is present under Name column in Review Indicators grid", name));
+                    By nameColumn = By.XPath("//table[@id='ReviewIndicatorLoanGrid-data-table']//tbody/tr[" + row + "]/td[2]/span");
+                    driver.VerifyTextValue(nameColumn, description);
+                }
+                else
+                {
+                    this.TESTREPORT.LogFailure("Review Indicators Name", String.Format("Name : <mark>{0}</mark> is not present under Name column in Review Indicators grid", name));
+                }
             }
-            else
+            catch (Exception ex)
             {
-                this.TESTREPORT.LogFailure("Review Indicators Name", String.Format("Name : <mark>{0}</mark> is not present under Name column in Review Indicators grid", name));
+
+                throw ex;
             }
-           
+
         }
         #endregion
 
@@ -54,18 +62,26 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         /// </summary>
         private int GetReviewIndicatorNamePosition(String name)
         {
-            int position=0;
-            var rows = driver.FindElements(reviewIndicatorsTableRow).Count;
-            for (int i = 1; i <= rows; i++)
+            try
             {
-                By nameColumn = By.XPath("//table[@id='ReviewIndicatorLoanGrid-data-table']//tbody/tr["+i+"]/td[1]");
-                if (driver.GetElementText(nameColumn).Equals(name))
+                int position = 0;
+                var rows = driver.FindElements(reviewIndicatorsTableRow).Count;
+                for (int i = 1; i <= rows; i++)
                 {
-                    position = i;
-                    break;
+                    By nameColumn = By.XPath("//table[@id='ReviewIndicatorLoanGrid-data-table']//tbody/tr[" + i + "]/td[1]");
+                    if (driver.GetElementText(nameColumn).Equals(name))
+                    {
+                        position = i;
+                        break;
+                    }
                 }
+                return position;
             }
-            return position;
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         #endregion

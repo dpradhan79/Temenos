@@ -17,7 +17,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 {
     public class Disburse : AbstractTemplatePage
     {
-       
+
         #region UI Object Repository
         private By btnDisburse = By.Id("btnDisburse");
         private By lblDisburseApplication = By.XPath("//div[@aria-describedby='ws_Disburse_Dialog']//span[@class='ui-dialog-title']");
@@ -38,34 +38,51 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         /// </summary>
         public void PerformDisbursementOfLoanApplication()
         {
-            String date = DateTime.Now.Date.ToString("dd");
-            int day = Convert.ToInt32(date) - 1;
-            String dayNumeric = Convert.ToString(day);
-            String Month = DateTime.Now.Month.ToString();
-            String Year = DateTime.Now.Year.ToString();
-            String expectedText = "Transactions will be sent to the Core Processor indicating that the funds were made available as of the Lifecycle Management Suite Disbursement Date, " + Month + "/" + dayNumeric + "/" + Year + ". This date affects interest accrual on your core processor and may require documents to be regenerated. Select Disburse to continue or Cancel to change the Disbursement Date.";
-            driver.ClickElement(btnDisburse,"Disburse");
-            Thread.Sleep(3000);
-            if (driver.IsWebElementDisplayed(btnDiscardChanges))
+            try
             {
-                driver.ClickElement(btnDiscardChanges, "Discard Changes and Continue");
+                String date = DateTime.Now.Date.ToString("dd");
+                int day = Convert.ToInt32(date) - 1;
+                String dayNumeric = Convert.ToString(day);
+                String Month = DateTime.Now.Month.ToString();
+                String Year = DateTime.Now.Year.ToString();
+                String expectedText = "Transactions will be sent to the Core Processor indicating that the funds were made available as of the Lifecycle Management Suite Disbursement Date, " + Month + "/" + dayNumeric + "/" + Year + ". This date affects interest accrual on your core processor and may require documents to be regenerated. Select Disburse to continue or Cancel to change the Disbursement Date.";
+                driver.ClickElement(btnDisburse, "Disburse");
+                Thread.Sleep(3000);
+                if (driver.IsWebElementDisplayed(btnDiscardChanges))
+                {
+                    driver.ClickElement(btnDiscardChanges, "Discard Changes and Continue");
+                }
+                driver.WaitElementPresent(lblDisburseApplication);
+                driver.VerifyTextValue(lblDisburseApplication, "Disburse Application");
+                driver.WaitElementPresent(formDisburse);
+                driver.VerifyTextValue(formDisburse, expectedText, "Disburse Message");
+                driver.ClickElement(checkboxDisburseAcceptLoanTerms, "Accept");
+                driver.ClickElement(btnDialogDisburse, "Disburse");
+                WaitTillElementDisappeared(loadingDisbursing);
+                driver.ClickElement(btnErrorOk, "OK");
             }
-            driver.WaitElementPresent(lblDisburseApplication);
-            driver.VerifyTextValue(lblDisburseApplication, "Disburse Application");
-            driver.WaitElementPresent(formDisburse);
-            driver.VerifyTextValue(formDisburse,expectedText,"Disburse Message");
-            driver.ClickElement(checkboxDisburseAcceptLoanTerms, "Accept");
-            driver.ClickElement(btnDialogDisburse, "Disburse");
-            WaitTillElementDisappeared(loadingDisbursing);
-            driver.ClickElement(btnErrorOk, "OK");
-           
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
         }
 
         public void DiscardTheChanges()
         {
-            Actions act = new Actions(driver);
-            act.SendKeys(OpenQA.Selenium.Keys.Enter).Build().Perform();
+            try
+            {
+                Actions act = new Actions(driver);
+                act.SendKeys(OpenQA.Selenium.Keys.Enter).Build().Perform();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
         }
-        #endregion        
+        #endregion
     }
 }

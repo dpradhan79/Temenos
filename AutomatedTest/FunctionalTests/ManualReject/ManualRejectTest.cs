@@ -49,14 +49,12 @@ namespace AutomatedTest.FunctionalTests
                 this.LoadBusinessTestData();
                 LoginPage.SignIn(EngineSetup.UserName, EngineSetup.Password);
                 HomePage.CreateNewApplication("Approve", this.validationTestData);
-                //HomePage.CreateNewApplication("Loan", "Auto: Automation Auto Approve", "Branch - In Person", "100120");
                 approveApplicationNumber = HomePage.GetApplicationNumber();
                 HomePage.SwitchToTabAppFrame();
                 HomePage.NavigateToScreen(Constants.LoanTermsAutomation);
                 HomePage.SwitchToCentralFrame();
                 HomePage.VerifyScreenHeading(Constants.LoanTermsAutomation);
                 LoanTermsAutomation.EnterFieldValuesInLoanTermPanel(this.validationTestData);
-                // LoanTermsAutomation.EnterFieldValuesInLoanTermPanel("Payment", "Monthly", "25000", "36");
                 HomePage.SwitchToParentFrame();
                 HomePage.VerifyDecisioningApplication(Constants.LoRejected, true);
                 HomePage.SwitchToDefaultContent();
@@ -70,10 +68,12 @@ namespace AutomatedTest.FunctionalTests
             {
                 TESTREPORT.LogFailure("Failed", "because of the exception " + ex);
                 testCaseResult = ResultStatus.Failed;
+                Assert.Fail(ex.Message);
             }
             finally
             {
                 this.TESTREPORT.UpdateTestCaseStatus(testRail, EngineSetup.TESTRAILRUNID, TestContext.Properties["name"] as String, testCaseResult);
+               
             }
             #endregion
         }
