@@ -27,7 +27,7 @@ namespace AutomatedTest.FunctionalTests
         public static IWebDriver driver = null;
 
         #region PageObject
-        public TestRailClient testRailClient = null;
+        public TestRailClient testRail = null;
         public LoginPage LoginPage = null;
         public HomePage HomePage = null;
         public DecisionProcessAutomation DecisionProcessAutomation = null;
@@ -46,8 +46,12 @@ namespace AutomatedTest.FunctionalTests
 
         public TestBaseTemplate()
         {
-            //driver = WebDriverFactory.CreateWebDriver();
-            testRailClient = new TestRailClient("https://myalliasproject.testrail.io", "praveenhydqa@gmail.com", "Dhanya@6");
+            const String testRailUrl = "http://atllmstestrail.akcelerant.com/";
+            const String userName = "kote@cigniti.com";
+            const String password = "Password1";
+            
+            testRail = new TestRailClient(testRailUrl, userName, password);
+
             LoginPage = new LoginPage();
             HomePage = new HomePage();
             PrimaryApplicantAutomationScreen = new PrimaryApplicantAutomationScreen();
@@ -234,17 +238,18 @@ namespace AutomatedTest.FunctionalTests
             }
         }
 
-        public Dictionary<string, string> loadValidationTestData(string testScriptName, string testCategory)
+        public Dictionary<string, string> loadValidationTestData(string testScriptName, string testCategory="")
         {
             return LoadTestData(testScriptName, testCategory, EngineSetup.VALIDATIONTESTDATASHEETNAME);
         }
 
         public Dictionary<string, string> LoadTestData(string testScriptName, string testCategory, string sheetName)
         {
+            String testDataPath = System.IO.Directory.GetCurrentDirectory();
             Dictionary<string, string> inputTestData = new Dictionary<String, String>();
             var testDataFileName = (string)null;
-            testDataFileName = (testCategory == EngineSetup.ApplicationPath) ? this.TESTDATAFILENAME : testScriptName + ".xlsx";
-            DataTable inputTestDataTable = ExcelReader.ReadExcelFile(this.TESTDATAFOLDERPATH, testDataFileName, sheetName, false, 2);
+            testDataFileName = (testCategory == testDataPath) ? this.TESTDATAFILENAME : testScriptName + ".xlsx";
+            DataTable inputTestDataTable = ExcelReader.ReadExcelFile(testDataPath, testDataFileName, sheetName, false, 2);
             DataRow[] testDataRows = inputTestDataTable.Select("TestScriptName = '" + testScriptName + "'");
             inputTestData = (testDataRows.Length > 0) ? testDataRows[0].Table.Columns.Cast<DataColumn>().ToDictionary(c => c.ColumnName, c => testDataRows[0][c].ToString()) : inputTestData;
             return inputTestData;
