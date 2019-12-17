@@ -78,15 +78,15 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
                 driver.SelectByVisibleText(dropdownApplicationType, validationTestData["ApplicationType"], "Application Type");
                 if (applyingfor.Equals("Approve"))
                 {
-                    driver.SelectByVisibleText(dropdownApplyingFor, validationTestData["ApproveApplyingfor"], "Applying For");
+                    driver.SelectByVisibleText(dropdownApplyingFor, validationTestData["ApproveApplyingFor"], "Applying For");
                 }
                 else if (applyingfor.Equals("Reject"))
                 {
-                    driver.SelectByVisibleText(dropdownApplyingFor, validationTestData["RejectApplyingfor"], "Applying For");
+                    driver.SelectByVisibleText(dropdownApplyingFor, validationTestData["RejectApplyingFor"], "Applying For");
                 }
                 else if (applyingfor.Equals("Review"))
                 {
-                    driver.SelectByVisibleText(dropdownApplyingFor, validationTestData["ReviewApplyingfor"], "Applying For");
+                    driver.SelectByVisibleText(dropdownApplyingFor, validationTestData["ReviewApplyingFor"], "Applying For");
                 }
                 SimulateThinkTimeInMilliSecs(2000);
                 driver.SelectByVisibleText(dropdownApplicationSource, validationTestData["ApplicationSource"], "Application Source");
