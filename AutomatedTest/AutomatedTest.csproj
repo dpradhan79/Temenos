@@ -50,10 +50,6 @@
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -63,10 +59,6 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="TestRail, Version=1.0.0.13, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\TestRailBQA.1.0.0.13\lib\net45\TestRail.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="UiaComWrapper, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
@@ -107,6 +99,10 @@
     <ProjectReference Include="..\StandardUtilities\StandardUtilities.csproj">
       <Project>{d5a3223d-89b8-4523-949a-32c3013588c7}</Project>
       <Name>StandardUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TestRailFactory\TestRail.csproj">
+      <Project>{bba2af4a-4fd1-416e-8f93-29b1cb6373b0}</Project>
+      <Name>TestRail</Name>
     </ProjectReference>
     <ProjectReference Include="..\TestReporter\TestReporter.csproj">
       <Project>{c3d18bc9-b508-43d5-81e1-45ddc108aa82}</Project>

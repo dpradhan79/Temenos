@@ -1,10 +1,9 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TestRail;
-using TestRail.Types;
 using StandardUtilities;
 using AutomatedTest.FunctionalTests;
 using Engine.Setup;
+using TestRail;
 namespace AutomatedTest.UnitTests
 {
     [TestClass]
@@ -30,11 +29,12 @@ namespace AutomatedTest.UnitTests
             const String testRailUrl = "https://cignitipoc.testrail.io/";
             const String userName = "debasish.pradhan@cigniti.com";
             const String password = "Temp1234";
+
             int runId = 3;
             this.TESTREPORT.InitTestCase(TestContext.Properties["name"] as String, TestContext.Properties["name"] as String);
             TestRailClient testRail = null;
             testRail = new TestRailClient(testRailUrl, userName, password);
-            ResultStatus testCaseResult = ResultStatus.Passed;
+            ResultStatus testCaseResult = ResultStatus.Failed;
             this.TESTREPORT.UpdateTestCaseStatus(testRail, EngineSetup.TESTRAILRUNID, TestContext.Properties["name"] as String, testCaseResult);
         }
 
@@ -42,15 +42,16 @@ namespace AutomatedTest.UnitTests
         [TestProperty("name", "Inventory Should Should Generate Alert When Item Is Under Threshold")]
         public void TestTestRail2()
         {
-            const String testRailUrl = "https://cignitipoc.testrail.io/";
-            const String userName = "debasish.pradhan@cigniti.com";
-            const String password = "Temp1234";
-            const int runId = 3;
+            const String testRailUrl = "http://atllmstestrail.akcelerant.com/";
+            const String userName = "kote@cigniti.com";
+            const String password = "Password1";
+            const int runId = 12;
             this.TESTREPORT.InitTestCase(TestContext.Properties["name"] as String, TestContext.Properties["name"] as String);
+
             TestRailClient testRail = null;
             testRail = new TestRailClient(testRailUrl, userName, password);
             ResultStatus testCaseResult = ResultStatus.Failed;
-            this.TESTREPORT.UpdateTestCaseStatus(testRail, EngineSetup.TESTRAILRUNID, TestContext.Properties["name"] as String, testCaseResult);
+            this.TESTREPORT.UpdateTestCaseStatus(testRail, runId, TestContext.Properties["name"] as String, testCaseResult);
         }
         
     }

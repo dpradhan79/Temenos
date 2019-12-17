@@ -16,7 +16,7 @@ using Engine.Factories;
 using AUT.Selenium.ApplicationSpecific.Pages;
 using System.Data;
 using System.Linq;
-
+using TestRail;
 namespace AutomatedTest.FunctionalTests
 {
     [TestClass]
@@ -27,7 +27,7 @@ namespace AutomatedTest.FunctionalTests
         public static IWebDriver driver = null;
 
         #region PageObject
-        public TestRailAPIWrapper TestRailAPI = null;
+        public TestRailClient testRailClient = null;
         public LoginPage LoginPage = null;
         public HomePage HomePage = null;
         public DecisionProcessAutomation DecisionProcessAutomation = null;
@@ -47,7 +47,7 @@ namespace AutomatedTest.FunctionalTests
         public TestBaseTemplate()
         {
             //driver = WebDriverFactory.CreateWebDriver();
-            TestRailAPI = new TestRailAPIWrapper("https://myalliasproject.testrail.io", "praveenhydqa@gmail.com", "Dhanya@6");
+            testRailClient = new TestRailClient("https://myalliasproject.testrail.io", "praveenhydqa@gmail.com", "Dhanya@6");
             LoginPage = new LoginPage();
             HomePage = new HomePage();
             PrimaryApplicantAutomationScreen = new PrimaryApplicantAutomationScreen();

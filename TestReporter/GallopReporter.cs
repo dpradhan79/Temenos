@@ -4,10 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GallopReporter;
-using TestRail;
-using TestRail.Types;
 using StandardUtilities;
-
+using TestRail;
 namespace TestReporter
 {
     /// <summary>
@@ -114,7 +112,7 @@ namespace TestReporter
         public void UpdateTestCaseStatus(TestRailClient trClient, int runId, String testCaseTitle, ResultStatus resultStatus)
         {
             this.UpdateTestCaseStatus();
-            TestRailAPIWrapper.UpdateTestCaseStatus(trClient, runId, testCaseTitle, resultStatus);
+            trClient.UpdateTestCaseStatus(runId, testCaseTitle, resultStatus);
         }
 
         /// <summary>

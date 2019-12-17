@@ -16,6 +16,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AUT", "AUT\AUT.csproj", "{E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomatedTest", "AutomatedTest\AutomatedTest.csproj", "{1600A149-36F3-45D3-95F9-DF2FE8F869C6}"
 	ProjectSection(ProjectDependencies) = postProject
+		{BBA2AF4A-4FD1-416E-8F93-29B1CB6373B0} = {BBA2AF4A-4FD1-416E-8F93-29B1CB6373B0}
 		{E342747D-905D-4E3E-AF72-BD05AED114A4} = {E342747D-905D-4E3E-AF72-BD05AED114A4}
 	EndProjectSection
 EndProject
@@ -23,6 +24,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestReporter", "TestReporte
 	ProjectSection(ProjectDependencies) = postProject
 		{F8610D20-51B3-4AE7-9690-A240145BFD77} = {F8610D20-51B3-4AE7-9690-A240145BFD77}
 		{D5A3223D-89B8-4523-949A-32C3013588C7} = {D5A3223D-89B8-4523-949A-32C3013588C7}
+		{BBA2AF4A-4FD1-416E-8F93-29B1CB6373B0} = {BBA2AF4A-4FD1-416E-8F93-29B1CB6373B0}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandardUtilities", "StandardUtilities\StandardUtilities.csproj", "{D5A3223D-89B8-4523-949A-32C3013588C7}"
@@ -30,6 +32,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "Engine\Engine.csproj", "{B5D7155E-0DA0-4D8B-BE9F-B3C46B3DA926}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GallopReporter", "GallopReporter\GallopReporter.csproj", "{F8610D20-51B3-4AE7-9690-A240145BFD77}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BBA2AF4A-4FD1-416E-8F93-29B1CB6373B0} = {BBA2AF4A-4FD1-416E-8F93-29B1CB6373B0}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestRail", "TestRailFactory\TestRail.csproj", "{BBA2AF4A-4FD1-416E-8F93-29B1CB6373B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -82,6 +89,12 @@ Global
 		{F8610D20-51B3-4AE7-9690-A240145BFD77}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F8610D20-51B3-4AE7-9690-A240145BFD77}.Release|x86.ActiveCfg = Release|x86
 		{F8610D20-51B3-4AE7-9690-A240145BFD77}.Release|x86.Build.0 = Release|x86
+		{BBA2AF4A-4FD1-416E-8F93-29B1CB6373B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBA2AF4A-4FD1-416E-8F93-29B1CB6373B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBA2AF4A-4FD1-416E-8F93-29B1CB6373B0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BBA2AF4A-4FD1-416E-8F93-29B1CB6373B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBA2AF4A-4FD1-416E-8F93-29B1CB6373B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBA2AF4A-4FD1-416E-8F93-29B1CB6373B0}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
