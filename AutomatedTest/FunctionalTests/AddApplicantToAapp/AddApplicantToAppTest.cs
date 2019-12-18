@@ -16,55 +16,67 @@ namespace AutomatedTest.FunctionalTests
     using AUT.Selenium.ApplicationSpecific.Pages;
     using Engine.Setup;     
     using Engine.Factories;
+    using TestRail;
 
-     [TestClass]
+    [TestClass]
     /// <summary>
     /// Temenos Application Tests
     /// </summary>
     /// <seealso cref="AutomatedTest.FunctionalTests.TestBaseTemplate" />
     public class AddApplicantToAppTest : TestBaseTemplate
-    {    
+    {
+        /// <summary>
+        /// Loads the business test data.
+        /// </summary>
+        public void LoadBusinessTestData()
+        {
+            this.validationTestData = this.loadValidationTestData(TestContext.TestName);
+        }
+
         /// <summary>
         /// Test case for Add Applicant to App.
         /// </summary>
         [TestMethod]
-        //[TestCategory("DecisionTests")]
-         public void AddApplicantToApp()
+        [TestCategory("Application")]
+        [TestProperty("name", "Add Applicant To App")]
+        public void AddApplicantToApp()
         {
-            //status for pass
-			int testcaseStatus = 0;
-            #region ManualReject
+            ResultStatus testCaseResult = ResultStatus.Untested;
+            #region Add Applicant To App
             try
             {
                 string approveApplicationNumber = null;
-                this.TESTREPORT.InitTestCase("AddApplicantToApp", "AddApplicantToApp");
+                this.TESTREPORT.InitTestCase(TestContext.Properties["name"] as String, TestContext.Properties["name"] as String);
+                this.LoadBusinessTestData();
                 LoginPage.SignIn(EngineSetup.UserName, EngineSetup.Password);
-                //HomePage.CreateNewApplication("Approve",this.validationTestData);
-                //HomePage.CreateNewApplication("Loan", "Auto: Automation Auto Approve", "Branch - In Person", "100119");
+                //HomePage.CreateNewApplication("Approve", this.validationTestData);
                 approveApplicationNumber = HomePage.GetApplicationNumber();
-                //HomePage.SwitchToTabAppFrame();
+                HomePage.SwitchAndVerifyHomePageFullyDisplayed();
                 HomePage.NavigateToScreen(Constants.Applicants);
                 HomePage.SwitchToCentralFrame();
                 HomePage.VerifyScreenHeading(Constants.Applicants);
-               // LoanTermsAutomation.EnterFieldValuesInLoanTermPanel("Payment", "Monthly", "25000", "36");
+                Application.AddApplicants("Joint", "100114", "MARTINA BEACOMMON");
                 HomePage.SwitchToParentFrame();
-                HomePage.VerifyDecisioningApplication("LO Rejected", true);
+                HomePage.NavigateToScreen(Constants.CreditReporting);
+                HomePage.SwitchToCentralFrame();
+                HomePage.VerifyScreenHeading(Constants.CreditReporting);
+
                 HomePage.SwitchToDefaultContent();
                 HomePage.CloseAndVerifyApplication(approveApplicationNumber);
-                HomePage.ClickLogOff();
+                testCaseResult = ResultStatus.Passed;
                 TESTREPORT.LogInfo("Test Execution Completed");
-                testcaseStatus = 1;
             }
             catch (Exception ex)
             {
-                TESTREPORT.LogInfo("Failed because of the exception "+ex);
-				//status for fail
-                testcaseStatus = 5;
+                TESTREPORT.LogFailure("Failed", "Because of the exception " + ex);
+                testCaseResult = ResultStatus.Failed;
+                Assert.Fail(ex.Message);
+
             }
             finally
             {
 
-                this.TESTREPORT.UpdateTestCaseStatus();
+                this.TESTREPORT.UpdateTestCaseStatus(testRail, EngineSetup.TESTRAILRUNID, TestContext.Properties["name"] as String, testCaseResult);
             }
             #endregion
         }

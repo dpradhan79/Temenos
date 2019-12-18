@@ -29,7 +29,7 @@ namespace Engine.Setup
         public const string StipulationsAutomation = "Stipulations - Automation";
 
         ///// <summary>
-        ////The stipulations automation
+        ////The Applicants
         ///// </summary>
         public const string Applicants = "Applicants";
 
@@ -44,9 +44,14 @@ namespace Engine.Setup
         public const string AutoApproved = "Auto Approved";
 
         ///// <summary>
-        ////The auto approved
+        ////The auto rejected
         ///// </summary>
         public const string AutoRejected = "Auto Rejected";
+
+        ///// <summary>
+        ////The Credit Reporting
+        ///// </summary>
+        public const string CreditReporting = "Credit Reporting";
 
 
       }

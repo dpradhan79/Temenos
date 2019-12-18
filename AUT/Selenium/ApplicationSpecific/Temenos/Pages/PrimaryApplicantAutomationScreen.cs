@@ -106,6 +106,11 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
             }
         }
 
+        /// <summary>
+        /// Select current adress state
+        /// <param name="state"></param>
+        /// </summary>
+        /// 
         public void SelectCurrentAddressState(String state)
         {
             try

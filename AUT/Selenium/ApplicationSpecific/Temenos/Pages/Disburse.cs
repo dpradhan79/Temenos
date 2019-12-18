@@ -32,9 +32,11 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         #region Public Methods
 
         /// <summary>
-        /// Verify review indicators
-        /// <param name="name">The name.</param>
-        /// <param name="description">The description.</param>
+        ///Method of perform disbursement of loan application
+        /// <param name="Disburse"></param>
+        /// <param name="Accept"></param>
+        /// <param name="Disbursemessage"></param>
+        /// <param name="Disburseapplication"></param>
         /// </summary>
         public void PerformDisbursementOfLoanApplication()
         {
@@ -69,6 +71,10 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 
         }
 
+
+        /// <summary>
+        /// Method of discard the changes
+       /// </summary>
         public void DiscardTheChanges()
         {
             try

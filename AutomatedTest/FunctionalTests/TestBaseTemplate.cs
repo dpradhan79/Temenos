@@ -27,6 +27,7 @@ namespace AutomatedTest.FunctionalTests
         public static IWebDriver driver = null;
 
         #region PageObject
+        public AddApplication Application = null;
         public TestRailClient testRail = null;
         public LoginPage LoginPage = null;
         public HomePage HomePage = null;
@@ -51,7 +52,7 @@ namespace AutomatedTest.FunctionalTests
             const String password = "Password1";
             
             testRail = new TestRailClient(testRailUrl, userName, password);
-
+            Application = new AddApplication();
             LoginPage = new LoginPage();
             HomePage = new HomePage();
             PrimaryApplicantAutomationScreen = new PrimaryApplicantAutomationScreen();

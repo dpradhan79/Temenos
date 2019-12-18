@@ -133,6 +133,9 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 
         }
 
+        /// <summary>
+        /// Swith to central frame
+        /// </summary>
         public void SwitchToCentralFrame()
         {
             try
@@ -147,6 +150,9 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 
         }
 
+        /// <summary>
+        /// Swith to Parent frame
+        /// </summary>
         public void SwitchToParentFrame()
         {
             try
@@ -161,6 +167,9 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 
         }
 
+        /// <summary>
+        /// Swith to tab frame and verifying home page is fully displayed
+        /// </summary>
         public void SwitchAndVerifyHomePageFullyDisplayed()
         {
             try
@@ -185,6 +194,9 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 
         }
 
+        /// <summary>
+        /// Swith to default content
+        /// </summary>
         public void SwitchToDefaultContent()
         {
             try
@@ -199,6 +211,10 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 
         }
 
+        /// <summary>
+        /// Verifying the screen heading
+        /// <param name="screenName"></param>
+        /// </summary>
         public void VerifyScreenHeading(string screenName)
         {
             try
@@ -215,6 +231,9 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
             
         }
 
+        /// <summary>
+        /// Verify decisioning of application
+        /// </summary>
         public void VerifyDecisioningOfApplication()
         {
             try
@@ -231,6 +250,9 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
             }
         }
 
+        /// <summary>
+        /// Reading application number from application
+        /// </summary>
         public String GetApplicationNumber()
         {
             try
@@ -248,6 +270,9 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
             
         }
 
+        /// <summary>
+        /// Close and verify Application
+        /// </summary>
         public void CloseAndVerifyApplication(string applicationNumber)
         {
             try
