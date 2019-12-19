@@ -140,7 +140,10 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         {
             try
             {
-                driver.SwitchToFrameById("centerFrame");
+                Thread.Sleep(15000);
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(180));
+                var element = wait.Until(ExpectedConditions.FrameToBeAvailableAndSwitchToIt("centerFrame"));
+                //driver.SwitchToFrameById("centerFrame");
             }
             catch (Exception ex)
             {
@@ -174,8 +177,8 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         {
             try
             {
-                Thread.Sleep(8000);
-                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(180));
+                Thread.Sleep(15000);
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(240));
                 var element = wait.Until(ExpectedConditions.FrameToBeAvailableAndSwitchToIt(frameTabApp));
                 // ExpectedConditions.FrameToBeAvailableAndSwitchToIt(frameTabApp);
                 //WebDriverWait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));

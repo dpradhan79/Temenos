@@ -52,6 +52,35 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
             }
 
         }
+
+        /// <summary>
+        /// Verify review indicators
+        /// <param name="name">The name.</param>
+        /// <param name="description">The description.</param>
+        /// </summary>
+        public void VerifyReviewIndicators(Dictionary<string, string> validationTestData,int index=0)
+        {
+            try
+            {
+                int row = GetReviewIndicatorNamePosition(validationTestData["ReviewIndicatorName" + index]);
+                if (row > 0)
+                {
+                    this.TESTREPORT.LogSuccess("Review Indicators Name", String.Format("Name : <mark>{0}</mark> is present under Name column in Review Indicators grid", validationTestData["ReviewIndicatorName" + index]));
+                    By nameColumn = By.XPath("//table[@id='ReviewIndicatorLoanGrid-data-table']//tbody/tr[" + row + "]/td[2]/span");
+                    driver.VerifyTextValue(nameColumn, validationTestData["ReviewIndicatorDescription" + index]);
+                }
+                else
+                {
+                    this.TESTREPORT.LogFailure("Review Indicators Name", String.Format("Name : <mark>{0}</mark> is not present under Name column in Review Indicators grid", validationTestData["ReviewIndicatorName" + index]));
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
         #endregion
 
         #region Private Methods

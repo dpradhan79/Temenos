@@ -53,6 +53,21 @@ namespace Engine.Setup
         ///// </summary>
         public const string CreditReporting = "Credit Reporting";
 
+        ///// <summary>
+        ////The Credit Reporting
+        ///// </summary>
+        public const string MemeberShipStartDate = "MemeberShipStartDate";
 
+        ///// <summary>
+        ////The Credit Reporting
+        ///// </summary>
+        public const string DoNotPullCredit = "DoNotPullCredit";
+
+        ///// <summary>
+        ////The Application Panels - Automation
+        ///// </summary>
+        public const string ApplicationPanelsAutomation = "Application Panels - Automation";
+
+ 
       }
 }

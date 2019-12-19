@@ -48,7 +48,7 @@ namespace AutomatedTest.FunctionalTests
             {
                 string approveApplicationNumber, rejectApplicationNumber, reviewApplicationNumber = null;
                 this.LoadBusinessTestData();
-                this.TESTREPORT.InitTestCase("AutoDecisionProcess", "AutoDecisionProcess");
+                this.TESTREPORT.InitTestCase(TestContext.Properties["name"] as String, TestContext.Properties["name"] as String);
                 LoginPage.SignIn(EngineSetup.UserName, EngineSetup.Password);
                 HomePage.CreateNewApplication("Approve", this.validationTestData);
                 approveApplicationNumber = HomePage.GetApplicationNumber();
@@ -56,8 +56,8 @@ namespace AutomatedTest.FunctionalTests
                 HomePage.NavigateToScreen(Constants.PrimaryApplicationAutomation);
                 HomePage.SwitchToCentralFrame();
                 HomePage.VerifyScreenHeading(Constants.PrimaryApplicationAutomation);
-                PrimaryApplicantAutomationScreen.EnterFieldValuesInPrimaryAppliciantPanel("MemeberShipStartDate", "2/27/2014");
-                PrimaryApplicantAutomationScreen.EnterFieldValuesInPrimaryAppliciantPanel("DoNotPullCredit");
+                PrimaryApplicantAutomationScreen.EnterFieldValuesInPrimaryAppliciantPanel(Constants.MemeberShipStartDate, this.validationTestData["MemeberShipStartDate"]);
+                PrimaryApplicantAutomationScreen.EnterFieldValuesInPrimaryAppliciantPanel(Constants.DoNotPullCredit);
                 HomePage.SwitchToParentFrame();
                 HomePage.NavigateToScreen(Constants.LoanTermsAutomation);
                 HomePage.SwitchToCentralFrame();
@@ -69,12 +69,12 @@ namespace AutomatedTest.FunctionalTests
                 HomePage.NavigateToScreen(Constants.PrimaryApplicationAutomation);
                 HomePage.SwitchToCentralFrame();
                 HomePage.VerifyScreenHeading(Constants.PrimaryApplicationAutomation);
-                PrimaryApplicantAutomationScreen.VerifyMemberShipStartDate("2/27/2014");
+                PrimaryApplicantAutomationScreen.VerifyMemberShipStartDate(this.validationTestData["MemeberShipStartDate"]);
                 HomePage.SwitchToParentFrame();
                 HomePage.NavigateToScreen(Constants.DecisionProcessAutomation);
                 HomePage.SwitchToCentralFrame();
                 HomePage.VerifyScreenHeading(Constants.DecisionProcessAutomation);
-                DecisionProcessAutomation.VerifyReviewIndicators("Bankruptcy", "No bankruptcy within the last 4 years.");
+                DecisionProcessAutomation.VerifyReviewIndicators(this.validationTestData);
                 HomePage.SwitchToDefaultContent();
                 HomePage.CloseAndVerifyApplication(approveApplicationNumber);
             #endregion
@@ -110,7 +110,7 @@ namespace AutomatedTest.FunctionalTests
                 HomePage.NavigateToScreen(Constants.DecisionProcessAutomation);
                 HomePage.SwitchToCentralFrame();
                 HomePage.VerifyScreenHeading(Constants.DecisionProcessAutomation);
-                DecisionProcessAutomation.VerifyReviewIndicators("OutOfState", "Physical and current address are not in PA");
+                DecisionProcessAutomation.VerifyReviewIndicators(this.validationTestData,1);
                 HomePage.SwitchToParentFrame();
                 HomePage.NavigateToScreen(Constants.PrimaryApplicationAutomation);
                 HomePage.SwitchToCentralFrame();
@@ -120,7 +120,7 @@ namespace AutomatedTest.FunctionalTests
                 HomePage.NavigateToScreen(Constants.DecisionProcessAutomation);
                 HomePage.SwitchToCentralFrame();
                 HomePage.VerifyScreenHeading(Constants.DecisionProcessAutomation);
-                DecisionProcessAutomation.VerifyReviewIndicators("InState", "Physical and current address are in PA");
+                DecisionProcessAutomation.VerifyReviewIndicators(this.validationTestData, 2);
                 HomePage.SwitchToParentFrame();
                 HomePage.NavigateToScreen(Constants.PrimaryApplicationAutomation);
                 HomePage.SwitchToCentralFrame();
@@ -135,7 +135,7 @@ namespace AutomatedTest.FunctionalTests
             }
             catch (Exception ex)
             {
-                TESTREPORT.LogFailure("Failed", "because of the exception " + ex);
+                TESTREPORT.LogFailure("Failed", "Because of the exception " + ex);
                 testCaseResult = ResultStatus.Failed;
                 Assert.Fail(ex.Message);
             }
