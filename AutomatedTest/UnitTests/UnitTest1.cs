@@ -53,6 +53,12 @@ namespace AutomatedTest.UnitTests
             ResultStatus testCaseResult = ResultStatus.Failed;
             this.TESTREPORT.UpdateTestCaseStatus(testRail, runId, TestContext.Properties["name"] as String, testCaseResult);
         }
+
+        [TestMethod]
+        public void TestSendMail()
+        {
+            StandardUtilities.EmailSender.SendEmail("smtp.gmail.com", 587, "debasish.gallop@gmail.com", "debasish.pradhan@cigniti.com", null, "Test", "Hi Welcome...", null, true);
+        }
         
     }
 }

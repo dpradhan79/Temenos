@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Mail;
 using System.Configuration;
+using System.Net;
 
 namespace StandardUtilities
 {
@@ -25,7 +26,7 @@ namespace StandardUtilities
            MailMessage mail = null;
            try
            {
-               smtpClient = new SmtpClient(smtpServer);
+               smtpClient = new SmtpClient(smtpServer);               
                mail = new MailMessage();
                mail.From = new MailAddress(mailFrom);
                mail.To.Add(mailToListSeparatedByComma);
@@ -44,8 +45,8 @@ namespace StandardUtilities
                }
 
                smtpClient.Port = smtpPort;
-               smtpClient.EnableSsl = false;
-
+               smtpClient.EnableSsl = enableSsl;              
+               smtpClient.Credentials = new NetworkCredential("debasish.gallop@gmail.com", "temp@1234");           
                smtpClient.Send(mail);
                isMailSentStatus = true;
 
