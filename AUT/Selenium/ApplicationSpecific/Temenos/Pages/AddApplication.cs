@@ -73,7 +73,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         private By dropdownWithdrawnReason = By.Id("Withdraw_ddlDeclineReason");
         private By sendAdverseActionTo = By.XPath("//input[contains(@id,'checkbox-Withdraw_AdverseApplicant')]");
         private By checkboxSendAdverseActionToCheckState = By.XPath("//input[contains(@id,'checkbox-Withdraw_AdverseApplicant') and @checked='checked']");
-
+        private By btnWithdrawApplication = By.XPath("//button[text()='Withdraw']");
         #endregion
 
         #region Public Methods
@@ -198,15 +198,13 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         {
             try
             {
+                By autoLabels = By.XPath("//span[text()='Application Panels - Automation']/../../following-sibling::div//h2");                
                 driver.VerifyTextValue(lblPanelText, "Whether you're buying new or used or refinancing from another lender");
                 driver.VerifyTextValue(lblPanelText, "Used Autos");
                 driver.VerifyTextValue(lblPanelText, "Auto Refinance");
                 driver.VerifyTextValue(lblPanelText, "RATES");
-                driver.VerifyTextValue(lblPanelText, "AUTO ");
-                driver.VerifyTextValue(lblPanelText, "LOANS ");
-                driver.VerifyTextValue(lblPanelText, "NEW");
-                driver.VerifyTextValue(lblPanelText, "USED ");
-                driver.VerifyTextValue(lblPanelText, "REFINANCE");
+                string text = driver.GetElementText(autoLabels);
+                driver.VerifyTextValue(autoLabels, "AUTO LOANS - NEW, USED &REFINANCE");        
             }
             catch (Exception ex)
             {
@@ -416,7 +414,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
                 {
                     this.TESTREPORT.LogFailure("Delete Applicant", "User not deleted under Applicants " + name, this.SCREENSHOTFILE);
                 }
-
+                
             }
             catch (Exception ex)
             {
@@ -442,7 +440,8 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
             {
                 this.TESTREPORT.LogFailure("Send Adverse Action To", "All are not selected by default ", this.SCREENSHOTFILE);
             }
-
+            driver.ClickElement(btnWithdrawApplication, "Withdraw");
+            HandleSuccessPopup();
         }
 
         /// <summary>

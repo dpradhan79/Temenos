@@ -11,7 +11,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AutomatedTest</RootNamespace>
     <AssemblyName>AutomatedTest</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -79,7 +79,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FunctionalTests\AddApplicantToAapp\AddApplicantToAppTest.cs" />
+    <Compile Include="FunctionalTests\AddApplicantToAapp\AddAndVerifyApplicantTest.cs" />
     <Compile Include="FunctionalTests\AutoDecisionProcess\AutoDecisionProcessTest.cs" />
     <Compile Include="FunctionalTests\Disbursement\DisbursementTest.cs" />
     <Compile Include="FunctionalTests\ManualReject\ManualRejectTest.cs" />
@@ -115,6 +115,7 @@
     <None Include="TestConfiguration\TestConfiguration.properties">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="TestData\Temenos\AddAndVerifyApplicant.xlsx" />
     <None Include="TestData\Temenos\AutoDecisionProcess.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
