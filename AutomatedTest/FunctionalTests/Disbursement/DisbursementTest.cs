@@ -38,7 +38,7 @@ namespace AutomatedTest.FunctionalTests
         [TestMethod]
         [TestCategory("Disbursement")]
         [TestCategory("DecisionProcess")]
-        [TestProperty("name", "Disbursement")]
+        [TestProperty("title", "Disbursement")]
         public void Disbursement()
         {
             ResultStatus testCaseResult = ResultStatus.Untested;
@@ -47,7 +47,7 @@ namespace AutomatedTest.FunctionalTests
             {
                 string approveApplicationNumber = null;
                 this.LoadBusinessTestData();
-                this.TESTREPORT.InitTestCase(TestContext.Properties["name"] as String, TestContext.Properties["name"] as String);
+                this.TESTREPORT.InitTestCase(TestContext.TestName, TestContext.Properties["title"] as String);
                 LoginPage.SignIn(EngineSetup.UserName, EngineSetup.Password);
                 HomePage.CreateNewApplication("Approve", this.validationTestData);
                 approveApplicationNumber = HomePage.GetApplicationNumber();
@@ -88,7 +88,7 @@ namespace AutomatedTest.FunctionalTests
             }
             finally
             {
-                this.TESTREPORT.UpdateTestCaseStatus(testRail, EngineSetup.TESTRAILRUNID, TestContext.Properties["name"] as String, testCaseResult);
+                this.TESTREPORT.UpdateTestCaseStatus(testRail, EngineSetup.TESTRAILRUNID, TestContext.Properties["title"] as String, testCaseResult);
 
             }
         }

@@ -38,7 +38,7 @@ namespace AutomatedTest.FunctionalTests
         [TestMethod]
         [TestCategory("ManualReject")]
         [TestCategory("DecisionProcess")]
-        [TestProperty("name", "Manual Reject")]
+        [TestProperty("title", "Manual Reject")]
         public void ManualReject()
         {
             ResultStatus testCaseResult = ResultStatus.Untested;
@@ -46,7 +46,7 @@ namespace AutomatedTest.FunctionalTests
             try
             {
                 string approveApplicationNumber = null;
-                this.TESTREPORT.InitTestCase(TestContext.Properties["name"] as String, TestContext.Properties["name"] as String);
+                this.TESTREPORT.InitTestCase(TestContext.TestName, TestContext.Properties["title"] as String);
                 this.LoadBusinessTestData();
                 LoginPage.SignIn(EngineSetup.UserName, EngineSetup.Password);
                 HomePage.CreateNewApplication("Approve", this.validationTestData);
@@ -73,7 +73,7 @@ namespace AutomatedTest.FunctionalTests
             }
             finally
             {
-                this.TESTREPORT.UpdateTestCaseStatus(testRail, EngineSetup.TESTRAILRUNID, TestContext.Properties["name"] as String, testCaseResult);
+                this.TESTREPORT.UpdateTestCaseStatus(testRail, EngineSetup.TESTRAILRUNID, TestContext.Properties["title"] as String, testCaseResult);
                
             }
             #endregion

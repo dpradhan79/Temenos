@@ -39,7 +39,7 @@ namespace AutomatedTest.FunctionalTests
         [TestMethod]
         [TestCategory("AutoDecisionProcess")]
         [TestCategory("DecisionProcess")]
-        [TestProperty("name", "Auto Decision Process")]
+        [TestProperty("title", "Auto Decision Process")]
         public void AutoDecisionProcess()
         {
             #region Approve
@@ -48,7 +48,7 @@ namespace AutomatedTest.FunctionalTests
             {
                 string approveApplicationNumber, rejectApplicationNumber, reviewApplicationNumber = null;
                 this.LoadBusinessTestData();
-                this.TESTREPORT.InitTestCase(TestContext.Properties["name"] as String, TestContext.Properties["name"] as String);
+                this.TESTREPORT.InitTestCase(TestContext.TestName, TestContext.Properties["title"] as String);
                 LoginPage.SignIn(EngineSetup.UserName, EngineSetup.Password);
                 HomePage.CreateNewApplication("Approve", this.validationTestData);
                 approveApplicationNumber = HomePage.GetApplicationNumber();
@@ -141,7 +141,7 @@ namespace AutomatedTest.FunctionalTests
             }
             finally
             {
-                this.TESTREPORT.UpdateTestCaseStatus(testRail, EngineSetup.TESTRAILRUNID, TestContext.Properties["name"] as String, testCaseResult);
+                this.TESTREPORT.UpdateTestCaseStatus(testRail, EngineSetup.TESTRAILRUNID, TestContext.Properties["title"] as String, testCaseResult);
 
             }
             #endregion
