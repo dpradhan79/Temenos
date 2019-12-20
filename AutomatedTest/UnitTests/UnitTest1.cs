@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StandardUtilities;
 using AutomatedTest.FunctionalTests;
 using Engine.Setup;
-using TestRail;
+using TMTFactory;
 namespace AutomatedTest.UnitTests
 {
     [TestClass]

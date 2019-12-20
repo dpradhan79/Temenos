@@ -16,7 +16,7 @@ using Engine.Factories;
 using AUT.Selenium.ApplicationSpecific.Pages;
 using System.Data;
 using System.Linq;
-using TestRail;
+using TMTFactory;
 namespace AutomatedTest.FunctionalTests
 {
     [TestClass]

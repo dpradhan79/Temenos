@@ -36,7 +36,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GallopReporter", "GallopRep
 		{BBA2AF4A-4FD1-416E-8F93-29B1CB6373B0} = {BBA2AF4A-4FD1-416E-8F93-29B1CB6373B0}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestRail", "TestRailFactory\TestRail.csproj", "{BBA2AF4A-4FD1-416E-8F93-29B1CB6373B0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMTFactory", "TMTFactory\TMTFactory.csproj", "{BBA2AF4A-4FD1-416E-8F93-29B1CB6373B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

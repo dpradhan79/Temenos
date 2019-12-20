@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Gurock.TestRail;
-namespace TestRail
+namespace TMTFactory
 {
     public class TestRailClient
     {

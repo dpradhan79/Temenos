@@ -16,7 +16,7 @@ namespace AutomatedTest.FunctionalTests
     using AUT.Selenium.ApplicationSpecific.Pages;
     using Engine.Setup;
     using Engine.Factories;
-    using TestRail;
+    using TMTFactory;
 
     [TestClass]
     /// <summary>
