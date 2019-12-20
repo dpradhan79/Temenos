@@ -109,6 +109,26 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         }
 
         /// <summary>
+        /// Swith to tab frame 
+        /// </summary>
+        public void SwitchToTabFrame()
+        {
+            try
+            {
+                Thread.Sleep(15000);
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(240));
+                var element = wait.Until(ExpectedConditions.FrameToBeAvailableAndSwitchToIt(frameTabApp));
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        /// <summary>
         /// Navigate to screen
         /// <param name="screenflowHeaderName"></param>
         /// <param name="screenName">Name of the screen</param>

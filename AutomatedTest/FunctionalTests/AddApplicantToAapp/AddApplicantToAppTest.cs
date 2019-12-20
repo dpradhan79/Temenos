@@ -14,7 +14,7 @@ namespace AutomatedTest.FunctionalTests
     using System.Text.RegularExpressions;
     using System.Threading;
     using AUT.Selenium.ApplicationSpecific.Pages;
-    using Engine.Setup;     
+    using Engine.Setup;
     using Engine.Factories;
     using TMTFactory;
 
@@ -88,11 +88,34 @@ namespace AutomatedTest.FunctionalTests
                 HomePage.SwitchToCentralFrame();
                 HomePage.VerifyScreenHeading(Constants.ApplicationPanelsAutomation);
                 Application.VerifyTextInAutomationPanel();
-                Application.ApplicationPanelScores("National Risk", "304", "572", "37", "37", "572");
-
-
+                //Application.ApplicationPanelScores("National Risk", "304", "572", "37", "37", "572");
+                Application.EditAndVeifyApplicationPanelAdditionalApplicantDeclarations("Do you pay alimony?", "Yes");
+                Application.EditAndVeifyApplicationPanelAdditionalApplicantDeclarations("Do you pay child support?", "Yes");
+                Application.EditAndVeifyApplicationPanelPrimaryApplicantDeclarations("Do you expect your income to decline in the next 2 years?", "No");
+                Application.EditAndVeifyApplicationPanelPrimaryApplicantDeclarations("Are you a US citizen?", "Yes");
+                Application.SaveApplicationPanelAutomation();
+                HomePage.SwitchToParentFrame();
+                HomePage.NavigateToScreen(Constants.Liabilities);
+                HomePage.SwitchToCentralFrame();
+                HomePage.VerifyScreenHeading(Constants.Liabilities);
+                Application.AddLiabilty("100", "Monthly", "15000.00", "10000.00", "550.00", "100100-2", "Medical", "Collection", "MICHAEL CHACOMMON", "100");
+                //HomePage.SwitchToParentFrame();
+                HomePage.SwitchToDefaultContent();
+                HomePage.SwitchToTabFrame();
+                HomePage.NavigateToScreen(Constants.LoanTermsAutomation);
+                HomePage.SwitchToCentralFrame();
+                HomePage.VerifyScreenHeading(Constants.LoanTermsAutomation);
+                LoanTermsAutomation.EnterFieldValuesInLoanTermPanel(this.validationTestData);
+                HomePage.SwitchToParentFrame();
+                HomePage.NavigateToScreen(Constants.Applicants);
+                HomePage.SwitchToCentralFrame();
+                HomePage.VerifyScreenHeading(Constants.Applicants);
+                Application.DeleteAppliciants("MARTINA BEACOMMON");
+                HomePage.SwitchToParentFrame();
+                Application.UpateAndRemoveWithdraw();
                 HomePage.SwitchToDefaultContent();
                 HomePage.CloseAndVerifyApplication(approveApplicationNumber);
+                HomePage.ClickLogOff();
                 testCaseResult = ResultStatus.Passed;
                 TESTREPORT.LogInfo("Test Execution Completed");
             }

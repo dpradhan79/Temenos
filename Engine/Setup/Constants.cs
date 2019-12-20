@@ -68,6 +68,9 @@ namespace Engine.Setup
         ///// </summary>
         public const string ApplicationPanelsAutomation = "Application Panels - Automation";
 
- 
+        ///// <summary>
+        ////The Liabilities
+        ///// </summary>
+        public const string Liabilities = "Liabilities";
       }
 }
