@@ -103,7 +103,9 @@ namespace AutomatedTest.FunctionalTests
         [TestInitialize()]
         public void BeforeEachTestCaseExecution()
         {
-
+            this.LoadBusinessTestData();
+            this.TESTREPORT.InitTestCase(TestContext.TestName, TestContext.Properties["title"] as String);
+            LoginPage.SignIn(EngineSetup.UserName, EngineSetup.Password);
 
         }
 
@@ -111,7 +113,7 @@ namespace AutomatedTest.FunctionalTests
         [TestCleanup()]
         public void AfterEachTestCaseExecution()
         {
-
+            
         }
 
 
@@ -203,7 +205,7 @@ namespace AutomatedTest.FunctionalTests
 
         }
 
-        public string readCSV(string columnName)
+        protected string readCSV(string columnName)
         {
             string data = "";
             try
@@ -239,12 +241,12 @@ namespace AutomatedTest.FunctionalTests
             }
         }
 
-        public Dictionary<string, string> loadValidationTestData(string testScriptName, string testCategory="")
+        protected Dictionary<string, string> loadValidationTestData(string testScriptName, string testCategory="")
         {
             return LoadTestData(testScriptName, testCategory, EngineSetup.VALIDATIONTESTDATASHEETNAME);
         }
 
-        public Dictionary<string, string> LoadTestData(string testScriptName, string testCategory, string sheetName)
+        protected Dictionary<string, string> LoadTestData(string testScriptName, string testCategory, string sheetName)
         {
             String testDataPath = System.IO.Directory.GetCurrentDirectory();
             Dictionary<string, string> inputTestData = new Dictionary<String, String>();
@@ -255,5 +257,11 @@ namespace AutomatedTest.FunctionalTests
             inputTestData = (testDataRows.Length > 0) ? testDataRows[0].Table.Columns.Cast<DataColumn>().ToDictionary(c => c.ColumnName, c => testDataRows[0][c].ToString()) : inputTestData;
             return inputTestData;
         }
+
+        protected void LoadBusinessTestData()
+        {
+            this.validationTestData = this.loadValidationTestData(TestContext.TestName);
+        }
+
     }
 }

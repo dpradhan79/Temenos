@@ -26,13 +26,6 @@ namespace AutomatedTest.FunctionalTests
     public class ManualRejectTest : TestBaseTemplate
     {
         /// <summary>
-        /// Loads the business test data.
-        /// </summary>
-        public void LoadBusinessTestData()
-        {
-            this.validationTestData = this.loadValidationTestData(TestContext.TestName);
-        }
-        /// <summary>
         /// Test case for Manual Reject.
         /// </summary>
         [TestMethod]
@@ -46,9 +39,9 @@ namespace AutomatedTest.FunctionalTests
             try
             {
                 string approveApplicationNumber = null;
-                this.TESTREPORT.InitTestCase(TestContext.TestName, TestContext.Properties["title"] as String);
-                this.LoadBusinessTestData();
-                LoginPage.SignIn(EngineSetup.UserName, EngineSetup.Password);
+                //this.TESTREPORT.InitTestCase(TestContext.TestName, TestContext.Properties["title"] as String);
+                //this.LoadBusinessTestData();
+                //LoginPage.SignIn(EngineSetup.UserName, EngineSetup.Password);
                 HomePage.CreateNewApplication("Approve", this.validationTestData);
                 approveApplicationNumber = HomePage.GetApplicationNumber();
                 HomePage.SwitchAndVerifyHomePageFullyDisplayed();
@@ -74,7 +67,7 @@ namespace AutomatedTest.FunctionalTests
             finally
             {
                 this.TESTREPORT.UpdateTestCaseStatus(testRail, EngineSetup.TESTRAILRUNID, TestContext.Properties["title"] as String, testCaseResult);
-               
+
             }
             #endregion
         }
