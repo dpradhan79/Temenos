@@ -7,7 +7,7 @@
     <ProjectGuid>{F8610D20-51B3-4AE7-9690-A240145BFD77}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GallopReporter</RootNamespace>
+    <RootNamespace>CignitiReporter</RootNamespace>
     <AssemblyName>GallopReporter</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -122,6 +122,10 @@
     <ProjectReference Include="..\StandardUtilities\StandardUtilities.csproj">
       <Project>{d5a3223d-89b8-4523-949a-32c3013588c7}</Project>
       <Name>StandardUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TMTFactory\TMTFactory.csproj">
+      <Project>{bba2af4a-4fd1-416e-8f93-29b1cb6373b0}</Project>
+      <Name>TMTFactory</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

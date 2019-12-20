@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GallopReporter
+namespace CignitiReporter
 {
     /// <summary>
     /// @Author - Debasish Pradhan

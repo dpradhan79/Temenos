@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GallopReporter;
+using CignitiReporter;
 using StandardUtilities;
 using TMTFactory;
 namespace TestReporter

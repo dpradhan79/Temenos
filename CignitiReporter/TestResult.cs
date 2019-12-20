@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace GallopReporter
+namespace CignitiReporter
 {
     /// <summary>
     /// @Author - Debasish Pradhan

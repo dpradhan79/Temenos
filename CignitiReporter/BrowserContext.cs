@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using log4net;
 
-namespace GallopReporter
+namespace CignitiReporter
 {
     /// <summary>
     /// @Author - Debasish Pradhan

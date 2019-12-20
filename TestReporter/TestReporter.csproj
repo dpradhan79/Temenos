@@ -72,9 +72,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GallopReporter\GallopReporter.csproj">
+    <ProjectReference Include="..\CignitiReporter\CignitiReporter.csproj">
       <Project>{f8610d20-51b3-4ae7-9690-a240145bfd77}</Project>
-      <Name>GallopReporter</Name>
+      <Name>CignitiReporter</Name>
     </ProjectReference>
     <ProjectReference Include="..\StandardUtilities\StandardUtilities.csproj">
       <Project>{d5a3223d-89b8-4523-949a-32c3013588c7}</Project>

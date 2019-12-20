@@ -341,5 +341,22 @@ namespace StandardUtilities
 
             }
         }
+
+        public static void DeleteCompressedFiles(string filepath)
+        {
+
+            try
+            {
+                if (File.Exists(filepath))
+                {
+
+                    System.IO.File.Delete(filepath);
+                }
+            }
+            catch (Exception)
+            {
+                
+            }
+        }
     }
 }

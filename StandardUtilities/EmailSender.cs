@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net.Mail;
 using System.Configuration;
 using System.Net;
+using TCMFactory;
 
 namespace StandardUtilities
 {
@@ -84,6 +85,81 @@ namespace StandardUtilities
            }
            return isMailSentStatus;
 
+       }
+
+       protected string CreateHtmlBodyForMail(IList<TestCase> listTestCases)
+       {
+           string mailbody = null;
+           try
+           {
+               //string totalExecutionTimeInMins = Convert.ToString(reporter.GetTestExecutionTimeInMins());
+               int passedTestcases = TestExecutionManagement.GetTotalPassTestCases(listTestCases);
+               int failedTestcases = TestExecutionManagement.GetTotalFailedTestCases(listTestCases);
+               int executedTestcases = passedTestcases + failedTestcases;
+
+               //to get all failed test cases details
+               IList<TestCase> listFailedTestCases = TestExecutionManagement.GetFailedTestCases(listTestCases);
+
+               StringBuilder myBuilder = new StringBuilder();
+
+               myBuilder.AppendFormat("<table border='1'; style='color: Black;width ='1000'; bgcolor='#b3cccc'><col width=\"80%\"><col width=\"30%\"> <tr><th bgcolor=\"#75a3a3\" colspan=\"2\">" + "Automation Execution Result" + "</th></tr><tr><td>Total Test Cases Executed : </td><td style=\"text-align:center\">" + executedTestcases + "</td></tr><tr><td>Total Test Cases Passed : </td><td style=\"text-align:center\">" + Convert.ToString(passedTestcases) + "</td></tr><tr><td>Total Test Cases Failed : </td><td style=\"text-align:center\">" + Convert.ToString(failedTestcases) + "</td></tr></table>");
+               if (listFailedTestCases.Count > 0)
+               {
+
+                   myBuilder.AppendFormat("<br />");
+                   myBuilder.AppendFormat("<br />");
+
+
+                   /*Table for failed Test Cases Summary*/
+                   myBuilder.Append("<table border='1'; style='color: Black;width ='2000'; bgcolor='#b3cccc'>");
+                   myBuilder.Append("<col width=\"15%\"><col width=\"15%\"><col width=\"15%\"><col width=\"55%\">");
+                   /*Table header*/
+                   myBuilder.Append("<tr><th bgcolor=\"#75a3a3\" colspan=\"4\">Failed Test Cases Summary</th></tr>");
+
+                   /*Table Column*/
+                   myBuilder.Append("<tr><th>Sr.No</th><th>Test Case Name</th><th>Test Case Description </th><th>Status</th></tr>");
+
+                   /*Row for failed Test case*/
+
+                   foreach (TestCase testcase in listFailedTestCases)
+                   {
+                       int counter = 1;
+                       myBuilder.Append("<tr>");
+                                                                   
+                       /*Sr.No*/
+                       myBuilder.Append("<td style=\"text-align:center\">");
+                       myBuilder.Append(String.Format("{0}", counter));
+                       myBuilder.Append("</td>");
+
+                       /*TestCase Name*/
+                       myBuilder.Append("<td style=\"text-align:center\">");
+                       myBuilder.Append(testcase.TestCaseName);
+                       myBuilder.Append("</td>");
+
+                       /*TestCase Description*/
+                       myBuilder.Append("<td style=\"text-align:center\">");
+                       myBuilder.Append(testcase.TestCaseDescription);
+                       myBuilder.Append("</td>");
+
+                       /*TestCase Status*/
+                       myBuilder.Append("<td style=\"text-align:center\">");
+                       myBuilder.Append(testcase.convertTestExecutionStatusToString());
+                       myBuilder.Append("</td>");
+
+                       myBuilder.Append("</tr>");
+                       /*rows ends for failed test case*/
+                   }
+
+                   myBuilder.Append("</table>");
+               }
+               mailbody = myBuilder.ToString();
+           }
+           catch (Exception ex)
+           {
+              Console.WriteLine(String.Format("Mail Body Could Not Be Formed Due To Error - ", ex.Message));
+           }
+
+           return mailbody.ToString();
        }
 
     }

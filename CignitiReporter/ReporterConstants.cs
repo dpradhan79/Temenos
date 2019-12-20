@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Configuration;
 using System.Reflection;
 using StandardUtilities;
-namespace GallopReporter
+namespace CignitiReporter
 {
     /// <summary>
     /// @Author - Debasish Pradhan

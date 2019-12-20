@@ -6,7 +6,7 @@ using Microsoft.Win32;
 using System.Text;
 using OpenQA.Selenium;
 using StandardUtilities;
-namespace GallopReporter
+namespace CignitiReporter
 {
     /// <summary>
     /// @Author - Debasish Pradhan
