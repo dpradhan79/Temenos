@@ -31,11 +31,11 @@ namespace AutomatedTest.UnitTests
             const String password = "Temp1234";
 
             int runId = 3;
-            this.TESTREPORT.InitTestCase(TestContext.TestName, TestContext.Properties["title"] as String);
+            //this.TESTREPORT.InitTestCase(TestContext.TestName, TestContext.Properties["title"] as String);
             TestRailClient testRail = null;
             testRail = new TestRailClient(testRailUrl, userName, password);
-            ResultStatus testCaseResult = ResultStatus.Failed;
-            this.TESTREPORT.UpdateTestCaseStatus(testRail, EngineSetup.TESTRAILRUNID, TestContext.Properties["title"] as String, testCaseResult);
+            //ResultStatus testCaseResult = ResultStatus.Failed;
+            //this.TESTREPORT.UpdateTestCaseStatus(testRail, EngineSetup.TESTRAILRUNID, TestContext.Properties["title"] as String, testCaseResult);
         }
 
         [TestMethod]

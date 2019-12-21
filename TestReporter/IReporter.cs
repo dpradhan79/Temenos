@@ -66,7 +66,7 @@ namespace TestReporter
         /// <summary>
         /// Updates the test case status in HTML/TestRail In Test Management Tool
         /// </summary>
-        void UpdateTestCaseStatus(TestRailClient trClient, int runId, String testCaseTitle, ResultStatus resultStatus);
+        void UpdateTestCaseStatus<T>(TestRailClient trClient, int runId, String testCaseTitle, T resultStatus);
 
         /// <summary>
         /// Closes this instance.

@@ -12,13 +12,13 @@ namespace TestReporter
     /// @Author - Debasish Pradhan
     /// </summary>
     /// <seealso cref="TestReporter.IReporter" />
-    public class GallopReporter : IReporter
+    public class CignitiReporter : IReporter
     {
         private CReporter cReporter = null;
         /// <summary>
-        /// Initializes a new instance of the <see cref="GallopReporter"/> class.
+        /// Initializes a new instance of the <see cref="CignitiReporter"/> class.
         /// </summary>
-        public GallopReporter()
+        public CignitiReporter()
         {
             this.cReporter = CReporter.getCReporter("", "", "", false);
             this.cReporter.calculateSuiteStartTime();
@@ -109,7 +109,7 @@ namespace TestReporter
         /// <summary>
         /// Updates the test case status in HTML/TestRail In Test Management Tool
         /// </summary>
-        public void UpdateTestCaseStatus(TestRailClient trClient, int runId, String testCaseTitle, ResultStatus resultStatus)
+        public void UpdateTestCaseStatus<T>(TestRailClient trClient, int runId, String testCaseTitle, T resultStatus)
         {
             this.UpdateTestCaseStatus();
             trClient.UpdateTestCaseStatus(runId, testCaseTitle, resultStatus);

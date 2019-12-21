@@ -27,7 +27,7 @@ namespace Engine.Factories
             {
                 
                 case "gallopreport":
-                    report = new GallopReporter();
+                    report = new CignitiReporter();
                     break;
                 case "extentreport":
                 

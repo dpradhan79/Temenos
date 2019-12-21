@@ -54,7 +54,7 @@
   <ItemGroup>
     <Compile Include="ExtentReporter.cs" />
     <Compile Include="ExtentReportManipulator.cs" />
-    <Compile Include="GallopReporter.cs" />
+    <Compile Include="CignitiReporter.cs" />
     <Compile Include="ITestReportManipulator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IReporter.cs" />
