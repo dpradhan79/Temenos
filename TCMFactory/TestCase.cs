@@ -13,6 +13,7 @@ namespace TCMFactory
         private String testCaseName = null;
         private String testCaseDescription = null;       
         private ResultStatus iTestExecutionStatus;
+        private String strTestExecutionResult = null;
         private ulong iTestExecutionTimeinMS = 0;
 
 
@@ -61,6 +62,12 @@ namespace TCMFactory
             }
 
             return testStatus;
+        }
+
+        public String TestExecutionResultMsg
+        {
+            get { return this.strTestExecutionResult; }
+            set { this.strTestExecutionResult = value; }
         }
     }
 }

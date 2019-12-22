@@ -43,7 +43,7 @@ namespace TCMFactory
             IList<TestCase> listFailedTestCases = new List<TestCase>();
             foreach (TestCase tc in listTestCases)
             {
-                if (tc.TestExecutionStatus == ResultStatus.Passed)
+                if (tc.TestExecutionStatus == ResultStatus.Failed)
                 {
                     listFailedTestCases.Add(tc);
                 }

@@ -15,8 +15,7 @@ namespace AutomatedTest.FunctionalTests
     using System.Threading;
     using AUT.Selenium.ApplicationSpecific.Pages;
     using Engine.Setup;
-    using Engine.Factories;
-    using TMTFactory;
+    using Engine.Factories;  
 
     [TestClass]
     /// <summary>
@@ -32,16 +31,12 @@ namespace AutomatedTest.FunctionalTests
         [TestCategory("ManualReject")]
         [TestCategory("DecisionProcess")]
         [TestProperty("title", "Manual Reject")]
-        public void ManualReject()
-        {
-            ResultStatus testCaseResult = ResultStatus.Untested;
+        public void ManualReject()        {
+           
             #region ManualReject
             try
             {
-                string approveApplicationNumber = null;
-                //this.TESTREPORT.InitTestCase(TestContext.TestName, TestContext.Properties["title"] as String);
-                //this.LoadBusinessTestData();
-                //LoginPage.SignIn(EngineSetup.UserName, EngineSetup.Password);
+                string approveApplicationNumber = null;                     
                 HomePage.CreateNewApplication("Approve", this.validationTestData);
                 approveApplicationNumber = HomePage.GetApplicationNumber();
                 HomePage.SwitchAndVerifyHomePageFullyDisplayed();
@@ -53,22 +48,14 @@ namespace AutomatedTest.FunctionalTests
                 HomePage.VerifyDecisioningApplication(Constants.LoRejected, true);
                 HomePage.SwitchToDefaultContent();
                 HomePage.CloseAndVerifyApplication(approveApplicationNumber);
-                HomePage.ClickLogOff();
-                testCaseResult = ResultStatus.Passed;
-                TESTREPORT.LogInfo("Test Execution Completed");
+                HomePage.ClickLogOff();               
 
             }
             catch (Exception ex)
-            {
-                TESTREPORT.LogFailure("Failed", "because of the exception " + ex);
-                testCaseResult = ResultStatus.Failed;
+            {               
+                this.testException = ex;                
                 Assert.Fail(ex.Message);
-            }
-            finally
-            {
-                this.TESTREPORT.UpdateTestCaseStatus(testRail, EngineSetup.TESTRAILRUNID, TestContext.Properties["title"] as String, testCaseResult);
-
-            }
+            }            
             #endregion
         }
     }

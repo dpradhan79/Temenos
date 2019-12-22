@@ -16,8 +16,6 @@ namespace AutomatedTest.FunctionalTests
     using AUT.Selenium.ApplicationSpecific.Pages;
     using Engine.Setup;
     using Engine.Factories;
-    using TMTFactory;
-
     [TestClass]
     /// <summary>
     /// Temenos Application Tests
@@ -25,30 +23,21 @@ namespace AutomatedTest.FunctionalTests
     /// <seealso cref="AutomatedTest.FunctionalTests.TestBaseTemplate" />
     public class AddAndVerifyApplicantTest : TestBaseTemplate
     {
-        /// <summary>
-        /// Loads the business test data.
-        /// </summary>
-        public void LoadBusinessTestData()
-        {
-            this.validationTestData = this.loadValidationTestData(TestContext.TestName);
-        }
-
-        /// <summary>
+         /// <summary>
         /// Test case for Add And Verify Appliciant
         /// </summary>
         [TestMethod]
         [TestCategory("Application")]
-        [TestProperty("name", "Add And Verify Applicant")]
+        [TestProperty("title", "Add And Verify Applicant")]
         public void AddAndVerifyApplicant()
-        {
-            ResultStatus testCaseResult = ResultStatus.Untested;
+        {          
             #region Add Applicant To App
             try
             {
                 string approveApplicationNumber = null;
-                this.TESTREPORT.InitTestCase(TestContext.Properties["name"] as String, TestContext.Properties["name"] as String);
-                this.LoadBusinessTestData();
-                LoginPage.SignIn(EngineSetup.UserName, EngineSetup.Password);
+                //this.TESTREPORT.InitTestCase(TestContext.Properties["name"] as String, TestContext.Properties["name"] as String);
+                //this.LoadBusinessTestData();
+                //LoginPage.SignIn(EngineSetup.UserName, EngineSetup.Password);                
                 HomePage.CreateNewApplication("Approve", this.validationTestData);
                 approveApplicationNumber = HomePage.GetApplicationNumber();
                 HomePage.SwitchAndVerifyHomePageFullyDisplayed();
@@ -115,22 +104,14 @@ namespace AutomatedTest.FunctionalTests
                 Application.UpateAndRemoveWithdraw();
                 HomePage.SwitchToDefaultContent();
                 HomePage.CloseAndVerifyApplication(approveApplicationNumber);
-                HomePage.ClickLogOff();
-                testCaseResult = ResultStatus.Passed;
-                TESTREPORT.LogInfo("Test Execution Completed");
+                HomePage.ClickLogOff();              
             }
             catch (Exception ex)
             {
-                TESTREPORT.LogFailure("Failed", "Because of the exception " + ex);
-                testCaseResult = ResultStatus.Failed;
+                this.testException = ex;
                 Assert.Fail(ex.Message);
 
-            }
-            finally
-            {
-
-                this.TESTREPORT.UpdateTestCaseStatus(testRail, EngineSetup.TESTRAILRUNID, TestContext.Properties["name"] as String, testCaseResult);
-            }
+            }            
             #endregion
         }
     }

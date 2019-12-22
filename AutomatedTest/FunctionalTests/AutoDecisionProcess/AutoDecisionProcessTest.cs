@@ -16,7 +16,6 @@ namespace AutomatedTest.FunctionalTests
     using AUT.Selenium.ApplicationSpecific.Pages;
     using Engine.Setup;
     using Engine.Factories;
-    using TMTFactory;
 
     [TestClass]
     /// <summary>
@@ -28,10 +27,10 @@ namespace AutomatedTest.FunctionalTests
         /// <summary>
         /// Loads the business test data.
         /// </summary>
-        public void LoadBusinessTestData()
-        {
-            this.validationTestData = this.loadValidationTestData(TestContext.TestName);
-        }
+        //public void LoadBusinessTestData()
+        //{
+        //    this.validationTestData = this.loadValidationTestData(TestContext.TestName);
+        //}
 
         /// <summary>
         /// Test case Auto Decision Process.
@@ -42,14 +41,10 @@ namespace AutomatedTest.FunctionalTests
         [TestProperty("title", "Auto Decision Process")]
         public void AutoDecisionProcess()
         {
-            #region Approve
-            ResultStatus testCaseResult = ResultStatus.Untested;
+            #region Approve            
             try
             {
-                string approveApplicationNumber, rejectApplicationNumber, reviewApplicationNumber = null;
-                this.LoadBusinessTestData();
-                this.TESTREPORT.InitTestCase(TestContext.TestName, TestContext.Properties["title"] as String);
-                LoginPage.SignIn(EngineSetup.UserName, EngineSetup.Password);
+                string approveApplicationNumber, rejectApplicationNumber, reviewApplicationNumber = null;                
                 HomePage.CreateNewApplication("Approve", this.validationTestData);
                 approveApplicationNumber = HomePage.GetApplicationNumber();
                 HomePage.SwitchAndVerifyHomePageFullyDisplayed();
@@ -128,22 +123,14 @@ namespace AutomatedTest.FunctionalTests
                 PrimaryApplicantAutomationScreen.SelectCurrentAddressState("Illinois");
                 HomePage.SwitchToDefaultContent();
                 HomePage.CloseAndVerifyApplication(reviewApplicationNumber);
-                HomePage.ClickLogOff();
-                testCaseResult = ResultStatus.Passed;
-                TESTREPORT.LogInfo("Test Execution Completed");
+                HomePage.ClickLogOff();               
 
             }
             catch (Exception ex)
-            {
-                TESTREPORT.LogFailure("Failed", "Because of the exception " + ex);
-                testCaseResult = ResultStatus.Failed;
+            {               
+                this.testException = ex;
                 Assert.Fail(ex.Message);
-            }
-            finally
-            {
-                this.TESTREPORT.UpdateTestCaseStatus(testRail, EngineSetup.TESTRAILRUNID, TestContext.Properties["title"] as String, testCaseResult);
-
-            }
+            }           
             #endregion
         }
     }

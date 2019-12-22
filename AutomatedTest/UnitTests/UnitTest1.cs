@@ -22,8 +22,8 @@ namespace AutomatedTest.UnitTests
             string currentDate = DateTime.Today.ToString("MM/dd/yyyy");
         }
 
-        [TestMethod]
-        [TestProperty("title", "Validate Billing Has Cashier Signature")]
+        //[TestMethod]
+        //[TestProperty("title", "Validate Billing Has Cashier Signature")]
         public void TestTestRail1()
         {
             const String testRailUrl = "https://cignitipoc.testrail.io/";
@@ -36,10 +36,12 @@ namespace AutomatedTest.UnitTests
             testRail = new TestRailClient(testRailUrl, userName, password);
             //ResultStatus testCaseResult = ResultStatus.Failed;
             //this.TESTREPORT.UpdateTestCaseStatus(testRail, EngineSetup.TESTRAILRUNID, TestContext.Properties["title"] as String, testCaseResult);
+            throw new Exception("Test");
+            
         }
 
-        [TestMethod]
-        [TestProperty("title", "Inventory Should Should Generate Alert When Item Is Under Threshold")]
+        //[TestMethod]
+        //[TestProperty("title", "Inventory Should Should Generate Alert When Item Is Under Threshold")]
         public void TestTestRail2()
         {
             const String testRailUrl = "http://atllmstestrail.akcelerant.com/";
@@ -54,10 +56,21 @@ namespace AutomatedTest.UnitTests
             this.TESTREPORT.UpdateTestCaseStatus(testRail, runId, TestContext.Properties["title"] as String, testCaseResult);
         }
 
-        [TestMethod]
+        //[TestMethod]
+        //[TestProperty("title", "Validate Billing Has Cashier Signature")]
         public void TestSendMail()
-        {
-            StandardUtilities.EmailSender.SendEmail("smtp.gmail.com", 587, "debasish.gallop@gmail.com", "debasish.pradhan@cigniti.com", null, "Test", "Hi Welcome...", null, true);
+        {           
+            //this.TESTREPORT.InitTestCase(TestContext.TestName, TestContext.Properties["title"] as String);
+            //StandardUtilities.EmailSender.SendEmail("smtp.gmail.com", 587, "debasish.gallop@gmail.com", "debasish.pradhan@cigniti.com", null, "Test", "Hi Welcome...", null, true);
+            try
+            {
+                throw new Exception("Test");
+            }
+            catch(Exception ex)
+            {
+                this.testException = ex;
+                Assert.Fail(ex.Message);
+            }
         }
         
     }

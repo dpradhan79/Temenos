@@ -17,11 +17,18 @@ namespace Engine.Setup
         private const string FILETESTCONFIGURATION = "TestConfiguration.properties";
         public const string VALIDATIONTESTDATASHEETNAME = "ValidationTestData";
         private static string executablePath = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "testexecutablePath");
+
+        #region Reporting Configuration
+
         private static string reportType = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "reportType"); 
         private static string testReportFile = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "testReportFile");
         private static IReporter testReportInternal = null;
         private static string screenShotFolder = new FileInfo(testReportFile).Directory.FullName + Path.DirectorySeparatorChar + "ScreenShots";
         private static int lastScreenShotCount = 1;
+        
+        #endregion
+
+        #region framework configuration
         private static string browser = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "browser");
         private static int defaultTimeOutForSelenium = Int32.Parse(StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "seleniumDefaultTimeOut"));
         public const int TimeOutConstant = 180;
@@ -30,7 +37,21 @@ namespace Engine.Setup
         private static string password = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "password");
         private static string testDataFileName = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "testDataFileName");
         private static int testRailRunId = Convert.ToInt16(StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "runId"));
+       
+        #endregion
 
+        #region Mail Configuration
+
+        private static String sendMail = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "sendMail");
+        private static String attachExecutionResult = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "attachExecutionResult");
+        
+        private static String smtpServer = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "smtpServer");
+        private static int smtpPort = Convert.ToInt16(StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "smtpPort"));
+        private static String emailFrom = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "emailFrom");
+        private static String mailToListSeparatedByComma = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "mailToListSeparatedByComma");
+        private static String mailSubject = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "mailSubject");
+
+        #endregion
         /// <summary>
         /// Initializes the <see cref="EngineSetup"/> class.
         /// </summary>
@@ -262,6 +283,91 @@ namespace Engine.Setup
                 return Environment.GetEnvironmentVariable("runId") != null ? Convert.ToInt16(Environment.GetEnvironmentVariable("runId")) : EngineSetup.testRailRunId;
             }
             set { EngineSetup.testRailRunId = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the Mail Requirement.
+        /// </summary>
+        /// <value>
+        /// sendMail.
+        /// </value>
+        public static String ISMAILREQUIRED
+        {
+            get { return EngineSetup.sendMail; }
+            set { EngineSetup.sendMail = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the Attachment Requirement.
+        /// </summary>
+        /// <value>
+        /// attachExecutionResult.
+        /// </value>
+        public static String ISATTACHMENTREQUIRED
+        {
+            get { return EngineSetup.attachExecutionResult; }
+            set { EngineSetup.attachExecutionResult = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the smtpServer.
+        /// </summary>
+        /// <value>
+        /// smtpServer.
+        /// </value>
+        public static String SMTPSERVER
+        {
+            get { return EngineSetup.smtpServer; }
+            set { EngineSetup.smtpServer = value; }
+        }
+
+
+        /// <summary>
+        /// Gets or sets the smtpPort.
+        /// </summary>
+        /// <value>
+        /// smtpPort.
+        /// </value>
+        public static int SMTPPORT
+        {
+            get { return EngineSetup.smtpPort; }
+            set { EngineSetup.smtpPort = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the emailFrom.
+        /// </summary>
+        /// <value>
+        /// emailFrom.
+        /// </value>
+        public static String EMAILFROM
+        {
+            get { return EngineSetup.emailFrom; }
+            set { EngineSetup.emailFrom = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the emailFrom.
+        /// </summary>
+        /// <value>
+        /// emailFrom.
+        /// </value>
+        public static String EMAILTOLIST
+        {
+            get { return EngineSetup.mailToListSeparatedByComma; }
+            set { EngineSetup.mailToListSeparatedByComma = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the emailFrom.
+        /// </summary>
+        /// <value>
+        /// emailFrom.
+        /// </value>
+        public static String EMAILSUBJECT
+        {
+            get { return EngineSetup.mailSubject; }
+            set { EngineSetup.mailSubject = value; }
         }
 
     }

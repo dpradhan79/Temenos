@@ -109,10 +109,10 @@ namespace TestReporter
         /// <summary>
         /// Updates the test case status in HTML/TestRail In Test Management Tool
         /// </summary>
-        public void UpdateTestCaseStatus<T>(TestRailClient trClient, int runId, String testCaseTitle, T resultStatus)
+        public void UpdateTestCaseStatus<T>(TestRailClient trClient, int runId, String testCaseTitle, T resultStatus, String msg = null)
         {
             this.UpdateTestCaseStatus();
-            trClient.UpdateTestCaseStatus(runId, testCaseTitle, resultStatus);
+            trClient.UpdateTestCaseStatus(runId, testCaseTitle, resultStatus, msg);
         }
 
         /// <summary>

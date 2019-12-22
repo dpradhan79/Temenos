@@ -16,7 +16,6 @@ namespace AutomatedTest.FunctionalTests
     using AUT.Selenium.ApplicationSpecific.Pages;
     using Engine.Setup;     
     using Engine.Factories;
-    using TMTFactory;
 
     [TestClass]
     /// <summary>
@@ -25,14 +24,7 @@ namespace AutomatedTest.FunctionalTests
     /// <seealso cref="AutomatedTest.FunctionalTests.TestBaseTemplate" />
     public class DisbursementTest : TestBaseTemplate
     {
-        /// <summary>
-        /// Loads the business test data.
-        /// </summary>
-        public void LoadBusinessTestData()
-        {
-            this.validationTestData = this.loadValidationTestData(TestContext.TestName);
-        }
-        /// <summary>
+         /// <summary>
         /// Test case for Disbursement.
         /// </summary>
         [TestMethod]
@@ -40,15 +32,11 @@ namespace AutomatedTest.FunctionalTests
         [TestCategory("DecisionProcess")]
         [TestProperty("title", "Disbursement")]
         public void Disbursement()
-        {
-            ResultStatus testCaseResult = ResultStatus.Untested;
+        {           
             #region Disbursement
             try
             {
-                string approveApplicationNumber = null;
-                this.LoadBusinessTestData();
-                this.TESTREPORT.InitTestCase(TestContext.TestName, TestContext.Properties["title"] as String);
-                LoginPage.SignIn(EngineSetup.UserName, EngineSetup.Password);
+                string approveApplicationNumber = null;                
                 HomePage.CreateNewApplication("Approve", this.validationTestData);
                 approveApplicationNumber = HomePage.GetApplicationNumber();
                 HomePage.SwitchAndVerifyHomePageFullyDisplayed();
@@ -75,22 +63,14 @@ namespace AutomatedTest.FunctionalTests
                 StipulationsAutomation.AddStipulations(this.validationTestData, false, 1);
                 HomePage.SwitchToDefaultContent();
                 HomePage.CloseAndVerifyApplication(approveApplicationNumber);
-                HomePage.ClickLogOff();
-                testCaseResult = ResultStatus.Passed;
-                TESTREPORT.LogInfo("Test Execution Completed");
+                HomePage.ClickLogOff();               
 
             }
             catch (Exception ex)
-            {
-                TESTREPORT.LogFailure("Failed", "Because of the exception " + ex);
-                testCaseResult = ResultStatus.Failed;
+            {               
+                this.testException = ex;
                 Assert.Fail(ex.Message);
-            }
-            finally
-            {
-                this.TESTREPORT.UpdateTestCaseStatus(testRail, EngineSetup.TESTRAILRUNID, TestContext.Properties["title"] as String, testCaseResult);
-
-            }
+            }            
         }
     }
 
