@@ -4,10 +4,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Input;
 using System.Windows.Forms;
 using System.Drawing;
-using Microsoft.VisualStudio.TestTools.UITesting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.VisualStudio.TestTools.UITest.Extension;
-using Keyboard = Microsoft.VisualStudio.TestTools.UITesting.Keyboard;
 using TestReporter;
 using Engine.Setup;
 using OpenQA.Selenium;
@@ -17,14 +14,17 @@ using AUT.Selenium.ApplicationSpecific.Pages;
 using System.Data;
 using System.Linq;
 using TMTFactory;
+using TCMFactory;
 namespace AutomatedTest.FunctionalTests
 {
     [TestClass]
     public class TestBaseTemplate
     {
-        private string dataFileName = null;
+        private String dataFileName = null;
         private int currentFileRowPointer = 1;
-        public static IWebDriver driver = null;
+        protected static IWebDriver driver = null;
+        protected Exception testException = null;
+        protected static IList<TestCase> listTestCases = new List<TestCase>();
 
         #region PageObject
         public AddApplication Application = null;
@@ -44,12 +44,16 @@ namespace AutomatedTest.FunctionalTests
         protected Dictionary<string, string> validationTestData = new Dictionary<String, String>();
 
         public TestContext TestContext { get; set; }
-
+        
         public TestBaseTemplate()
         {
             const String testRailUrl = "http://atllmstestrail.akcelerant.com/";
             const String userName = "kote@cigniti.com";
             const String password = "Password1";
+
+            //const String testRailUrl = "https://cignitipoc.testrail.io/";
+            //const String userName = "debasish.pradhan@cigniti.com";
+            //const String password = "Temp1234";
             
             testRail = new TestRailClient(testRailUrl, userName, password);
             Application = new AddApplication();
@@ -65,27 +69,28 @@ namespace AutomatedTest.FunctionalTests
         [AssemblyInitialize]
         public static void BeforeAllTestsExecution(TestContext testContext)
         {
-           
+            /****TODO - MultiThreading ****/
             #region WebApplication - Launch
-            //EngineSetup.TestReport.InitTestCase("Launch Application", "Verify Application Is Launched Successfully");
             driver = WebDriverFactory.getWebDriver(EngineSetup.BROWSER);
             driver.Navigate().GoToUrl(EngineSetup.WEBURL);
-            //EngineSetup.TestReport.LogSuccess(String.Format("Launch Application On Browser - {0}",EngineSetup.BROWSER), String.Format("Application - {0} Launch Successful", EngineSetup.WEBURL));
-            //EngineSetup.TestReport.UpdateTestCaseStatus();
-
             #endregion
         }
         [AssemblyCleanup]
         public static void AfterAllTestsExecution()
         {
-
+            /****TODO - MultiThreading ****/
             //after execution, update extent report with gallop logo 
-            /*driver can not be initialized in static method as driver is instance variable*/           
+            /*driver can not be initialized in static method as driver is instance variable*/
             WebDriverFactory.getWebDriver().Close();
             WebDriverFactory.getWebDriver().Quit();
             WebDriverFactory.Free();
             EngineSetup.TestReport.Close();
             TestBaseTemplate.UpdateTestReport();
+            if (EngineSetup.ISMAILREQUIRED.Equals("Yes", StringComparison.OrdinalIgnoreCase))
+            {
+                String emailBody = EmailSender.CreateHtmlBodyForMail(listTestCases);
+                EmailSender.SendEmail(EngineSetup.SMTPSERVER, EngineSetup.SMTPPORT, EngineSetup.EMAILFROM, EngineSetup.EMAILTOLIST, null, EngineSetup.EMAILSUBJECT, emailBody, null, true);
+            }
             
         }
         [ClassInitialize]
@@ -103,16 +108,60 @@ namespace AutomatedTest.FunctionalTests
         [TestInitialize()]
         public void BeforeEachTestCaseExecution()
         {
-            this.LoadBusinessTestData();
-            this.TESTREPORT.InitTestCase(TestContext.TestName, TestContext.Properties["title"] as String);
-            LoginPage.SignIn(EngineSetup.UserName, EngineSetup.Password);
+            /****TODO - MultiThreading ****/
+            //#region WebApplication - Launch
+            //driver = WebDriverFactory.getWebDriver(EngineSetup.BROWSER);
+            //driver.Navigate().GoToUrl(EngineSetup.WEBURL);
+            //#endregion
 
+            this.testException = null;
+            this.TESTREPORT.InitTestCase(TestContext.TestName, TestContext.Properties["title"] as String);
+            this.LoadBusinessTestData();
+            LoginPage.SignIn(EngineSetup.UserName, EngineSetup.Password);
         }
 
         ////Use TestCleanup to run code after each test has run
         [TestCleanup()]
         public void AfterEachTestCaseExecution()
         {
+            /****TODO - MultiThreading ****/
+            //#region Close WebDriver
+            //WebDriverFactory.getWebDriver().Close();
+            //WebDriverFactory.getWebDriver().Quit();
+            //WebDriverFactory.Free();
+            //#endregion
+            TestCase testCase = new TestCase();
+            testCase.TestCaseName = TestContext.TestName;
+            testCase.TestCaseDescription = TestContext.Properties["title"] as String;
+            
+            switch(TestContext.CurrentTestOutcome)
+            {
+                case UnitTestOutcome.Passed:
+                    testCase.TestExecutionStatus = ResultStatus.Passed;
+                    testCase.TestExecutionResultMsg = "Test Execution Completed Successfully";
+                    this.TESTREPORT.LogInfo("Test Execution Completed Successfully");
+                    this.TESTREPORT.UpdateTestCaseStatus();
+                    this.testRail.UpdateTestCaseStatus(EngineSetup.TESTRAILRUNID, TestContext.Properties["title"] as String, TestContext.CurrentTestOutcome.ToString(), testCase.TestExecutionResultMsg);                    
+                    break;
+
+                case UnitTestOutcome.Failed:
+                    testCase.TestExecutionStatus = ResultStatus.Failed;
+                    testCase.TestExecutionResultMsg = this.testException.Message;
+                    this.TESTREPORT.LogFailure("Failed", "Exception Encountered - " + this.testException);
+                    this.TESTREPORT.UpdateTestCaseStatus();
+                    this.testRail.UpdateTestCaseStatus(EngineSetup.TESTRAILRUNID, TestContext.Properties["title"] as String, TestContext.CurrentTestOutcome.ToString(), this.testException.Message);                    
+                    break;
+
+                default:
+                    testCase.TestExecutionStatus = ResultStatus.Failed;
+                    testCase.TestExecutionResultMsg = this.testException.Message;
+                    this.TESTREPORT.LogFailure("Failed", "Exception Encountered - " + this.testException);
+                    this.TESTREPORT.UpdateTestCaseStatus();
+                    this.testRail.UpdateTestCaseStatus(EngineSetup.TESTRAILRUNID, TestContext.Properties["title"] as String, TestContext.CurrentTestOutcome.ToString(), this.testException.Message);
+                    break;
+
+            }
+            listTestCases.Add(testCase);
             
         }
 
@@ -121,9 +170,6 @@ namespace AutomatedTest.FunctionalTests
         ///Gets or sets the test context which provides
         ///information about and functionality for the current test run.
         ///</summary>
-
-
-
 
         protected string RANDVALUE
         {
