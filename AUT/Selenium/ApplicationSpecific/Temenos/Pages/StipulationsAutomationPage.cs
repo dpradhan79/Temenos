@@ -41,7 +41,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         /// <param name="description">The descrition.</param>
         /// <param name="comments">The comments.</param>
         /// </summary>
-        public void AddStipulations(Dictionary<string, string> validationTestData, bool met = true, int index = 0)
+        public void AddStipulations(Dictionary<string, string> validationTestData, int index = 0)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
                 driver.SelectByVisibleText(dropdownRequiredFor, validationTestData["RequiredFor" + index], "Required For");
                 driver.SendKeysToElement(txtDescription, validationTestData["Description" + index], "Description");
                 driver.SendKeysToElement(txtComments, validationTestData["Comments" + index], "Comments");
-                if (met)
+                if (validationTestData["Met"].Equals("True"))
                 {
                     driver.ClickElement(checkBoxMet, "Met");
                 }

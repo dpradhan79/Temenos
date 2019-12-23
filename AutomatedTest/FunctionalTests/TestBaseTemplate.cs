@@ -36,6 +36,7 @@ namespace AutomatedTest.FunctionalTests
         public PrimaryApplicantAutomationPage PrimaryApplicantAutomationScreen = null;
         public StipulationsAutomationPage StipulationsAutomation = null;
         public DisbursePage Disburse = null;
+        public TemenosBasePage TemenosBasePage = null;
         #endregion
 
         /// <summary>
@@ -47,13 +48,13 @@ namespace AutomatedTest.FunctionalTests
         
         public TestBaseTemplate()
         {
-            //const String testRailUrl = "http://atllmstestrail.akcelerant.com/";
-            //const String userName = "kote@cigniti.com";
-            //const String password = "Password1";
+            const String testRailUrl = "http://atllmstestrail.akcelerant.com/";
+            const String userName = "kote@cigniti.com";
+            const String password = "Password1";
 
-            const String testRailUrl = "https://cignitipoc.testrail.io/";
-            const String userName = "debasish.pradhan@cigniti.com";
-            const String password = "Temp1234";
+            //const String testRailUrl = "https://cignitipoc.testrail.io/";
+            //const String userName = "debasish.pradhan@cigniti.com";
+            //const String password = "Temp1234";
             
             testRail = new TestRailClient(testRailUrl, userName, password);
             Applicant = new ApplicantPage();
@@ -64,6 +65,7 @@ namespace AutomatedTest.FunctionalTests
             LoanTermsAutomation = new LoanTermsAutomationPage();
             StipulationsAutomation = new StipulationsAutomationPage();
             Disburse = new DisbursePage();
+            TemenosBasePage = new TemenosBasePage();
         }
 
         [AssemblyInitialize]

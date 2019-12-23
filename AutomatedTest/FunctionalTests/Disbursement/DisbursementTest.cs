@@ -37,30 +37,23 @@ namespace AutomatedTest.FunctionalTests
             try
             {
                 string approveApplicationNumber = null;                
-                HomePage.CreateNewApplication("Approve", this.validationTestData);
+                HomePage.CreateNewApplication(Constants.Approve, this.validationTestData);
                 approveApplicationNumber = HomePage.GetApplicationNumber();
                 HomePage.SwitchAndVerifyHomePageFullyDisplayed();
-                HomePage.NavigateToScreen(Constants.LoanTermsAutomation);
-                HomePage.SwitchToCentralFrame();
-                HomePage.VerifyScreenHeading(Constants.LoanTermsAutomation);
+                TemenosBasePage.NavigateToScreen(Constants.LoanTermsAutomation);
                 LoanTermsAutomation.EnterFieldValuesInLoanTermPanel(this.validationTestData);
                 HomePage.SwitchToParentFrame();
-                HomePage.NavigateToScreen(Constants.PrimaryApplicationAutomation);
-                HomePage.SwitchToCentralFrame();
-                HomePage.VerifyScreenHeading(Constants.PrimaryApplicationAutomation);
+                TemenosBasePage.NavigateToScreen(Constants.PrimaryApplicationAutomation);                
                 PrimaryApplicantAutomationScreen.EnterFieldValuesInPrimaryAppliciantPanel("DoNotPullCredit");
                 HomePage.SwitchToParentFrame();
-                HomePage.VerifyDecisioningApplication(Constants.AutoApproved, false);
-                HomePage.NavigateToScreen(Constants.StipulationsAutomation);
-                HomePage.SwitchToCentralFrame();
-                HomePage.VerifyScreenHeading(Constants.StipulationsAutomation);
-                StipulationsAutomation.AddStipulations(this.validationTestData, true);
+                HomePage.VerifyDecisioningApplication(Constants.AutoApproved, this.validationTestData);
+                TemenosBasePage.NavigateToScreen(Constants.StipulationsAutomation);                
+                StipulationsAutomation.AddStipulations(this.validationTestData);
                 HomePage.SwitchToParentFrame();
                 Disburse.PerformDisbursementOfLoanApplication();
-                HomePage.NavigateToScreen(Constants.StipulationsAutomation);
-                HomePage.SwitchToCentralFrame();
+                TemenosBasePage.NavigateToScreen(Constants.StipulationsAutomation);               
                 Disburse.DiscardTheChanges();
-                StipulationsAutomation.AddStipulations(this.validationTestData, false, 1);
+                StipulationsAutomation.AddStipulations(this.validationTestData, 1);
                 HomePage.SwitchToDefaultContent();
                 HomePage.CloseAndVerifyApplication(approveApplicationNumber);
                 HomePage.ClickLogOff();               

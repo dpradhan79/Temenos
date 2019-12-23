@@ -36,83 +36,61 @@ namespace AutomatedTest.FunctionalTests
             #region Approve            
             try
             {
-                string approveApplicationNumber, rejectApplicationNumber, reviewApplicationNumber = null;                
-                HomePage.CreateNewApplication("Approve", this.validationTestData);
+                string approveApplicationNumber, rejectApplicationNumber, reviewApplicationNumber = null;
+                HomePage.CreateNewApplication(Constants.Approve, this.validationTestData);
                 approveApplicationNumber = HomePage.GetApplicationNumber();
                 HomePage.SwitchAndVerifyHomePageFullyDisplayed();
-                HomePage.NavigateToScreen(Constants.PrimaryApplicationAutomation);
-                HomePage.SwitchToCentralFrame();
-                HomePage.VerifyScreenHeading(Constants.PrimaryApplicationAutomation);
+                TemenosBasePage.NavigateToScreen(Constants.PrimaryApplicationAutomation);
                 PrimaryApplicantAutomationScreen.EnterFieldValuesInPrimaryAppliciantPanel(Constants.MemeberShipStartDate, this.validationTestData["MemeberShipStartDate"]);
                 PrimaryApplicantAutomationScreen.EnterFieldValuesInPrimaryAppliciantPanel(Constants.DoNotPullCredit);
                 HomePage.SwitchToParentFrame();
-                HomePage.NavigateToScreen(Constants.LoanTermsAutomation);
-                HomePage.SwitchToCentralFrame();
-                HomePage.VerifyScreenHeading(Constants.LoanTermsAutomation);
+                TemenosBasePage.NavigateToScreen(Constants.LoanTermsAutomation);
                 LoanTermsAutomation.EnterFieldValuesInLoanTermPanel(this.validationTestData);
                 HomePage.SwitchToParentFrame();
-                HomePage.VerifyDecisioningApplication(Constants.LoRejected, true);
-                HomePage.VerifyDecisioningApplication(Constants.AutoApproved, true);
-                HomePage.NavigateToScreen(Constants.PrimaryApplicationAutomation);
-                HomePage.SwitchToCentralFrame();
-                HomePage.VerifyScreenHeading(Constants.PrimaryApplicationAutomation);
+                HomePage.VerifyDecisioningApplication(Constants.LoRejected, this.validationTestData);
+                HomePage.VerifyDecisioningApplication(Constants.AutoApproved, this.validationTestData);
+                TemenosBasePage.NavigateToScreen(Constants.PrimaryApplicationAutomation);
                 PrimaryApplicantAutomationScreen.VerifyMemberShipStartDate(this.validationTestData["MemeberShipStartDate"]);
                 HomePage.SwitchToParentFrame();
-                HomePage.NavigateToScreen(Constants.DecisionProcessAutomation);
-                HomePage.SwitchToCentralFrame();
-                HomePage.VerifyScreenHeading(Constants.DecisionProcessAutomation);
+                TemenosBasePage.NavigateToScreen(Constants.DecisionProcessAutomation);                
                 DecisionProcessAutomation.VerifyReviewIndicators(this.validationTestData);
                 HomePage.SwitchToDefaultContent();
                 HomePage.CloseAndVerifyApplication(approveApplicationNumber);
                 #endregion
 
                 #region Reject
-                HomePage.CreateNewApplication("Reject", this.validationTestData);
+                HomePage.CreateNewApplication(Constants.Reject, this.validationTestData);
                 rejectApplicationNumber = HomePage.GetApplicationNumber();
                 HomePage.SwitchAndVerifyHomePageFullyDisplayed();
-                HomePage.NavigateToScreen(Constants.LoanTermsAutomation);
-                HomePage.SwitchToCentralFrame();
-                HomePage.VerifyScreenHeading(Constants.LoanTermsAutomation);
+                TemenosBasePage.NavigateToScreen(Constants.LoanTermsAutomation);                
                 LoanTermsAutomation.EnterFieldValuesInLoanTermPanel(this.validationTestData);
                 HomePage.SwitchToParentFrame();
-                HomePage.VerifyDecisioningApplication(Constants.AutoRejected, true);
-                HomePage.NavigateToScreen(Constants.StipulationsAutomation);
-                HomePage.SwitchToCentralFrame();
-                HomePage.VerifyScreenHeading(Constants.StipulationsAutomation);
+                HomePage.VerifyDecisioningApplication(Constants.AutoRejected, this.validationTestData);
+                TemenosBasePage.NavigateToScreen(Constants.StipulationsAutomation);               
                 StipulationsAutomation.AddStipulations(this.validationTestData);
                 HomePage.SwitchToDefaultContent();
                 HomePage.CloseAndVerifyApplication(rejectApplicationNumber);
                 #endregion
 
                 #region review
-                HomePage.CreateNewApplication("Review", this.validationTestData);
+                HomePage.CreateNewApplication(Constants.Review, this.validationTestData);
                 reviewApplicationNumber = HomePage.GetApplicationNumber();
                 HomePage.SwitchAndVerifyHomePageFullyDisplayed();
-                HomePage.NavigateToScreen(Constants.LoanTermsAutomation);
-                HomePage.SwitchToCentralFrame();
-                HomePage.VerifyScreenHeading(Constants.LoanTermsAutomation);
+                TemenosBasePage.NavigateToScreen(Constants.LoanTermsAutomation);               
                 LoanTermsAutomation.EnterFieldValuesInLoanTermPanel(this.validationTestData);
                 HomePage.SwitchToParentFrame();
                 HomePage.VerifyDecisioningOfApplication();
-                HomePage.NavigateToScreen(Constants.DecisionProcessAutomation);
-                HomePage.SwitchToCentralFrame();
-                HomePage.VerifyScreenHeading(Constants.DecisionProcessAutomation);
+                TemenosBasePage.NavigateToScreen(Constants.DecisionProcessAutomation);              
                 DecisionProcessAutomation.VerifyReviewIndicators(this.validationTestData,1);
                 HomePage.SwitchToParentFrame();
-                HomePage.NavigateToScreen(Constants.PrimaryApplicationAutomation);
-                HomePage.SwitchToCentralFrame();
-                HomePage.VerifyScreenHeading(Constants.PrimaryApplicationAutomation);
-                PrimaryApplicantAutomationScreen.SelectCurrentAddressState("Pennsylvania");
+                TemenosBasePage.NavigateToScreen(Constants.PrimaryApplicationAutomation);              
+                PrimaryApplicantAutomationScreen.SelectCurrentAddressState(this.validationTestData["CurrentAddressState"]);
                 HomePage.SwitchToParentFrame();
-                HomePage.NavigateToScreen(Constants.DecisionProcessAutomation);
-                HomePage.SwitchToCentralFrame();
-                HomePage.VerifyScreenHeading(Constants.DecisionProcessAutomation);
+                TemenosBasePage.NavigateToScreen(Constants.DecisionProcessAutomation); 
                 DecisionProcessAutomation.VerifyReviewIndicators(this.validationTestData, 2);
                 HomePage.SwitchToParentFrame();
-                HomePage.NavigateToScreen(Constants.PrimaryApplicationAutomation);
-                HomePage.SwitchToCentralFrame();
-                HomePage.VerifyScreenHeading(Constants.PrimaryApplicationAutomation);
-                PrimaryApplicantAutomationScreen.SelectCurrentAddressState("Illinois");
+                TemenosBasePage.NavigateToScreen(Constants.PrimaryApplicationAutomation);
+                PrimaryApplicantAutomationScreen.SelectCurrentAddressState(this.validationTestData["CurrentAddressState1"]);
                 HomePage.SwitchToDefaultContent();
                 HomePage.CloseAndVerifyApplication(reviewApplicationNumber);
                 HomePage.ClickLogOff();               

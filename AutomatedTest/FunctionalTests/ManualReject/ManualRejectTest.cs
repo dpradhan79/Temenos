@@ -40,12 +40,10 @@ namespace AutomatedTest.FunctionalTests
                 HomePage.CreateNewApplication("Approve", this.validationTestData);
                 approveApplicationNumber = HomePage.GetApplicationNumber();
                 HomePage.SwitchAndVerifyHomePageFullyDisplayed();
-                HomePage.NavigateToScreen(Constants.LoanTermsAutomation);
-                HomePage.SwitchToCentralFrame();
-                HomePage.VerifyScreenHeading(Constants.LoanTermsAutomation);
+                TemenosBasePage.NavigateToScreen(Constants.LoanTermsAutomation);
                 LoanTermsAutomation.EnterFieldValuesInLoanTermPanel(this.validationTestData);
                 HomePage.SwitchToParentFrame();
-                HomePage.VerifyDecisioningApplication(Constants.LoRejected, true);
+                HomePage.VerifyDecisioningApplication(Constants.LoRejected, this.validationTestData);
                 HomePage.SwitchToDefaultContent();
                 HomePage.CloseAndVerifyApplication(approveApplicationNumber);
                 HomePage.ClickLogOff();               

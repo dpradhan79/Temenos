@@ -366,7 +366,7 @@ namespace AUT.Selenium.CommonReUsablePages
         protected void SimulateThinkTimeInMilliSecs(int milliSecs)
         {
             Thread.Sleep(milliSecs);            
-            this.TESTREPORT.LogSuccess("SimulateThinkTimeInMilliSecs", String.Format("Wait Introduced For <mark>{0}</mark> milliseconds", milliSecs));
+            //this.TESTREPORT.LogSuccess("SimulateThinkTimeInMilliSecs", String.Format("Wait Introduced For <mark>{0}</mark> milliseconds", milliSecs));
         }
 
         /// <summary>
