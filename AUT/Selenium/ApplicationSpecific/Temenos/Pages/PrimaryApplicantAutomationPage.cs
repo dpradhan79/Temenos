@@ -15,7 +15,7 @@ using Engine.Factories;
 
 namespace AUT.Selenium.ApplicationSpecific.Pages
 {
-    public class PrimaryApplicantAutomationScreen : AbstractTemplatePage
+    public class PrimaryApplicantAutomationPage : AbstractTemplatePage
     {
 
         #region UI Object Repository

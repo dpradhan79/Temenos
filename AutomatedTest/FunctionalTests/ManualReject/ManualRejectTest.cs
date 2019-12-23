@@ -31,12 +31,12 @@ namespace AutomatedTest.FunctionalTests
         [TestCategory("ManualReject")]
         [TestCategory("DecisionProcess")]
         [TestProperty("title", "Manual Reject")]
-        public void ManualReject()        {
+        public void TestManualReject()        {
            
             #region ManualReject
             try
             {
-                string approveApplicationNumber = null;                     
+                string approveApplicationNumber = null;
                 HomePage.CreateNewApplication("Approve", this.validationTestData);
                 approveApplicationNumber = HomePage.GetApplicationNumber();
                 HomePage.SwitchAndVerifyHomePageFullyDisplayed();

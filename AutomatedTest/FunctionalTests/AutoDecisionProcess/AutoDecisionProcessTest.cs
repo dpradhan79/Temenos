@@ -23,15 +23,7 @@ namespace AutomatedTest.FunctionalTests
     /// </summary>
     /// <seealso cref="AutomatedTest.FunctionalTests.TestBaseTemplate" />
     public class AutoDecisionProcessTests : TestBaseTemplate
-    {
-        /// <summary>
-        /// Loads the business test data.
-        /// </summary>
-        //public void LoadBusinessTestData()
-        //{
-        //    this.validationTestData = this.loadValidationTestData(TestContext.TestName);
-        //}
-
+    {     
         /// <summary>
         /// Test case Auto Decision Process.
         /// </summary>
@@ -39,7 +31,7 @@ namespace AutomatedTest.FunctionalTests
         [TestCategory("AutoDecisionProcess")]
         [TestCategory("DecisionProcess")]
         [TestProperty("title", "Auto Decision Process")]
-        public void AutoDecisionProcess()
+        public void TestAutoDecisionProcess()
         {
             #region Approve            
             try
@@ -72,7 +64,7 @@ namespace AutomatedTest.FunctionalTests
                 DecisionProcessAutomation.VerifyReviewIndicators(this.validationTestData);
                 HomePage.SwitchToDefaultContent();
                 HomePage.CloseAndVerifyApplication(approveApplicationNumber);
-            #endregion
+                #endregion
 
                 #region Reject
                 HomePage.CreateNewApplication("Reject", this.validationTestData);

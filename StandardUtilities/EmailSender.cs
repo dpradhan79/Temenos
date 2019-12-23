@@ -101,21 +101,19 @@ namespace StandardUtilities
                IList<TestCase> listFailedTestCases = TestExecutionManagement.GetFailedTestCases(listTestCases);
 
                StringBuilder myBuilder = new StringBuilder();
-
+               myBuilder.AppendFormat("<table border='1'; style='color: Black;width ='1200'; bgcolor='#00b0f0'>");
                //Table For Failed Test Case Details
-               myBuilder.AppendFormat("<table border='1'; style='color: Black;width ='1000'; bgcolor='#b3cccc'><col width=\"70%\"><col width=\"30%\"> <tr><th bgcolor=\"#75a3a3\" colspan=\"2\">" + "Automation Execution Result" + "</th></tr><tr><td>Total Test Cases Executed : </td><td style=\"text-align:center\">" + executedTestcases + "</td></tr><tr><td>Total Test Cases Passed : </td><td style=\"text-align:center\">" + Convert.ToString(passedTestcases) + "</td></tr><tr><td>Total Test Cases Failed : </td><td style=\"text-align:center\">" + Convert.ToString(failedTestcases) + "</td></tr></table>");
+               myBuilder.AppendFormat("<table border='1'; style='color: Black;width ='1200'; bgcolor='#00b0f0'><col width=\"70%\"><col width=\"30%\"> <tr><th bgcolor=\"#002060\" colspan=\"2\"><font color='white'>" + "Automation Execution Result" + "</font></th></tr><tr><td>Total Test Cases Executed : </td><td style=\"text-align:center\">" + executedTestcases + "</td></tr><tr><td>Total Test Cases Passed : </td><td style=\"text-align:center\">" + Convert.ToString(passedTestcases) + "</td></tr><tr><td>Total Test Cases Failed : </td><td style=\"text-align:center\">" + Convert.ToString(failedTestcases) + "</td></tr></table>");
                if (listFailedTestCases.Count > 0)
                {
 
                    myBuilder.AppendFormat("<br />");
-                   myBuilder.AppendFormat("<br />");
-
-
+                   
                    /*Table for failed Test Cases Summary*/
-                   myBuilder.Append("<table border='1'; style='color: Black;width ='2000'; bgcolor='#b3cccc'>");
+                   myBuilder.Append("<table border='1'; style='color: Black;width ='1200'; bgcolor='#00b0f0'>");
                    myBuilder.Append("<col width=\"15%\"><col width=\"15%\"><col width=\"15%\"><col width=\"15%\"><col width=\"40%\">");
                    /*Table header*/
-                   myBuilder.Append("<tr><th bgcolor=\"#75a3a3\" colspan=\"5\">Failed Test Cases Summary</th></tr>");
+                   myBuilder.Append("<tr><th bgcolor=\"#002060\" colspan=\"5\"><font color='white'>Failed Test Cases Summary</font></th></tr>");
 
                    /*Table Column*/
                    myBuilder.Append("<tr><th>Sr.No</th><th>Test Case Name</th><th>Test Case Description </th><th>Status</th><th>Status Description</th></tr>");
@@ -128,29 +126,29 @@ namespace StandardUtilities
                        myBuilder.Append("<tr>");
                                                                    
                        /*Sr.No*/
-                       myBuilder.Append("<td style=\"text-align:center\">");
+                       myBuilder.Append("<td style=\"text-align:center\"><font color='Red'>");
                        myBuilder.Append(String.Format("{0}", ++ counter));
-                       myBuilder.Append("</td>");
+                       myBuilder.Append("</font></td>");
 
                        /*TestCase Name*/
-                       myBuilder.Append("<td style=\"text-align:center\">");
+                       myBuilder.Append("<td style=\"text-align:center\"><font color='Red'>");
                        myBuilder.Append(testcase.TestCaseName);
-                       myBuilder.Append("</td>");
+                       myBuilder.Append("</font></td>");
 
                        /*TestCase Description*/
-                       myBuilder.Append("<td style=\"text-align:center\">");
+                       myBuilder.Append("<td style=\"text-align:center\"><font color='Red'>");
                        myBuilder.Append(testcase.TestCaseDescription);
-                       myBuilder.Append("</td>");
+                       myBuilder.Append("</font></td>");
 
                        /*TestCase Status*/
-                       myBuilder.Append("<td style=\"text-align:center\">");
+                       myBuilder.Append("<td style=\"text-align:center\"><font color='Red'>");
                        myBuilder.Append(testcase.convertTestExecutionStatusToString());
-                       myBuilder.Append("</td>");
+                       myBuilder.Append("</font></td>");
 
                        /*TestCase Status Description */
-                       myBuilder.Append("<td style=\"text-align:center\">");
+                       myBuilder.Append("<td style=\"text-align:center\"><font color='Red'>");
                        myBuilder.Append(testcase.TestExecutionResultMsg);
-                       myBuilder.Append("</td>");
+                       myBuilder.Append("</font></td>");
 
                        myBuilder.Append("</tr>");
                        /*rows ends for failed test case*/
@@ -167,16 +165,16 @@ namespace StandardUtilities
 
                    myBuilder.AppendFormat("<br />");
                   
-                   /*Table for failed Test Cases Summary*/
-                   myBuilder.Append("<table border='1'; style='color: Black;width ='2000'; bgcolor='#b3cccc'>");
+                   /*Table for passed Test Cases Summary*/
+                   myBuilder.Append("<table border='1'; style='color: Black;width ='1200'; bgcolor='#00b0f0'>");
                    myBuilder.Append("<col width=\"15%\"><col width=\"15%\"><col width=\"15%\"><col width=\"15%\"><col width=\"40%\">");
                    /*Table header*/
-                   myBuilder.Append("<tr><th bgcolor=\"#75a3a3\" colspan=\"5\">Passed Test Cases Summary</th></tr>");
+                   myBuilder.Append("<tr><th bgcolor=\"#002060\" colspan=\"5\"><font color='white'>Passed Test Cases Summary</font></th></tr>");
 
                    /*Table Column*/
                    myBuilder.Append("<tr><th>Sr.No</th><th>Test Case Name</th><th>Test Case Description </th><th>Status</th><th>Status Description</th></tr>");
 
-                   /*Row for failed Test case*/
+                   /*Row for passed Test case*/
                    int counter = 0;
                    foreach (TestCase testcase in listPassedTestCases)
                    {
@@ -214,7 +212,7 @@ namespace StandardUtilities
 
                    myBuilder.Append("</table>");
                }
-
+               myBuilder.Append("</table>");
                //form mailBody from myBuilder
                mailbody = myBuilder.ToString();
            }
