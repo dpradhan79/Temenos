@@ -14,7 +14,7 @@ using Engine.Factories;
 
 namespace AUT.Selenium.ApplicationSpecific.Pages
 {
-    public class LoanTermsAutomation : AbstractTemplatePage
+    public class LoanTermsAutomationPage : AbstractTemplatePage
     {
 
         #region UI Object Repository

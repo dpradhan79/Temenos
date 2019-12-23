@@ -73,14 +73,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Selenium\ApplicationSpecific\Temenos\Pages\AddApplication.cs" />
-    <Compile Include="Selenium\ApplicationSpecific\Temenos\Pages\Disburse.cs" />
-    <Compile Include="Selenium\ApplicationSpecific\Temenos\Pages\DecisionProcessAutomation.cs" />
+    <Compile Include="Selenium\ApplicationSpecific\Temenos\Pages\ApplicantPage.cs" />
+    <Compile Include="Selenium\ApplicationSpecific\Temenos\Pages\DisbursePage.cs" />
+    <Compile Include="Selenium\ApplicationSpecific\Temenos\Pages\DecisionProcessAutomationPage.cs" />
     <Compile Include="Selenium\ApplicationSpecific\Temenos\Pages\HomePage.cs" />
-    <Compile Include="Selenium\ApplicationSpecific\Temenos\Pages\LoanTermsAutomation.cs" />
+    <Compile Include="Selenium\ApplicationSpecific\Temenos\Pages\LoanTermsAutomationPage.cs" />
     <Compile Include="Selenium\ApplicationSpecific\Temenos\Pages\LoginPage.cs" />
-    <Compile Include="Selenium\ApplicationSpecific\Temenos\Pages\PrimaryApplicantAutomationScreen.cs" />
-    <Compile Include="Selenium\ApplicationSpecific\Temenos\Pages\StipulationsAutomation.cs" />
+    <Compile Include="Selenium\ApplicationSpecific\Temenos\Pages\PrimaryApplicantAutomationPage.cs" />
+    <Compile Include="Selenium\ApplicationSpecific\Temenos\Pages\StipulationsAutomationPage.cs" />
     <Compile Include="Selenium\ApplicationSpecific\Temenos\Pages\Utility.cs" />
     <Compile Include="Selenium\CommonReUsablePages\AbstractTemplatePage.cs" />
   </ItemGroup>

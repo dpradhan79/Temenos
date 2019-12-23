@@ -39,7 +39,7 @@ namespace AutomatedTest.FunctionalTests
         [TestCategory("AutoDecisionProcess")]
         [TestCategory("DecisionProcess")]
         [TestProperty("title", "Auto Decision Process")]
-        public void AutoDecisionProcess()
+        public void TestAutoDecisionProcess()
         {
             #region Approve            
             try

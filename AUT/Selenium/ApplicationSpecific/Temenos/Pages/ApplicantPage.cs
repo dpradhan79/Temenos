@@ -15,7 +15,7 @@ using System.Threading;
 
 namespace AUT.Selenium.ApplicationSpecific.Pages
 {
-    public class AddApplication : AbstractTemplatePage
+    public class ApplicantPage : AbstractTemplatePage
     {
 
         #region UI Object Repository

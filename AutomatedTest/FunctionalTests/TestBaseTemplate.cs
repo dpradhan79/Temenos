@@ -10,11 +10,11 @@ using Engine.Setup;
 using OpenQA.Selenium;
 using StandardUtilities;
 using Engine.Factories;
-using AUT.Selenium.ApplicationSpecific.Pages;
 using System.Data;
 using System.Linq;
 using TMTFactory;
 using TCMFactory;
+using AUT.Selenium.ApplicationSpecific.Pages;
 namespace AutomatedTest.FunctionalTests
 {
     [TestClass]
@@ -27,15 +27,15 @@ namespace AutomatedTest.FunctionalTests
         protected static IList<TestCase> listTestCases = new List<TestCase>();
 
         #region PageObject
-        public AddApplication Application = null;
+        public ApplicantPage Applicant = null;
         public TestRailClient testRail = null;
         public LoginPage LoginPage = null;
         public HomePage HomePage = null;
-        public DecisionProcessAutomation DecisionProcessAutomation = null;
-        public LoanTermsAutomation LoanTermsAutomation = null;
-        public PrimaryApplicantAutomationScreen PrimaryApplicantAutomationScreen = null;
-        public StipulationsAutomation StipulationsAutomation = null;
-        public Disburse Disburse = null;
+        public DecisionProcessAutomationPage DecisionProcessAutomation = null;
+        public LoanTermsAutomationPage LoanTermsAutomation = null;
+        public PrimaryApplicantAutomationPage PrimaryApplicantAutomationScreen = null;
+        public StipulationsAutomationPage StipulationsAutomation = null;
+        public DisbursePage Disburse = null;
         #endregion
 
         /// <summary>
@@ -47,23 +47,23 @@ namespace AutomatedTest.FunctionalTests
         
         public TestBaseTemplate()
         {
-            const String testRailUrl = "http://atllmstestrail.akcelerant.com/";
-            const String userName = "kote@cigniti.com";
-            const String password = "Password1";
+            //const String testRailUrl = "http://atllmstestrail.akcelerant.com/";
+            //const String userName = "kote@cigniti.com";
+            //const String password = "Password1";
 
-            //const String testRailUrl = "https://cignitipoc.testrail.io/";
-            //const String userName = "debasish.pradhan@cigniti.com";
-            //const String password = "Temp1234";
+            const String testRailUrl = "https://cignitipoc.testrail.io/";
+            const String userName = "debasish.pradhan@cigniti.com";
+            const String password = "Temp1234";
             
             testRail = new TestRailClient(testRailUrl, userName, password);
-            Application = new AddApplication();
+            Applicant = new ApplicantPage();
             LoginPage = new LoginPage();
             HomePage = new HomePage();
-            PrimaryApplicantAutomationScreen = new PrimaryApplicantAutomationScreen();
-            DecisionProcessAutomation = new DecisionProcessAutomation();
-            LoanTermsAutomation = new LoanTermsAutomation();
-            StipulationsAutomation = new StipulationsAutomation();
-            Disburse = new Disburse();
+            PrimaryApplicantAutomationScreen = new PrimaryApplicantAutomationPage();
+            DecisionProcessAutomation = new DecisionProcessAutomationPage();
+            LoanTermsAutomation = new LoanTermsAutomationPage();
+            StipulationsAutomation = new StipulationsAutomationPage();
+            Disburse = new DisbursePage();
         }
 
         [AssemblyInitialize]
@@ -297,9 +297,9 @@ namespace AutomatedTest.FunctionalTests
             String testDataPath = System.IO.Directory.GetCurrentDirectory();
             Dictionary<string, string> inputTestData = new Dictionary<String, String>();
             var testDataFileName = (string)null;
-            testDataFileName = (testCategory == testDataPath) ? this.TESTDATAFILENAME : testScriptName + ".xlsx";
+            testDataFileName = (testCategory == testDataPath) ? this.TESTDATAFILENAME : testScriptName.Replace("Test","").Trim() + ".xlsx";
             DataTable inputTestDataTable = ExcelReader.ReadExcelFile(testDataPath, testDataFileName, sheetName, false, 2);
-            DataRow[] testDataRows = inputTestDataTable.Select("TestScriptName = '" + testScriptName + "'");
+            DataRow[] testDataRows = inputTestDataTable.Select("TestScriptName = '" + testScriptName.Replace("Test", "").Trim() + "'");
             inputTestData = (testDataRows.Length > 0) ? testDataRows[0].Table.Columns.Cast<DataColumn>().ToDictionary(c => c.ColumnName, c => testDataRows[0][c].ToString()) : inputTestData;
             return inputTestData;
         }

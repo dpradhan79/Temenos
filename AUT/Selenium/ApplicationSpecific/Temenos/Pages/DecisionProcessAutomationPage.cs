@@ -13,7 +13,7 @@ using Engine.Factories;
 
 namespace AUT.Selenium.ApplicationSpecific.Pages
 {
-    public class DecisionProcessAutomation : AbstractTemplatePage
+    public class DecisionProcessAutomationPage : AbstractTemplatePage
     {
 
         #region UI Object Repository
