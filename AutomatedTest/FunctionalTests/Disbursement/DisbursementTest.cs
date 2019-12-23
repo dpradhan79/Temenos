@@ -31,7 +31,7 @@ namespace AutomatedTest.FunctionalTests
         [TestCategory("Disbursement")]
         [TestCategory("DecisionProcess")]
         [TestProperty("title", "Disbursement")]
-        public void Disbursement()
+        public void TestDisbursement()
         {           
             #region Disbursement
             try

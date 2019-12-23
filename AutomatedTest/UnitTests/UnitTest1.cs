@@ -42,7 +42,7 @@ namespace AutomatedTest.UnitTests
 
         //[TestMethod]
         //[TestProperty("title", "Inventory Should Should Generate Alert When Item Is Under Threshold")]
-        public void TestTestRail2()
+        public void TestTestRail3444()
         {
             const String testRailUrl = "http://atllmstestrail.akcelerant.com/";
             const String userName = "kote@cigniti.com";
@@ -55,6 +55,26 @@ namespace AutomatedTest.UnitTests
             ResultStatus testCaseResult = ResultStatus.Failed;
             this.TESTREPORT.UpdateTestCaseStatus(testRail, runId, TestContext.Properties["title"] as String, testCaseResult);
         }
+
+        //[TestMethod]
+        //[TestCategory("TestExecution")]
+        //[TestProperty("title", "Inventory Should Should Generate Alert When Item Is Under Threshold")]
+        public void TestTestRail2()
+        {
+            #region ManualReject
+            try
+            {
+               string title =  driver.CurrentWindowHandle;
+
+            }
+            catch (Exception ex)
+            {
+                this.testException = ex;
+                Assert.Fail(ex.Message);
+            }
+            #endregion
+        }
+
 
         //[TestMethod]
         //[TestProperty("title", "Validate Billing Has Cashier Signature")]

@@ -79,7 +79,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FunctionalTests\AddApplicantToAapp\AddAndVerifyApplicantTest.cs" />
+    <Compile Include="FunctionalTests\Applicant\AddVerifyRemoveApplicantTest.cs" />
     <Compile Include="FunctionalTests\AutoDecisionProcess\AutoDecisionProcessTest.cs" />
     <Compile Include="FunctionalTests\Disbursement\DisbursementTest.cs" />
     <Compile Include="FunctionalTests\ManualReject\ManualRejectTest.cs" />
@@ -119,7 +119,9 @@
     <None Include="TestConfiguration\TestConfiguration.properties">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="TestData\Temenos\AddAndVerifyApplicant.xlsx" />
+    <None Include="TestData\Temenos\AddVerifyRemoveApplicant.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="TestData\Temenos\AutoDecisionProcess.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

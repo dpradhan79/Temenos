@@ -15,7 +15,7 @@ using OpenQA.Selenium.Interactions;
 
 namespace AUT.Selenium.ApplicationSpecific.Pages
 {
-    public class Disburse : AbstractTemplatePage
+    public class DisbursePage : AbstractTemplatePage
     {
 
         #region UI Object Repository

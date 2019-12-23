@@ -13,7 +13,7 @@ using OpenQA.Selenium.Interactions;
 
 namespace AUT.Selenium.ApplicationSpecific.Pages
 {
-    public class StipulationsAutomation : AbstractTemplatePage
+    public class StipulationsAutomationPage : AbstractTemplatePage
     {
 
         #region UI Object Repository
