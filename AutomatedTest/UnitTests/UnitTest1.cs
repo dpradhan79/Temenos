@@ -56,7 +56,7 @@ namespace AutomatedTest.UnitTests
             this.TESTREPORT.UpdateTestCaseStatus(testRail, runId, TestContext.Properties["title"] as String, testCaseResult);
         }
 
-        [TestMethod]
+        //[TestMethod]
         //[TestCategory("TestExecution")]
         //[TestProperty("title", "Inventory Should Should Generate Alert When Item Is Under Threshold")]
         public void TestTestRail2()
