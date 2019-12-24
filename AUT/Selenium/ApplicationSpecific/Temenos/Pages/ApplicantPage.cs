@@ -74,6 +74,9 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         private By sendAdverseActionTo = By.XPath("//input[contains(@id,'checkbox-Withdraw_AdverseApplicant')]");
         private By checkboxSendAdverseActionToCheckState = By.XPath("//input[contains(@id,'checkbox-Withdraw_AdverseApplicant') and @checked='checked']");
         private By btnWithdrawApplication = By.XPath("//button[text()='Withdraw']");
+        private By lblAutoLabels = By.XPath("//span[text()='Application Panels - Automation']/../../following-sibling::div//h2");
+        private By lblUsedAutos = By.XPath("//span[text()='Application Panels - Automation']/../../following-sibling::div//h3");
+        private By lblAutoRefiance = By.XPath("(//span[text()='Application Panels - Automation']/../../following-sibling::div//h3)[2]");
         #endregion
 
         #region Public Methods
@@ -124,7 +127,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
             driver.WaitElementTextEquals(dialogGetCreditReport, "Get Credit Report");
             driver.WaitElementPresent(dropdownPrimarySubject);
             driver.SelectDropdownItemByText(dropdownPrimarySubject, validationTestData["PrimarySubject"], "Primary Subject");
-            driver.SelectDropdownItemByText(dropdownCreditBureau, validationTestData["PrimarySubject"], "Credit Bureau");
+            driver.SelectDropdownItemByText(dropdownCreditBureau, validationTestData["CreditBureau"], "Credit Bureau");
             driver.ClickElement(btnSubmit, "Submit");
             WaitTillElementDisappeared(loadingRetrievingCreditReport);
             if (driver.IsWebElementDisplayed(lblCreditBureauResponse))
@@ -191,7 +194,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         {
             try
             {
-                By selectAppliciants = By.XPath("//span[text()='Applicants']/../../following-sibling::div//div[@class='a-card a-card-message']/b[text()='" + validationTestData["Name"] + "']");
+                By selectAppliciants = By.XPath("//span[text()='Applicants']/../../following-sibling::div//div[@class='a-card a-card-message']/b[text()='" + validationTestData["Name" + index] + "']");
                 driver.ClickElementWithJavascript(selectAppliciants, "Select Appliciants " + validationTestData["Name"+index]);
                 driver.WaitElementExistsAndVisible(btnEdit);
                 driver.ClickElement(btnEdit, "Edit");
@@ -226,13 +229,15 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         {
             try
             {
-                By autoLabels = By.XPath("//span[text()='Application Panels - Automation']/../../following-sibling::div//h2");                
+                
                 driver.VerifyTextValue(lblPanelText, "Whether you're buying new or used or refinancing from another lender");
-                driver.VerifyTextValue(lblPanelText, "Used Autos");
-                driver.VerifyTextValue(lblPanelText, "Auto Refinance");
+                string textUsedAutos = driver.GetElementText(lblUsedAutos);
+                driver.VerifyTextValue(textUsedAutos, "Used Autos");
+                string textRefinance = driver.GetElementText(lblUsedAutos);
+                driver.VerifyTextValue(textRefinance, "Auto Refinance");
                 driver.VerifyTextValue(lblPanelText, "RATES");
-                string text = driver.GetElementText(autoLabels);
-                driver.VerifyTextValue(autoLabels, "AUTO LOANS - NEW, USED &REFINANCE");        
+                string textAutoLabels = driver.GetElementText(lblAutoLabels);
+                driver.VerifyTextValue(textAutoLabels, "AUTO LOANS - NEW, USED &REFINANCE");        
             }
             catch (Exception ex)
             {
@@ -388,8 +393,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         /// <param name="Type"></param> 
         /// </summary>
 
-        public void AddLiabilty(string percentageInclude, string frequency, string balance, string limit, string payment, string accountNumber,
-            string category, string type, string name, string value)
+        public void AddLiabilty(Dictionary<string, string> validationTestData)
         {
 
             try
@@ -402,14 +406,14 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
                 driver.ClickElement(checkboxExpense, "Expense");
                 driver.ClickElement(checkboxRefi, "Refi");
                 //driver.SendKeysToElement(txtPecInclude, percentageInclude, "% Included");
-                driver.SendKeysToElement(txtBalance, balance, "Balance");
-                driver.SendKeysToElement(txtLimit, limit, "Limit");
-                driver.SendKeysToElement(txtPayment, payment, "Payment Amount");
-                driver.SelectByVisibleText(dropdownPaymentFrequency, frequency, "Payment Frequency");
-                driver.SendKeysToElement(txtAccount, accountNumber, "Account Number");
-                driver.SelectDropdownItemByText(dropdownCategory, category, "Category");
-                driver.SelectDropdownItemByText(dropdownType, type, "Type");
-                AddPercentageToApplicant(name, value);
+                driver.SendKeysToElement(txtBalance, validationTestData["Balance"], "Balance");
+                driver.SendKeysToElement(txtLimit, validationTestData["Limit"], "Limit");
+                driver.SendKeysToElement(txtPayment, validationTestData["Payment"], "Payment Amount");
+                driver.SelectByVisibleText(dropdownPaymentFrequency, validationTestData["Frequency"], "Payment Frequency");
+                driver.SendKeysToElement(txtAccount, validationTestData["LiabilityAccountNumber"], "Account Number");
+                driver.SelectDropdownItemByText(dropdownCategory, validationTestData["Category"], "Category");
+                driver.SelectDropdownItemByText(dropdownType, validationTestData["Type"], "Type");
+                AddPercentageToApplicant(validationTestData["Name"], validationTestData["Value"]);
                 driver.ClickElement(btnLiabilitySave, "Save");
                 driver.SwitchBackToMainWindow();
             }

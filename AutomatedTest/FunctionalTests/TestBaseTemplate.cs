@@ -56,7 +56,9 @@ namespace AutomatedTest.FunctionalTests
             //const String testRailUrl = "https://cignitipoc.testrail.io/";
             //const String userName = "debasish.pradhan@cigniti.com";
             //const String password = "Temp1234";
-            
+
+            testRail = new TestRailClient(EngineSetup.TESTRAILURL, EngineSetup.TESTRAILUSERNAME, EngineSetup.TESTRAILPASSWORD);
+
             testRail = new TestRailClient(testRailUrl, userName, password);
             Applicant = new ApplicantPage();
             LoginPage = new LoginPage();
@@ -120,8 +122,8 @@ namespace AutomatedTest.FunctionalTests
 
             this.testException = null;
             this.TESTREPORT.InitTestCase(TestContext.TestName, TestContext.Properties["title"] as String);
-            //this.LoadBusinessTestData();
-            LoginPage.SignIn(EngineSetup.UserName, Utility.Decrypt(EngineSetup.Password));
+            this.LoadBusinessTestData();
+            LoginPage.SignIn(EngineSetup.UserName, EngineSetup.DECRYPT(EngineSetup.Password));
         }
 
         ////Use TestCleanup to run code after each test has run

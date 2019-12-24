@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using TestReporter;
 using System.IO;
 using Engine.Factories;
+using System.Security.Cryptography;
+using System.IO;
 namespace Engine.Setup
 {
     /// <summary>
@@ -39,7 +41,10 @@ namespace Engine.Setup
         private static int testRailRunId = Convert.ToInt16(StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "runId"));
         private static string projectName = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "projectName");
         private static string runName = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "runName");
-       
+        private static string testRailURL = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "testRailURL");
+        private static string testRailUserName = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "testRailUserName");
+        private static string testRailPassword = DECRYPT(StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "testRailPassword"));
+        private static string testRailPasswordFromJenkins = Environment.GetEnvironmentVariable("testrailPassword");
         #endregion
 
         #region Mail Configuration
@@ -402,6 +407,135 @@ namespace Engine.Setup
                 return Environment.GetEnvironmentVariable("runname") != null ? Environment.GetEnvironmentVariable("runname") : EngineSetup.runName;
             }
             set { EngineSetup.runName = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the testrailurl.
+        /// </summary>
+        /// <value>
+        /// The runname.
+        /// </value>
+        public static String TESTRAILURL
+        {
+            get
+            {
+                //environment variable will be read in case of Jenkins parameterized build execution
+                return Environment.GetEnvironmentVariable("testrailurl") != null ? Environment.GetEnvironmentVariable("testrailurl") : EngineSetup.testRailURL;
+            }
+            set { EngineSetup.testRailURL = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the testrailusername.
+        /// </summary>
+        /// <value>
+        /// The testrailusername.
+        /// </value>
+        public static String TESTRAILUSERNAME
+        {
+            get
+            {
+                //environment variable will be read in case of Jenkins parameterized build execution
+                return Environment.GetEnvironmentVariable("testrailusername") != null ? Environment.GetEnvironmentVariable("testrailusername") : EngineSetup.testRailUserName;
+            }
+            set { EngineSetup.testRailUserName = value; }
+        }
+
+
+        /// <summary>
+        /// Gets or sets the testrailpassword.
+        /// </summary>
+        /// <value>
+        /// The testrailpassword.
+        /// </value>
+        public static string TESTRAILPASSWORDFROMPROPERTYFILE
+        {
+            get
+            {
+                return EngineSetup.testRailPassword;
+            }
+            set { EngineSetup.testRailPassword = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the testrailpassword.
+        /// </summary>
+        /// <value>
+        /// The testrailpassword.
+        /// </value>
+        public static String TESTRAILPASSWORDFROMENVIRONMENT
+        {
+            get
+            {
+                //environment variable will be read in case of Jenkins parameterized build execution
+                return EngineSetup.testRailPasswordFromJenkins;
+            }
+            set { EngineSetup.testRailPasswordFromJenkins = value; }
+        }
+
+        public static String TESTRAILPASSWORD
+        {
+            get
+            {
+                //environment variable will be read in case of Jenkins parameterized build execution
+                return TESTRAILPASSWORDFROMENVIRONMENT != null ? TESTRAILPASSWORDFROMENVIRONMENT : TESTRAILPASSWORDFROMPROPERTYFILE;
+            }
+            set { TESTRAILPASSWORDFROMPROPERTYFILE = value; }
+
+            
+        }
+
+
+        /// <summary>
+        /// Decrypt is the method to decrypt the password/text
+        /// </summary>
+        /// <param name="milliSecs">cipherText</param>
+        public static string DECRYPT(string cipherText)
+        {
+            string EncryptionKey = "MAKV2SPBNI99212";
+            byte[] cipherBytes = Convert.FromBase64String(cipherText);
+            using (Aes encryptor = Aes.Create())
+            {
+                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
+                encryptor.Key = pdb.GetBytes(32);
+                encryptor.IV = pdb.GetBytes(16);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateDecryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(cipherBytes, 0, cipherBytes.Length);
+                        cs.Close();
+                    }
+                    cipherText = Encoding.Unicode.GetString(ms.ToArray());
+                }
+            }
+            return cipherText;
+        }
+
+        /// <summary>
+        /// Encrypt is the method to encrypt the password/text
+        /// </summary>
+        /// <param name="milliSecs">encryptedValue</param>
+        public string ENCRYPT(string encryptedValue)
+        {
+            string EncryptionKey = "MAKV2SPBNI99212";
+            byte[] clearBytes = Encoding.Unicode.GetBytes(encryptedValue);
+            using (Aes encryptor = Aes.Create())
+            {
+                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
+                encryptor.Key = pdb.GetBytes(32);
+                encryptor.IV = pdb.GetBytes(16);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateEncryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(clearBytes, 0, clearBytes.Length);
+                        cs.Close();
+                    }
+                    encryptedValue = Convert.ToBase64String(ms.ToArray());
+                }
+            }
+            return encryptedValue;
         }
 
     }

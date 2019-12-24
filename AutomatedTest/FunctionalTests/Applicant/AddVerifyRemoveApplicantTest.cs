@@ -58,7 +58,6 @@ namespace AutomatedTest.FunctionalTests
                 HomePage.SwitchToParentFrame();
                 TemenosBasePage.NavigateToScreen(Constants.ApplicationPanelsAutomation);
                 Applicant.VerifyTextInAutomationPanel();
-                //Application.ApplicationPanelScores("National Risk", "304", "572", "37", "37", "572");
                 Applicant.EditAndVeifyApplicationPanelAdditionalApplicantDeclarations(this.validationTestData, 1);
                 Applicant.EditAndVeifyApplicationPanelAdditionalApplicantDeclarations(this.validationTestData, 2);
                 Applicant.EditAndVeifyApplicationPanelPrimaryApplicantDeclarations(this.validationTestData, 1);
@@ -66,14 +65,14 @@ namespace AutomatedTest.FunctionalTests
                 Applicant.SaveApplicationPanelAutomation();
                 HomePage.SwitchToParentFrame();
                 TemenosBasePage.NavigateToScreen(Constants.Liabilities);
-                Applicant.AddLiabilty("100", "Monthly", "15000.00", "10000.00", "550.00", "100100-2", "Medical", "Collection", "MICHAEL CHACOMMON", "100");
+                Applicant.AddLiabilty(this.validationTestData);
                 HomePage.SwitchToDefaultContent();
                 HomePage.SwitchToTabFrame();
                 TemenosBasePage.NavigateToScreen(Constants.LoanTermsAutomation);
                 LoanTermsAutomation.EnterFieldValuesInLoanTermPanel(this.validationTestData);
                 HomePage.SwitchToParentFrame();
                 TemenosBasePage.NavigateToScreen(Constants.Applicants);
-                Applicant.DeleteAppliciants("MARTINA BEACOMMON");
+                Applicant.DeleteAppliciants(this.validationTestData["ApplicantNames1"]);
                 HomePage.SwitchToParentFrame();
                 Applicant.UpateAndRemoveWithdraw();
                 HomePage.SwitchToDefaultContent();
