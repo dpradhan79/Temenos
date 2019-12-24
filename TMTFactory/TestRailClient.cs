@@ -49,5 +49,52 @@ namespace TMTFactory
                 }
             }
         }
+
+        public long GetProjectID(string projectName)
+        {
+            long projectID = 0;
+            JArray protects = (JArray)apiClient.SendGet("get_projects");
+            foreach (JObject test in protects)
+            {
+                if ((test["name"].ToString().Equals(projectName, StringComparison.OrdinalIgnoreCase)))
+                {
+                  string id = test["id"].ToString();
+                  projectID = long.Parse(id);                   
+                }                
+            }
+            return projectID;
+        }
+
+        public long GetSuiteID(string projectName,string suiteName)
+        {
+            long suiteID = 0;
+            JArray suites = (JArray)apiClient.SendGet("get_suites/" + GetProjectID(projectName));
+            foreach (JObject test in suites)
+            {
+                if ((test["name"].ToString().Equals(suiteName, StringComparison.OrdinalIgnoreCase)))
+                {
+                    string id = test["id"].ToString();
+                    suiteID = long.Parse(id);
+                }
+            }
+            return suiteID;
+        }
+
+
+        public long GetRunID(string projectName,string runName)
+        {
+            long runID = 0;
+            JArray runNames = (JArray)apiClient.SendGet("get_runs/" + GetProjectID(projectName));
+            foreach (JObject test in runNames)
+            {
+                if ((test["name"].ToString().Equals(runName, StringComparison.OrdinalIgnoreCase)))
+                {
+                    string id = test["id"].ToString();
+                    runID = long.Parse(id);
+                }
+            }
+            return runID;
+        }
+         
     }
 }

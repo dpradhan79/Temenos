@@ -37,6 +37,8 @@ namespace Engine.Setup
         private static string password = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "password");
         private static string testDataFileName = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "testDataFileName");
         private static int testRailRunId = Convert.ToInt16(StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "runId"));
+        private static string projectName = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "projectName");
+        private static string runName = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "runName");
        
         #endregion
 
@@ -368,6 +370,38 @@ namespace Engine.Setup
         {
             get { return EngineSetup.mailSubject; }
             set { EngineSetup.mailSubject = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the projectname.
+        /// </summary>
+        /// <value>
+        /// The projectname.
+        /// </value>
+        public static string PROJECTNAME
+        {
+            get
+            {
+                //environment variable will be read in case of Jenkins parameterized build execution
+                return Environment.GetEnvironmentVariable("projectname") != null ? Environment.GetEnvironmentVariable("projectname") : EngineSetup.projectName;
+            }
+            set { EngineSetup.projectName = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the runname.
+        /// </summary>
+        /// <value>
+        /// The runname.
+        /// </value>
+        public static string RUNNAME
+        {
+            get
+            {
+                //environment variable will be read in case of Jenkins parameterized build execution
+                return Environment.GetEnvironmentVariable("runname") != null ? Environment.GetEnvironmentVariable("runname") : EngineSetup.runName;
+            }
+            set { EngineSetup.runName = value; }
         }
 
     }

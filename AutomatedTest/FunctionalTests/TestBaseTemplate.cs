@@ -37,6 +37,7 @@ namespace AutomatedTest.FunctionalTests
         public StipulationsAutomationPage StipulationsAutomation = null;
         public DisbursePage Disburse = null;
         public TemenosBasePage TemenosBasePage = null;
+        public Utility Utility = null;
         #endregion
 
         /// <summary>
@@ -66,6 +67,7 @@ namespace AutomatedTest.FunctionalTests
             StipulationsAutomation = new StipulationsAutomationPage();
             Disburse = new DisbursePage();
             TemenosBasePage = new TemenosBasePage();
+            Utility = new Utility();
         }
 
         [AssemblyInitialize]
@@ -118,8 +120,8 @@ namespace AutomatedTest.FunctionalTests
 
             this.testException = null;
             this.TESTREPORT.InitTestCase(TestContext.TestName, TestContext.Properties["title"] as String);
-            this.LoadBusinessTestData();
-            LoginPage.SignIn(EngineSetup.UserName, EngineSetup.Password);
+            //this.LoadBusinessTestData();
+            LoginPage.SignIn(EngineSetup.UserName, Utility.Decrypt(EngineSetup.Password));
         }
 
         ////Use TestCleanup to run code after each test has run
