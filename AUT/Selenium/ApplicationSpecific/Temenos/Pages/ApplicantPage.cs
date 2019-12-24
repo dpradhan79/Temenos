@@ -85,7 +85,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         /// <param name="appliciantroles"></param>
         /// </summary>
 
-        public void AddApplicants(string roles, string accountNumber, string applicantNames)
+        public void AddApplicants(Dictionary<string, string> validationTestData,int index)
         {
             try
             {
@@ -95,12 +95,12 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
                 homePage.SwitchToParentFrame();
                 driver.WaitElementTextEquals(dialogAddApplicant, "Add Applicant");
                 driver.WaitElementPresent(txtAccountNumber);
-                driver.SendKeysToElement(txtAccountNumber, accountNumber, "Account Number");
-                driver.SelectDropdownItemByText(dropdownApplicantRoles, roles, "Appliciant Roles");
+                driver.SendKeysToElement(txtAccountNumber, validationTestData["ApplicantAccountNumber"+index], "Account Number");
+                driver.SelectDropdownItemByText(dropdownApplicantRoles, validationTestData["Roles"+index], "Appliciant Roles");
                 driver.ClickElement(btnOK, "OK");
                 homePage.SwitchToCentralFrame();
                 driver.WaitElementExistsAndVisible(btnSaveAndClose);
-                driver.VerifyTextValue(txtFullName, applicantNames);
+                driver.VerifyTextValue(txtFullName, validationTestData["ApplicantNames"+index]);
                 driver.ClickElement(btnSaveAndClose, "Save And Close");
             }
             catch (Exception ex)
@@ -110,15 +110,21 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
             }
         }
 
-        public void AddUpdateVerifyCreditReportingSystemScreen(string primarySubject, string creditBureau)
+        /// <summary>
+        /// Method of add update verify credit reporting system screen
+        /// <param name="PrimarySubject"></param>
+        /// <param name="PrimarySubject"></param>       
+        /// </summary>
+
+        public void AddUpdateVerifyCreditReportingSystemScreen(Dictionary<string, string> validationTestData)
         {
             driver.WaitElementExistsAndVisible(btnGetCreditReport);
             driver.ClickElement(btnGetCreditReport, "Get crredit Report");
             driver.WaitElementExistsAndVisible(dialogGetCreditReport);
             driver.WaitElementTextEquals(dialogGetCreditReport, "Get Credit Report");
             driver.WaitElementPresent(dropdownPrimarySubject);
-            driver.SelectDropdownItemByText(dropdownPrimarySubject, primarySubject, "Primary Subject");
-            driver.SelectDropdownItemByText(dropdownCreditBureau, creditBureau, "Credit Bureau");
+            driver.SelectDropdownItemByText(dropdownPrimarySubject, validationTestData["PrimarySubject"], "Primary Subject");
+            driver.SelectDropdownItemByText(dropdownCreditBureau, validationTestData["PrimarySubject"], "Credit Bureau");
             driver.ClickElement(btnSubmit, "Submit");
             WaitTillElementDisappeared(loadingRetrievingCreditReport);
             if (driver.IsWebElementDisplayed(lblCreditBureauResponse))
@@ -133,7 +139,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
             }
             else
             {
-                this.TESTREPORT.LogSuccess("Credit Reporting", "Added primary subject is not displayed in grid", this.SCREENSHOTFILE);
+                this.TESTREPORT.LogFailure("Credit Reporting", "Added primary subject is not displayed in grid", this.SCREENSHOTFILE);
             }
 
             By PrimarySubjectSelected = By.XPath("//td[text()='CHACOMMON, MICHAEL']/parent::tr/parent::tbody//td[@aria-describedby='CreditReportList_InUse']/input[@type='checkbox' and @checked='checked']");
@@ -143,46 +149,65 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
             }
             else
             {
-                this.TESTREPORT.LogSuccess("Credit Reporting", "Added primary subject is not displayed in grid", this.SCREENSHOTFILE);
+                this.TESTREPORT.LogFailure("Credit Reporting", "Added primary subject is not displayed in grid", this.SCREENSHOTFILE);
             }
 
         }
 
-        public void VerifyAppliciantsData(string name, string accountNum)
+        /// <summary>
+        /// Method of verify appliciants data
+        /// <param name="ApplicantNames"></param>
+        /// <param name="ApplicantAccountNumber"></param>       
+        /// </summary>
+
+        public void VerifyAppliciantsData(Dictionary<string, string> validationTestData,int index)
         {
-            By selectAppliciants = By.XPath("//span[text()='Applicants']/../../following-sibling::div//div[@class='a-card a-card-message']/b[text()='" + name + "']");
-            driver.ClickElementWithJavascript(selectAppliciants, "Select Appliciants " + name);
+            By selectAppliciants = By.XPath("//span[text()='Applicants']/../../following-sibling::div//div[@class='a-card a-card-message']/b[text()='" + validationTestData["ApplicantNames" + index] + "']");
+            driver.ClickElementWithJavascript(selectAppliciants, "Select Appliciants " + validationTestData["ApplicantNames" + index]);
             driver.WaitElementExistsAndVisible(btnEdit);
             driver.ClickElement(btnEdit, "Edit");
             WaitTillElementDisappeared(loadingSpin);
             driver.WaitElementPresent(txtFullName);
-            driver.VerifyTextValue(txtFullName, name);
-            driver.VerifyTextValue(txtIdentificationAccountNumber, accountNum);
+            driver.VerifyTextValue(txtFullName, validationTestData["ApplicantNames" + index]);
+            driver.VerifyTextValue(txtIdentificationAccountNumber, validationTestData["ApplicantAccountNumber" + index]);
             driver.ClickElement(btnSaveAndClose, "Save And Close");
             WaitTillElementDisappeared(loadingSpin);
         }
 
-        public void VerifyGridPanelAndFieldsOnPopupScreen(string name, string applicantType, string accountNum, string coreMessage, string homePhone, string workPhone, string email, string age, string riskTier)
+        /// <summary>
+        /// Method of verify grid panal and field on popup screen
+        /// <param name="Name"></param>
+        /// <param name="AccountNum"></param>       
+        /// <param name="ApplicantType"></param>  
+        /// <param name="CoreMessage"></param>  
+        /// <param name="HomePhone"></param>  
+        /// <param name="WorkPhone"></param>  
+        /// <param name="Email"></param>  
+        /// <param name="Age"></param>  
+        /// <param name="RiskTier"></param> 
+        /// </summary>
+
+        public void VerifyGridPanelAndFieldsOnPopupScreen(Dictionary<string, string> validationTestData,int index)
         {
             try
             {
-                By selectAppliciants = By.XPath("//span[text()='Applicants']/../../following-sibling::div//div[@class='a-card a-card-message']/b[text()='" + name + "']");
-                driver.ClickElementWithJavascript(selectAppliciants, "Select Appliciants " + name);
+                By selectAppliciants = By.XPath("//span[text()='Applicants']/../../following-sibling::div//div[@class='a-card a-card-message']/b[text()='" + validationTestData["Name"] + "']");
+                driver.ClickElementWithJavascript(selectAppliciants, "Select Appliciants " + validationTestData["Name"+index]);
                 driver.WaitElementExistsAndVisible(btnEdit);
                 driver.ClickElement(btnEdit, "Edit");
                 WaitTillElementDisappeared(loadingSpin);
                 driver.WaitElementPresent(txtFullName);
-                driver.VerifyTextValue(txtFullName, name);
-                driver.VerifyTextValue(txtIdentificationAccountNumber, accountNum);
+                driver.VerifyTextValue(txtFullName, validationTestData["Name"+index]);
+                driver.VerifyTextValue(txtIdentificationAccountNumber, validationTestData["AccountNum"+index]);
                 string type = driver.GetSelectedOption(dropdownApplicantType, 10);
-                driver.VerifyTextValue(type, applicantType);
-                driver.VerifyTextValue(lblCoreMessage, coreMessage);
-                driver.VerifyTextValue(lblHomePhone, homePhone);
-                driver.VerifyTextValue(lblWorkPhone, workPhone);
-                driver.VerifyTextValue(lblEmail, email);
-                driver.VerifyTextValue(lblAge, age);
+                driver.VerifyTextValue(type, validationTestData["ApplicantType"+index]);
+                driver.VerifyTextValue(lblCoreMessage, validationTestData["CoreMessage"+index]);
+                driver.VerifyTextValue(lblHomePhone, validationTestData["HomePhone"+index]);
+                driver.VerifyTextValue(lblWorkPhone, validationTestData["WorkPhone"+index]);
+                driver.VerifyTextValue(lblEmail, validationTestData["Email"+index]);
+                driver.VerifyTextValue(lblAge, validationTestData["Age"+index]);
                 string risk = driver.GetSelectedOption(dropdownRiskTier, 10);
-                driver.VerifyTextValue(risk, riskTier);
+                driver.VerifyTextValue(risk, validationTestData["RiskTier"+index]);
                 driver.ClickElement(btnSaveAndClose, "Save And Close");
                 WaitTillElementDisappeared(loadingSpin);
             }
@@ -193,6 +218,9 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
             }
 
         }
+        /// <summary>
+        /// Method of verify text in automation panel         
+        /// </summary>
 
         public void VerifyTextInAutomationPanel()
         {
@@ -211,6 +239,9 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
                 throw ex;
             }
         }
+        /// <summary>
+        /// Method of application panel scores     
+        /// </summary>
 
         public void ApplicationPanelScores(string model, string average, string high, string low, string name1, string name2)
         {
@@ -240,33 +271,39 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 
         }
 
-        public void EditAndVeifyApplicationPanelAdditionalApplicantDeclarations(string description, string value)
+        /// <summary>
+        /// Edit and verify application panel additional applicant declaration
+        /// <param name="AditionalDeclaration"></param>
+        /// <param name="AditionalDeclarationValue"></param>       
+        /// </summary>
+
+        public void EditAndVeifyApplicationPanelAdditionalApplicantDeclarations(Dictionary<string, string> validationTestData, int index)
         {
             try
             {
-                By descrip = By.XPath("//table[@id='AADeclarationsList']//td[text()='" + description + "']");
-                By descripchk = By.XPath("//table[@id='AADeclarationsList']//td[text()='" + description + "']/../td/input[@type='checkbox']");
-                driver.ClickElement(descrip, description);
-                driver.ClickElement(descripchk, "Check Box " + description);
+                By descrip = By.XPath("//table[@id='AADeclarationsList']//td[text()='" + validationTestData["AditionalDeclaration" + index] + "']");
+                By descripchk = By.XPath("//table[@id='AADeclarationsList']//td[text()='" + validationTestData["AditionalDeclaration" + index] + "']/../td/input[@type='checkbox']");
+                driver.ClickElement(descrip, validationTestData["AditionalDeclaration" + index]);
+                driver.ClickElement(descripchk, "Check Box " + validationTestData["AditionalDeclaration" + index]);
 
                 bool selected = driver.FindElement(descripchk).Selected;
                 if (selected)
                 {
-                    this.TESTREPORT.LogSuccess("Additional Appliciant Declarations", "User selected the appliciant declarations " + description);
+                    this.TESTREPORT.LogSuccess("Additional Appliciant Declarations", "User selected the appliciant declarations " + validationTestData["AditionalDeclaration" + index]);
                 }
                 else
                 {
-                    this.TESTREPORT.LogFailure("Additional Appliciant Declarations", "User selected the appliciant declarations " + description, this.SCREENSHOTFILE);
+                    this.TESTREPORT.LogFailure("Additional Appliciant Declarations", "User selected the appliciant declarations " + validationTestData["AditionalDeclaration" + index], this.SCREENSHOTFILE);
                 }
-                By input = By.XPath("//table[@id='AADeclarationsList']//td[text()='" + description + "']/..//input[@name='AnswerExplanation']");
-                driver.SendKeysToElement(input, value, description);
-                driver.ClickElement(input, description);
+                By input = By.XPath("//table[@id='AADeclarationsList']//td[text()='" + validationTestData["AditionalDeclaration" + index] + "']/..//input[@name='AnswerExplanation']");
+                driver.SendKeysToElement(input, validationTestData["AditionalDeclarationValue" + index], validationTestData["AditionalDeclaration" + index]);
+                driver.ClickElement(input, validationTestData["AditionalDeclaration" + index]);
                 //Actions act = new Actions(driver);
                 //act.KeyDown(OpenQA.Selenium.Keys.Enter).KeyUp(OpenQA.Selenium.Keys.Enter).Build().Perform();
                 driver.FindElement(input).SendKeys(OpenQA.Selenium.Keys.Enter);
 
-                By explanationValue = By.XPath("//table[@id='AADeclarationsList']//td[text()='" + description + "']/../td[@aria-describedby='AADeclarationsList_AnswerExplanation']");
-                driver.VerifyTextValue(explanationValue, value);
+                By explanationValue = By.XPath("//table[@id='AADeclarationsList']//td[text()='" + validationTestData["AditionalDeclaration" + index] + "']/../td[@aria-describedby='AADeclarationsList_AnswerExplanation']");
+                driver.VerifyTextValue(explanationValue, validationTestData["AditionalDeclarationValue" + index]);
 
             }
             catch (Exception)
@@ -276,33 +313,38 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
             }
 
         }
+        /// <summary>
+        /// Edit and verify application panel primary applicant declarations
+        /// <param name="PrimaryDeclaration"></param>
+        /// <param name="PrimaryDeclarationValue"></param>       
+        /// </summary>
 
-        public void EditAndVeifyApplicationPanelPrimaryApplicantDeclarations(string description, string value)
+        public void EditAndVeifyApplicationPanelPrimaryApplicantDeclarations(Dictionary<string, string> validationTestData, int index)
         {
             try
             {
-                By descrip = By.XPath("//table[@id='PADeclarationsList']//td[text()='" + description + "']");
-                By descripchk = By.XPath("//table[@id='PADeclarationsList']//td[text()='" + description + "']/../td/input[@type='checkbox']");
-                driver.ClickElement(descrip, description);
-                driver.ClickElement(descripchk, "Check Box " + description);
+                By descrip = By.XPath("//table[@id='PADeclarationsList']//td[text()='" + validationTestData["PrimaryDeclaration" + index] + "']");
+                By descripchk = By.XPath("//table[@id='PADeclarationsList']//td[text()='" + validationTestData["PrimaryDeclaration" + index] + "']/../td/input[@type='checkbox']");
+                driver.ClickElement(descrip, validationTestData["PrimaryDeclaration" + index]);
+                driver.ClickElement(descripchk, "Check Box " + validationTestData["PrimaryDeclaration" + index]);
 
                 bool selected = driver.FindElement(descripchk).Selected;
                 if (selected)
                 {
-                    this.TESTREPORT.LogSuccess("Primary Appliciant Declarations", "User selected the appliciant declarations " + description);
+                    this.TESTREPORT.LogSuccess("Primary Appliciant Declarations", "User selected the appliciant declarations " + validationTestData["PrimaryDeclaration" + index]);
                 }
                 else
                 {
-                    this.TESTREPORT.LogFailure("Primary Appliciant Declarations", "User selected the appliciant declarations " + description, this.SCREENSHOTFILE);
+                    this.TESTREPORT.LogFailure("Primary Appliciant Declarations", "User selected the appliciant declarations " + validationTestData["PrimaryDeclaration" + index], this.SCREENSHOTFILE);
                 }
-                By input = By.XPath("//table[@id='PADeclarationsList']//td[text()='" + description + "']/..//input[@name='AnswerExplanation']");
-                driver.SendKeysToElement(input, value, description);
+                By input = By.XPath("//table[@id='PADeclarationsList']//td[text()='" + validationTestData["PrimaryDeclaration" + index] + "']/..//input[@name='AnswerExplanation']");
+                driver.SendKeysToElement(input, validationTestData["PrimaryDeclarationValue" + index], validationTestData["PrimaryDeclaration" + index]);
                 //Actions act = new Actions(driver);
                 //act.KeyDown(OpenQA.Selenium.Keys.Enter).KeyUp(OpenQA.Selenium.Keys.Enter).Build().Perform();
                 driver.FindElement(input).SendKeys(OpenQA.Selenium.Keys.Enter);
 
-                By explanationValue = By.XPath("//table[@id='PADeclarationsList']//td[text()='" + description + "']/../td[@aria-describedby='PADeclarationsList_AnswerExplanation']");
-                driver.VerifyTextValue(explanationValue, value);
+                By explanationValue = By.XPath("//table[@id='PADeclarationsList']//td[text()='" + validationTestData["PrimaryDeclaration" + index] + "']/../td[@aria-describedby='PADeclarationsList_AnswerExplanation']");
+                driver.VerifyTextValue(explanationValue, validationTestData["PrimaryDeclarationValue" + index]);
             }
             catch (Exception)
             {
@@ -311,6 +353,9 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
             }
 
         }
+        /// <summary>
+        /// Method of save application panel automation           
+        /// </summary>
 
         public void SaveApplicationPanelAutomation()
         {
@@ -329,6 +374,19 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
             }
         }
 
+        /// <summary>
+        ///Method of add liabilty
+        /// <param name="Secured"></param>
+        /// <param name="Expense"></param> 
+        /// <param name="Refi"></param>  
+        /// <param name="Balance"></param>  
+        /// <param name="Limit"></param>  
+        /// <param name="PaymentAmount"></param>  
+        /// <param name="PaymentFrequency""></param>  
+        /// <param name="AccountNumber"></param>  
+        /// <param name="Category"></param>  
+        /// <param name="Type"></param> 
+        /// </summary>
 
         public void AddLiabilty(string percentageInclude, string frequency, string balance, string limit, string payment, string accountNumber,
             string category, string type, string name, string value)
@@ -364,6 +422,10 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 
         }
 
+        /// <summary>
+        /// Method of add percentage to applicant      
+        /// </summary>
+
         private void AddPercentageToApplicant(string name, string value)
         {
 
@@ -392,6 +454,9 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 
         }
 
+        /// <summary>
+        ///Method of delete appliciant           
+        /// </summary>
         public void DeleteAppliciants(string name)
         {
             try
@@ -422,6 +487,10 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
                 throw ex;
             }
         }
+
+        /// <summary>
+        ///Method of update anad remove withdraw       
+        /// </summary>
 
         public void UpateAndRemoveWithdraw()
         {
@@ -461,6 +530,10 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
             }
         }
 
+
+        /// <summary>
+        /// Method of get review indicator name position             
+        /// </summary>
         private int GetReviewIndicatorNamePosition(String model)
         {
             try

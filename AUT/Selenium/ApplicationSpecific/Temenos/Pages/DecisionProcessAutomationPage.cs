@@ -71,7 +71,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
                 }
                 else
                 {
-                    this.TESTREPORT.LogFailure("Review Indicators Name", String.Format("Name : <mark>{0}</mark> is not present under Name column in Review Indicators grid", validationTestData["ReviewIndicatorName" + index]));
+                    this.TESTREPORT.LogFailure("Review Indicators Name", String.Format("Name : <mark>{0}</mark> is not present under Name column in Review Indicators grid", validationTestData["ReviewIndicatorName" + index]),this.SCREENSHOTFILE);
                 }
             }
             catch (Exception ex)
