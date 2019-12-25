@@ -26,11 +26,8 @@ namespace AutomatedTest.FunctionalTests
     {     
         /// <summary>
         /// Test case Auto Decision Process.
-        /// </summary>
-        [TestMethod]
-        [TestCategory("AutoDecisionProcess")]
-        [TestCategory("DecisionProcess")]
-        [TestProperty("title", "Auto Decision Process")]
+        /// </summary>       
+        [TestMethod, TestCategory("DecisionProcess"), TestCategory("AutoDecisionProcess"), TestProperty("title", "Auto Decision Process")]
         public void TestAutoDecisionProcess()
         {
             #region Approve            

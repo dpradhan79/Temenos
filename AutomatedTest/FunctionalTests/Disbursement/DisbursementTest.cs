@@ -26,11 +26,8 @@ namespace AutomatedTest.FunctionalTests
     {
          /// <summary>
         /// Test case for Disbursement.
-        /// </summary>
-        [TestMethod]
-        [TestCategory("Disbursement")]
-        [TestCategory("DecisionProcess")]
-        [TestProperty("title", "Disbursement")]
+        /// </summary>        
+        [TestMethod, TestCategory("DecisionProcess"), TestCategory("Disbursement"), TestProperty("title", "Disbursement")]
         public void TestDisbursement()
         {           
             #region Disbursement
