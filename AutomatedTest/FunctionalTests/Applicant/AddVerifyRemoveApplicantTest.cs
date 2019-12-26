@@ -26,9 +26,8 @@ namespace AutomatedTest.FunctionalTests
          /// <summary>
         /// Test case for Add And Verify Appliciant
         /// </summary>
-        [TestMethod]
-        [TestCategory("Application")]
-        [TestProperty("title", "Add And Verify Applicant")]
+        [TestMethod, TestCategory("Application"), TestProperty("title", "Add And Verify Applicant")]       
+       
         public void TestAddVerifyRemoveApplicant()
         {          
             #region Add Applicant To App

@@ -26,11 +26,8 @@ namespace AutomatedTest.FunctionalTests
     {
         /// <summary>
         /// Test case for Manual Reject.
-        /// </summary>
-        [TestMethod]
-        [TestCategory("ManualReject")]
-        [TestCategory("DecisionProcess")]
-        [TestProperty("title", "Manual Reject")]
+        /// </summary>        
+        [TestMethod, TestCategory("DecisionProcess"), TestCategory("ManualReject"), TestProperty("title", "Manual Reject")]
         public void TestManualReject()        {
            
             #region ManualReject
