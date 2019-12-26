@@ -154,12 +154,12 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
                 By PrimarySubjectSelected = By.XPath("//td[text()='CHACOMMON, MICHAEL']/parent::tr/parent::tbody//td[@aria-describedby='CreditReportList_InUse']/input[@type='checkbox' and @checked='checked']");
                 if (driver.IsWebElementDisplayed(PrimarySubjectSelected))
                 {
-                    this.TESTREPORT.LogSuccess("Credit Reporting", String.Format("Added primary subject <mark>{0}</mark> is displayed in grid and also use report selected by default", validationTestData["PrimarySubject"]));
+                    this.TESTREPORT.LogSuccess("Credit Reporting", String.Format("Added primary subject <mark>{0}</mark> is displayed in grid and use report selected by default", validationTestData["PrimarySubject"]));
                 }
                 else
                 {
-                    this.TESTREPORT.LogFailure("Credit Reporting", String.Format("Added primary subject <mark>{0}</mark> is displayed in grid and also use report not selected by default", validationTestData["PrimarySubject"]),this.SCREENSHOTFILE);
-                    TemenosBasePage.dictError.Add("Credit Reporting", String.Format("Added primary subject {0} is displayed in grid and also use report not selected by default", validationTestData["PrimarySubject"]));
+                    this.TESTREPORT.LogFailure("Credit Reporting", String.Format("Added primary subject <mark>{0}</mark> is displayed in grid and use report not selected by default", validationTestData["PrimarySubject"]),this.SCREENSHOTFILE);
+                    TemenosBasePage.dictError.Add("Credit Reporting", String.Format("Added primary subject {0} is displayed in grid and use report not selected by default", validationTestData["PrimarySubject"]));
                 }
             }
             catch (Exception ex)
@@ -187,8 +187,8 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
             driver.ClickElement(btnEdit, "Edit");
             WaitTillElementDisappeared(loadingSpin);
             driver.WaitElementPresent(txtFullName);
-            driver.VerifyTextValue(txtFullName, validationTestData["ApplicantNames" + index]);
-            driver.VerifyTextValue(txtIdentificationAccountNumber, validationTestData["ApplicantAccountNumber" + index]);
+            driver.VerifyTextValue(txtFullName, validationTestData["ApplicantNames" + index],"Applicant Name");
+            driver.VerifyTextValue(txtIdentificationAccountNumber, validationTestData["ApplicantAccountNumber" + index],"Account Number");
             driver.ClickElement(btnSaveAndClose, "Save And Close");
             WaitTillElementDisappeared(loadingSpin);
             }
@@ -222,17 +222,45 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
                 driver.ClickElement(btnEdit, "Edit");
                 WaitTillElementDisappeared(loadingSpin);
                 driver.WaitElementPresent(txtFullName);
-                driver.VerifyTextValue(txtFullName, validationTestData["Name"+index]);
-                driver.VerifyTextValue(txtIdentificationAccountNumber, validationTestData["AccountNum"+index]);
+                driver.VerifyTextValue(txtFullName, validationTestData["Name"+index],"Full Name");
+                driver.VerifyTextValue(txtIdentificationAccountNumber, validationTestData["AccountNum"+index],"Account Nuber");
                 string type = driver.GetSelectedOption(dropdownApplicantType, 10);
-                driver.VerifyTextValue(type, validationTestData["ApplicantType"+index]);
-                driver.VerifyTextValue(lblCoreMessage, validationTestData["CoreMessage"+index]);
-                driver.VerifyTextValue(lblHomePhone, validationTestData["HomePhone"+index]);
-                driver.VerifyTextValue(lblWorkPhone, validationTestData["WorkPhone"+index]);
-                driver.VerifyTextValue(lblEmail, validationTestData["Email"+index]);
-                driver.VerifyTextValue(lblAge, validationTestData["Age"+index]);
+                bool applicationTypeStatus = driver.VerifyTextValue(type, validationTestData["ApplicantType"+index],"Applicant Type");
+                if (!applicationTypeStatus)
+                {
+                    TemenosBasePage.dictError.Add("Applicant Details - ApplicantType", String.Format("Actual Value does not matched with expected value: {0}", validationTestData["ApplicantType" + index]));
+                }
+                bool CoreMessageStatus = driver.VerifyTextValue(lblCoreMessage, validationTestData["CoreMessage"+index],"Core Message");
+                if (!CoreMessageStatus)
+                {
+                    TemenosBasePage.dictError.Add("Applicant Details - CoreMessage", String.Format("Actual Value does not matched with expected value: {0}", validationTestData["CoreMessage" + index]));
+                }
+                bool HomePhoneStatus =driver.VerifyTextValue(lblHomePhone, validationTestData["HomePhone"+index],"Home Phone");
+                if (!HomePhoneStatus)
+                {
+                    TemenosBasePage.dictError.Add("Applicant Details - HomePhone", String.Format("Actual Value does not matched with expected value: {0}", validationTestData["HomePhone" + index]));
+                }
+               bool WorkPhoneStatus = driver.VerifyTextValue(lblWorkPhone, validationTestData["WorkPhone"+index],"Work Phone");
+               if (!WorkPhoneStatus)
+                {
+                    TemenosBasePage.dictError.Add("Applicant Details - WorkPhone", String.Format("Actual Value does not matched with expected value: {0}", validationTestData["WorkPhone" + index]));
+                }
+                bool EmailStatus = driver.VerifyTextValue(lblEmail, validationTestData["Email"+index],"Email");
+                if (!EmailStatus)
+                {
+                    TemenosBasePage.dictError.Add("Applicant Details - Email", String.Format("Actual Value does not matched with expected value: {0}", validationTestData["Email" + index]));
+                }
+                bool AgeStatus = driver.VerifyTextValue(lblAge, validationTestData["Age"+index],"Age");
+                if (!AgeStatus)
+                {
+                    TemenosBasePage.dictError.Add("Applicant Details - Age - "+validationTestData["Age"+index], String.Format("Actual Value does not matched with expected value: {0}", validationTestData["Age" + index]));
+                }
                 string risk = driver.GetSelectedOption(dropdownRiskTier, 10);
-                driver.VerifyTextValue(risk, validationTestData["RiskTier"+index]);
+               bool RiskTierStatus = driver.VerifyTextValue(risk, validationTestData["RiskTier"+index],"RiskTier");
+               if (!RiskTierStatus)
+                {
+                    TemenosBasePage.dictError.Add("Applicant Details - RiskTier - " + validationTestData["RiskTier" + index], String.Format("Actual Value does not matched with expected value: {0}", validationTestData["RiskTier" + index]));
+                }
                 driver.ClickElement(btnSaveAndClose, "Save And Close");
                 WaitTillElementDisappeared(loadingSpin);
             }
@@ -254,7 +282,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
                 driver.VerifyTextValue(lblPanelText, "Whether you're buying new or used or refinancing from another lender");
                 string textUsedAutos = driver.GetElementText(lblUsedAutos);
                 driver.VerifyTextValue(textUsedAutos, "Used Autos");
-                string textRefinance = driver.GetElementText(lblUsedAutos);
+                string textRefinance = driver.GetElementText(lblAutoRefiance);
                 driver.VerifyTextValue(textRefinance, "Auto Refinance");
                 driver.VerifyTextValue(lblPanelText, "RATES");
                 string textAutoLabels = driver.GetElementText(lblAutoLabels);
