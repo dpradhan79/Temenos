@@ -121,39 +121,48 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 
         public void AddUpdateVerifyCreditReportingSystemScreen(Dictionary<string, string> validationTestData)
         {
-            driver.WaitElementExistsAndVisible(btnGetCreditReport);
-            driver.ClickElement(btnGetCreditReport, "Get crredit Report");
-            driver.WaitElementExistsAndVisible(dialogGetCreditReport);
-            driver.WaitElementTextEquals(dialogGetCreditReport, "Get Credit Report");
-            driver.WaitElementPresent(dropdownPrimarySubject);
-            driver.SelectDropdownItemByText(dropdownPrimarySubject, validationTestData["PrimarySubject"], "Primary Subject");
-            driver.SelectDropdownItemByText(dropdownCreditBureau, validationTestData["CreditBureau"], "Credit Bureau");
-            driver.ClickElement(btnSubmit, "Submit");
-            WaitTillElementDisappeared(loadingRetrievingCreditReport);
-            if (driver.IsWebElementDisplayed(lblCreditBureauResponse))
+            try
             {
-                driver.ClickElement(btnCreditBureauResponseNo, "Credit Bureau Response No");
-            }
+                driver.WaitElementExistsAndVisible(btnGetCreditReport);
+                driver.ClickElement(btnGetCreditReport, "Get crredit Report");
+                driver.WaitElementExistsAndVisible(dialogGetCreditReport);
+                driver.WaitElementTextEquals(dialogGetCreditReport, "Get Credit Report");
+                driver.WaitElementPresent(dropdownPrimarySubject);
+                driver.SelectDropdownItemByText(dropdownPrimarySubject, validationTestData["PrimarySubject"], "Primary Subject");
+                driver.SelectDropdownItemByText(dropdownCreditBureau, validationTestData["CreditBureau"], "Credit Bureau");
+                driver.ClickElement(btnSubmit, "Submit");
+                WaitTillElementDisappeared(loadingRetrievingCreditReport);
+                if (driver.IsWebElementDisplayed(lblCreditBureauResponse))
+                {
+                    driver.ClickElement(btnCreditBureauResponseNo, "Credit Bureau Response No");
+                }
 
-            By PrimarySubject = By.XPath("//form[@id='CreditReportingGrid']//tbody//tr[2]//td[text()='CHACOMMON, MICHAEL']");
-            if (driver.IsWebElementDisplayed(PrimarySubject))
-            {
-                this.TESTREPORT.LogSuccess("Credit Reporting", "Added primary subject is displayed in grid");
-            }
-            else
-            {
-                this.TESTREPORT.LogFailure("Credit Reporting", "Added primary subject is not displayed in grid", this.SCREENSHOTFILE);
-            }
+                By PrimarySubject = By.XPath("//form[@id='CreditReportingGrid']//tbody//tr[2]//td[text()='CHACOMMON, MICHAEL']");
+                if (driver.IsWebElementDisplayed(PrimarySubject))
+                {
+                    this.TESTREPORT.LogSuccess("Credit Reporting", "Added primary subject is displayed in grid");
+                }
+                else
+                {
+                    this.TESTREPORT.LogFailure("Credit Reporting", "Added primary subject is not displayed in grid", this.SCREENSHOTFILE);
+                }
 
-            By PrimarySubjectSelected = By.XPath("//td[text()='CHACOMMON, MICHAEL']/parent::tr/parent::tbody//td[@aria-describedby='CreditReportList_InUse']/input[@type='checkbox' and @checked='checked']");
-            if (driver.IsWebElementDisplayed(PrimarySubjectSelected))
-            {
-                this.TESTREPORT.LogSuccess("Credit Reporting", "Added primary subject is displayed in grid and also use report selected by default");
+                By PrimarySubjectSelected = By.XPath("//td[text()='CHACOMMON, MICHAEL']/parent::tr/parent::tbody//td[@aria-describedby='CreditReportList_InUse']/input[@type='checkbox' and @checked='checked']");
+                if (driver.IsWebElementDisplayed(PrimarySubjectSelected))
+                {
+                    this.TESTREPORT.LogSuccess("Credit Reporting", "Added primary subject is displayed in grid and also use report selected by default");
+                }
+                else
+                {
+                    this.TESTREPORT.LogFailure("Credit Reporting", "Added primary subject is not displayed in grid and it is not selected by default", this.SCREENSHOTFILE);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                this.TESTREPORT.LogFailure("Credit Reporting", "Added primary subject is not displayed in grid", this.SCREENSHOTFILE);
+                
+                throw ex;
             }
+            
 
         }
 
@@ -165,6 +174,8 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 
         public void VerifyAppliciantsData(Dictionary<string, string> validationTestData,int index)
         {
+            try
+            {
             By selectAppliciants = By.XPath("//span[text()='Applicants']/../../following-sibling::div//div[@class='a-card a-card-message']/b[text()='" + validationTestData["ApplicantNames" + index] + "']");
             driver.ClickElementWithJavascript(selectAppliciants, "Select Appliciants " + validationTestData["ApplicantNames" + index]);
             driver.WaitElementExistsAndVisible(btnEdit);
@@ -175,6 +186,12 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
             driver.VerifyTextValue(txtIdentificationAccountNumber, validationTestData["ApplicantAccountNumber" + index]);
             driver.ClickElement(btnSaveAndClose, "Save And Close");
             WaitTillElementDisappeared(loadingSpin);
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -228,8 +245,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         public void VerifyTextInAutomationPanel()
         {
             try
-            {
-                
+            {                
                 driver.VerifyTextValue(lblPanelText, "Whether you're buying new or used or refinancing from another lender");
                 string textUsedAutos = driver.GetElementText(lblUsedAutos);
                 driver.VerifyTextValue(textUsedAutos, "Used Autos");
@@ -432,29 +448,34 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 
         private void AddPercentageToApplicant(string name, string value)
         {
-
-            By applicantName = By.XPath("//td[text()='" + name + "']");
-            By mapTOLiability = By.XPath("//td[text()='" + name + "']/..//input[@type='checkbox']");
-
-            driver.ClickElement(applicantName, name);
-            driver.ClickElement(mapTOLiability, "Check Box " + name);
-
-            bool selected = driver.FindElement(mapTOLiability).Selected;
-            if (selected)
+            try
             {
-                this.TESTREPORT.LogSuccess("Add Liabilty", "Map to Liabilty" + name);
-            }
-            else
-            {
-                this.TESTREPORT.LogFailure("Add Liabilty", "Map to Liabilty " + name, this.SCREENSHOTFILE);
-            }
-            By input = By.XPath("//td[text()='" + name + "']/..//input[@name='PercentageResponsible']");
-            driver.FindElement(input).Clear();
-            driver.SendKeysToElement(input, value, name);
-            //Actions act = new Actions(driver);
-            //act.KeyDown(OpenQA.Selenium.Keys.Enter).KeyUp(OpenQA.Selenium.Keys.Enter).Build().Perform();
-            driver.FindElement(input).SendKeys(OpenQA.Selenium.Keys.Enter);
+                By applicantName = By.XPath("//td[text()='" + name + "']");
+                By mapTOLiability = By.XPath("//td[text()='" + name + "']/..//input[@type='checkbox']");
 
+                driver.ClickElement(applicantName, name);
+                driver.ClickElement(mapTOLiability, "Check Box " + name);
+
+                bool selected = driver.FindElement(mapTOLiability).Selected;
+                if (selected)
+                {
+                    this.TESTREPORT.LogSuccess("Add Liabilty", "Map to Liabilty" + name);
+                }
+                else
+                {
+                    this.TESTREPORT.LogFailure("Add Liabilty", "Map to Liabilty " + name, this.SCREENSHOTFILE);
+                }
+                By input = By.XPath("//td[text()='" + name + "']/..//input[@name='PercentageResponsible']");
+                driver.FindElement(input).Clear();
+                driver.SendKeysToElement(input, value, name);
+                //Actions act = new Actions(driver);
+                //act.KeyDown(OpenQA.Selenium.Keys.Enter).KeyUp(OpenQA.Selenium.Keys.Enter).Build().Perform();
+                driver.FindElement(input).SendKeys(OpenQA.Selenium.Keys.Enter);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
         }
 
@@ -498,23 +519,32 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 
         public void UpateAndRemoveWithdraw()
         {
-            driver.ClickElement(btnMore, "More");
-            driver.ClickElement(btnWithdraw, "Withdraw");
-            driver.WaitElementExistsAndVisible(lblWithdrawApplication);
-            driver.WaitElementExistsAndVisible(dropdownWithdrawnReason);
-            driver.SelectDropdownItemByText(dropdownWithdrawnReason, "Applicant Changed Mind", "Withdrawn Reason");
-            int count = driver.FindElements(sendAdverseActionTo).Count;
-            int checkedCount = driver.FindElements(checkboxSendAdverseActionToCheckState).Count;
-            if (count == checkedCount)
+            try
             {
-                this.TESTREPORT.LogSuccess("Send Adverse Action To", "All are selecetd by default ");
+                driver.ClickElement(btnMore, "More");
+                driver.ClickElement(btnWithdraw, "Withdraw");
+                driver.WaitElementExistsAndVisible(lblWithdrawApplication);
+                driver.WaitElementExistsAndVisible(dropdownWithdrawnReason);
+                driver.SelectDropdownItemByText(dropdownWithdrawnReason, "Applicant Changed Mind", "Withdrawn Reason");
+                int count = driver.FindElements(sendAdverseActionTo).Count;
+                int checkedCount = driver.FindElements(checkboxSendAdverseActionToCheckState).Count;
+                if (count == checkedCount)
+                {
+                    this.TESTREPORT.LogSuccess("Send Adverse Action To", "All are selecetd by default ");
+                }
+                else
+                {
+                    this.TESTREPORT.LogFailure("Send Adverse Action To", "All are not selected by default ", this.SCREENSHOTFILE);
+                }
+                driver.ClickElement(btnWithdrawApplication, "Withdraw");
+                HandleSuccessPopup();
+
             }
-            else
+            catch (Exception ex)
             {
-                this.TESTREPORT.LogFailure("Send Adverse Action To", "All are not selected by default ", this.SCREENSHOTFILE);
-            }
-            driver.ClickElement(btnWithdrawApplication, "Withdraw");
-            HandleSuccessPopup();
+                
+                throw ex;
+            } 
         }
 
         /// <summary>

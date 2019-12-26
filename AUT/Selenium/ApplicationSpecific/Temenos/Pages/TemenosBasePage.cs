@@ -20,15 +20,21 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 
         #region UI Object Repository
         private By loadingSpin = By.XPath("//div[text()='Loading...']");
-       
-
         #endregion
 
         #region Public Methods
         public void WaitUpToLoadingIconDisable()
         {
-            SimulateThinkTimeInMilliSecs(5000); 
-            WaitTillElementDisappeared(loadingSpin);
+            try
+            {
+                SimulateThinkTimeInMilliSecs(5000);
+                WaitTillElementDisappeared(loadingSpin);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         
