@@ -18,6 +18,9 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 {
     public class HomePage : AbstractTemplatePage
     {
+        //#region Page Object For BasePage
+        //TemenosBasePage temenosBasePage = new TemenosBasePage();
+        //#endregion
        
         #region UI Object Repository
         private By btnCreate = By.XPath("//button[contains(@class,'icon-application')]");
@@ -307,11 +310,12 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
                 driver.ClickElementWithJavascript(closeApplication, "Close the application for" + applicationNumber);
                 if (!driver.IsWebElementDisplayed(closeApplication)) 
                 {
-                this.TESTREPORT.LogSuccess("Close And verify Application", String.Format("Application Number : <mark>{0}</mark> is not present in desktop pages",applicationNumber));
+                this.TESTREPORT.LogSuccess("Close And verify Application", String.Format("Application Number : <mark>{0}</mark> is not present in Home Page",applicationNumber));
                 }
                 else
                 {
-                this.TESTREPORT.LogFailure("Close And verify Application", String.Format("Application Number : <mark>{0}</mark> is present in desktop pages,not closed", applicationNumber));
+                this.TESTREPORT.LogFailure("Close And verify Application", String.Format("Application Number : <mark>{0}</mark> is present in Home Page ,not closed", applicationNumber));
+                TemenosBasePage.dictError.Add("Close And verify Application", String.Format("Application Number : {0} is present in Home Page ,not closed", applicationNumber));
                 }
             }
             catch (Exception ex)

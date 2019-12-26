@@ -43,8 +43,8 @@ namespace AutomatedTest.FunctionalTests
                 HomePage.VerifyDecisioningApplication(Constants.LoRejected, this.validationTestData);
                 HomePage.SwitchToDefaultContent();
                 HomePage.CloseAndVerifyApplication(approveApplicationNumber);
-                HomePage.ClickLogOff();               
-
+                HomePage.ClickLogOff();
+                TemenosBasePage.CheckFailures();
             }
             catch (Exception ex)
             {               

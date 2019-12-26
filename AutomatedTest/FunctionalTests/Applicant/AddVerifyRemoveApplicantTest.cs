@@ -76,7 +76,8 @@ namespace AutomatedTest.FunctionalTests
                 Applicant.UpateAndRemoveWithdraw();
                 HomePage.SwitchToDefaultContent();
                 HomePage.CloseAndVerifyApplication(approveApplicationNumber);
-                HomePage.ClickLogOff();              
+                HomePage.ClickLogOff();
+                TemenosBasePage.CheckFailures();
             }
             catch (Exception ex)
             {

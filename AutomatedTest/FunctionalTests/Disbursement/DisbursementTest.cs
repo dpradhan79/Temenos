@@ -53,8 +53,8 @@ namespace AutomatedTest.FunctionalTests
                 StipulationsAutomation.AddStipulations(this.validationTestData, 1);
                 HomePage.SwitchToDefaultContent();
                 HomePage.CloseAndVerifyApplication(approveApplicationNumber);
-                HomePage.ClickLogOff();               
-
+                HomePage.ClickLogOff();
+                TemenosBasePage.CheckFailures();
             }
             catch (Exception ex)
             {               

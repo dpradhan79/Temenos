@@ -18,6 +18,8 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
     public class TemenosBasePage : AbstractTemplatePage
     {
 
+        public static Dictionary<String, String> dictError = new Dictionary<string, string>();
+
         #region UI Object Repository
         private By loadingSpin = By.XPath("//div[text()='Loading...']");
         #endregion
@@ -27,7 +29,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         {
             try
             {
-                SimulateThinkTimeInMilliSecs(5000);
+                SimulateThinkTimeInMilliSecs(2000);
                 WaitTillElementDisappeared(loadingSpin);
             }
             catch (Exception ex)
@@ -62,8 +64,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         }
 
         #endregion
-
-        #region Private Methods
+       
          /// <summary>
         /// Navigate to screen
         /// <param name="screenflowHeaderName"></param>
@@ -88,7 +89,23 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
             }
 
         }
+      
+        public void CheckFailures()
+        {
+            string strInbulitException = null;
+           
+            if (dictError.Count() > 0)
+            {
+                foreach (var item in dictError)
+                {
+                    strInbulitException += String.Format("{0}-{1};", item.Key, item.Value);
+                }
+                throw new Exception(strInbulitException);
+            }
+           
+        }
 
+       #region Private Methods
          /// <summary>
         /// Swith to central frame
         /// </summary>

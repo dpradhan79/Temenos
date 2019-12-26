@@ -17,7 +17,10 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 {
     public class ApplicantPage : AbstractTemplatePage
     {
-
+        //#region Page Object For BasePage
+        //TemenosBasePage temenosBasePage = new TemenosBasePage();
+        //#endregion
+        
         #region UI Object Repository
         private By btnAdd = By.XPath("//button[text()='Add']");
         private By dialogAddApplicant = By.XPath("//div[@aria-describedby='aadialogAddApplicant']//span[@class='ui-dialog-title']");
@@ -140,21 +143,23 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
                 By PrimarySubject = By.XPath("//form[@id='CreditReportingGrid']//tbody//tr[2]//td[text()='CHACOMMON, MICHAEL']");
                 if (driver.IsWebElementDisplayed(PrimarySubject))
                 {
-                    this.TESTREPORT.LogSuccess("Credit Reporting", "Added primary subject is displayed in grid");
+                    this.TESTREPORT.LogSuccess("Credit Reporting", String.Format("Added primary subject <mark>{0}</mark> is displayed in grid", validationTestData["PrimarySubject"]));
                 }
                 else
                 {
-                    this.TESTREPORT.LogFailure("Credit Reporting", "Added primary subject is not displayed in grid", this.SCREENSHOTFILE);
+                    this.TESTREPORT.LogFailure("Credit Reporting", String.Format("Added primary subject <mark>{0}</mark> is not displayed in grid", validationTestData["PrimarySubject"]), this.SCREENSHOTFILE);
+                    TemenosBasePage.dictError.Add("Credit Reporting", String.Format("Added primary subject {0} is not displayed in grid", validationTestData["PrimarySubject"]));
                 }
 
                 By PrimarySubjectSelected = By.XPath("//td[text()='CHACOMMON, MICHAEL']/parent::tr/parent::tbody//td[@aria-describedby='CreditReportList_InUse']/input[@type='checkbox' and @checked='checked']");
                 if (driver.IsWebElementDisplayed(PrimarySubjectSelected))
                 {
-                    this.TESTREPORT.LogSuccess("Credit Reporting", "Added primary subject is displayed in grid and also use report selected by default");
+                    this.TESTREPORT.LogSuccess("Credit Reporting", String.Format("Added primary subject <mark>{0}</mark> is displayed in grid and also use report selected by default", validationTestData["PrimarySubject"]));
                 }
                 else
                 {
-                    this.TESTREPORT.LogFailure("Credit Reporting", "Added primary subject is not displayed in grid and it is not selected by default", this.SCREENSHOTFILE);
+                    this.TESTREPORT.LogFailure("Credit Reporting", String.Format("Added primary subject <mark>{0}</mark> is displayed in grid and also use report not selected by default", validationTestData["PrimarySubject"]),this.SCREENSHOTFILE);
+                    TemenosBasePage.dictError.Add("Credit Reporting", String.Format("Added primary subject {0} is displayed in grid and also use report not selected by default", validationTestData["PrimarySubject"]));
                 }
             }
             catch (Exception ex)
@@ -310,11 +315,12 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
                 bool selected = driver.FindElement(descripchk).Selected;
                 if (selected)
                 {
-                    this.TESTREPORT.LogSuccess("Additional Appliciant Declarations", "User selected the appliciant declarations " + validationTestData["AditionalDeclaration" + index]);
+                    this.TESTREPORT.LogSuccess("Additional Appliciant Declarations", String.Format("User selected the appliciant declarations <mark>{0}<mark>", validationTestData["AditionalDeclaration" + index]));
                 }
                 else
                 {
-                    this.TESTREPORT.LogFailure("Additional Appliciant Declarations", "User selected the appliciant declarations " + validationTestData["AditionalDeclaration" + index], this.SCREENSHOTFILE);
+                    this.TESTREPORT.LogFailure("Additional Appliciant Declarations", String.Format("Unable to select appliciant declarations <mark>{0}<mark>", validationTestData["AditionalDeclaration" + index]), this.SCREENSHOTFILE);
+                    TemenosBasePage.dictError.Add("Additional Appliciant Declarations", String.Format("Unable to select appliciant declarations <mark>{0}<mark>", validationTestData["AditionalDeclaration" + index]));
                 }
                 By input = By.XPath("//table[@id='AADeclarationsList']//td[text()='" + validationTestData["AditionalDeclaration" + index] + "']/..//input[@name='AnswerExplanation']");
                 driver.SendKeysToElement(input, validationTestData["AditionalDeclarationValue" + index], validationTestData["AditionalDeclaration" + index]);
@@ -352,11 +358,12 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
                 bool selected = driver.FindElement(descripchk).Selected;
                 if (selected)
                 {
-                    this.TESTREPORT.LogSuccess("Primary Appliciant Declarations", "User selected the appliciant declarations " + validationTestData["PrimaryDeclaration" + index]);
+                    this.TESTREPORT.LogSuccess("Primary Appliciant Declarations", String.Format("User selected the appliciant declarations <mark>{0}</mark>",validationTestData["PrimaryDeclaration" + index]));
                 }
                 else
                 {
-                    this.TESTREPORT.LogFailure("Primary Appliciant Declarations", "User selected the appliciant declarations " + validationTestData["PrimaryDeclaration" + index], this.SCREENSHOTFILE);
+                    this.TESTREPORT.LogFailure("Primary Appliciant Declarations", String.Format("User is not selected the appliciant declarations <mark>{0}</mark>",validationTestData["PrimaryDeclaration" + index]),this.SCREENSHOTFILE);
+                    TemenosBasePage.dictError.Add("Review Indicators Name", String.Format("Name : {0} is not present under Name column in Review Indicators grid", validationTestData["ReviewIndicatorName" + index]));
                 }
                 By input = By.XPath("//table[@id='PADeclarationsList']//td[text()='" + validationTestData["PrimaryDeclaration" + index] + "']/..//input[@name='AnswerExplanation']");
                 driver.SendKeysToElement(input, validationTestData["PrimaryDeclarationValue" + index], validationTestData["PrimaryDeclaration" + index]);
@@ -459,11 +466,12 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
                 bool selected = driver.FindElement(mapTOLiability).Selected;
                 if (selected)
                 {
-                    this.TESTREPORT.LogSuccess("Add Liabilty", "Map to Liabilty" + name);
+                    this.TESTREPORT.LogSuccess("Add Liabilty", String.Format("Map to Liabilty <mark>{0}<mark>", name) + name);
                 }
                 else
                 {
-                    this.TESTREPORT.LogFailure("Add Liabilty", "Map to Liabilty " + name, this.SCREENSHOTFILE);
+                    this.TESTREPORT.LogFailure("Add Liabilty", String.Format("Map to Liabilty checkbox not selecte <mark>{0}<mark>",name), this.SCREENSHOTFILE);
+                    TemenosBasePage.dictError.Add("Add Liabilty", String.Format("Map to Liabilty checkbox not selecte {0}", name));
                 }
                 By input = By.XPath("//td[text()='" + name + "']/..//input[@name='PercentageResponsible']");
                 driver.FindElement(input).Clear();
@@ -498,11 +506,12 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
                 HandleSuccessPopup();
                 if (!driver.IsWebElementDisplayed(selectApplicants))
                 {
-                    this.TESTREPORT.LogSuccess("Delete Applicant", "User deleted under Applicants " + name);
+                    this.TESTREPORT.LogSuccess("Delete Applicant", String.Format("User deleted under Applicants <mark>{0}<mark>",name));
                 }
                 else
                 {
-                    this.TESTREPORT.LogFailure("Delete Applicant", "User not deleted under Applicants " + name, this.SCREENSHOTFILE);
+                    this.TESTREPORT.LogFailure("Delete Applicant", String.Format("User not deleted under Applicants <mark>{0}<mark>", name),this.SCREENSHOTFILE);
+                    TemenosBasePage.dictError.Add("Delete Applicant", String.Format("User not deleted under Applicants {0}", name));
                 }
                 
             }
@@ -530,11 +539,12 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
                 int checkedCount = driver.FindElements(checkboxSendAdverseActionToCheckState).Count;
                 if (count == checkedCount)
                 {
-                    this.TESTREPORT.LogSuccess("Send Adverse Action To", "All are selecetd by default ");
+                    this.TESTREPORT.LogSuccess("Send Adverse Action To", String.Format("All are selecetd by default"));
                 }
                 else
                 {
-                    this.TESTREPORT.LogFailure("Send Adverse Action To", "All are not selected by default ", this.SCREENSHOTFILE);
+                    this.TESTREPORT.LogFailure("Send Adverse Action To", String.Format("All are not selected by default "), this.SCREENSHOTFILE);
+                    TemenosBasePage.dictError.Add("Send Adverse Action To", String.Format("All are not selected by default "));
                 }
                 driver.ClickElement(btnWithdrawApplication, "Withdraw");
                 HandleSuccessPopup();

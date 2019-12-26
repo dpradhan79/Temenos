@@ -43,23 +43,14 @@ namespace AutomatedTest.FunctionalTests
         /// <summary>
         /// Input Test Data
         /// </summary>
-        protected Dictionary<string, string> validationTestData = new Dictionary<String, String>();
+        protected Dictionary<string, string> validationTestData = new Dictionary<String, String>();       
 
         public TestContext TestContext { get; set; }
         
         public TestBaseTemplate()
-        {
-            const String testRailUrl = "http://atllmstestrail.akcelerant.com/";
-            const String userName = "kote@cigniti.com";
-            const String password = "Password1";
-
-            //const String testRailUrl = "https://cignitipoc.testrail.io/";
-            //const String userName = "debasish.pradhan@cigniti.com";
-            //const String password = "Temp1234";
+        {        
 
             testRail = new TestRailClient(EngineSetup.TESTRAILURL, EngineSetup.TESTRAILUSERNAME, EngineSetup.TESTRAILPASSWORD);
-
-            testRail = new TestRailClient(testRailUrl, userName, password);
             Applicant = new ApplicantPage();
             LoginPage = new LoginPage();
             HomePage = new HomePage();

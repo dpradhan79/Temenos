@@ -16,6 +16,10 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
     public class StipulationsAutomationPage : AbstractTemplatePage
     {
 
+        //#region Page Object For BasePage
+        //TemenosBasePage temenosBasePage = new TemenosBasePage();
+        //#endregion
+
         #region UI Object Repository
         private By btnAdd = By.Id("btnAddStip");
         private By btnAddMultiple = By.Id("btnAddMultiple");
@@ -154,13 +158,15 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
                 }
                 else
                 {
-                    this.TESTREPORT.LogSuccess(name + " button", String.Format(name + ": <mark>{0}</mark> button is not displayed", name));
+                    this.TESTREPORT.LogFailure(name + " button", String.Format(name + ": <mark>{0}</mark> button is not displayed", name), this.SCREENSHOTFILE);
+                    TemenosBasePage.dictError.Add(name + " button", String.Format(name + ": {0} button is not displayed", name));
                 }
             }
             catch (Exception ex)
             {
 
-                this.TESTREPORT.LogSuccess(name + " button", String.Format(name + ": <mark>{0}</mark> button is not displayed", name));
+                this.TESTREPORT.LogFailure(name + " button", String.Format(name + ": <mark>{0}</mark> button is not displayed", name),this.SCREENSHOTFILE);
+                TemenosBasePage.dictError.Add(name + " button", String.Format(name + ": {0} button is not displayed", name));
                 throw ex;
             }
 

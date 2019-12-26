@@ -16,6 +16,9 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 {
     public class LoginPage : AbstractTemplatePage
     {
+        //#region Page Object For BasePage
+        //TemenosBasePage temenosBasePage = new TemenosBasePage();
+        //#endregion
 
         #region UI Object Repository
         private By txtUserName = By.Id("Username");
@@ -74,6 +77,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
             {
 
                 this.TESTREPORT.LogFailure("Home Page", "Failed to login to the application");
+                TemenosBasePage.dictError.Add("Home Page", "Failed to login to the application");
                 throw ex;
             }
         }

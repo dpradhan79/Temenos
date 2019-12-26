@@ -29,11 +29,11 @@ namespace AutomatedTest.FunctionalTests
         /// </summary>       
         [TestMethod, TestCategory("DecisionProcess"), TestCategory("AutoDecisionProcess"), TestProperty("title", "Auto Decision Process")]
         public void TestAutoDecisionProcess()
-        {
-            #region Approve            
+        {            
+             #region Approve            
             try
             {
-                string approveApplicationNumber, rejectApplicationNumber, reviewApplicationNumber = null;
+                string approveApplicationNumber, rejectApplicationNumber, reviewApplicationNumber = null;                
                 HomePage.CreateNewApplication(Constants.Approve, this.validationTestData);
                 approveApplicationNumber = HomePage.GetApplicationNumber();
                 HomePage.SwitchAndVerifyHomePageFullyDisplayed();
@@ -90,7 +90,8 @@ namespace AutomatedTest.FunctionalTests
                 PrimaryApplicantAutomationScreen.SelectCurrentAddressState(this.validationTestData["CurrentAddressState1"]);
                 HomePage.SwitchToDefaultContent();
                 HomePage.CloseAndVerifyApplication(reviewApplicationNumber);
-                HomePage.ClickLogOff();               
+                HomePage.ClickLogOff();
+                TemenosBasePage.CheckFailures();               
 
             }
             catch (Exception ex)
