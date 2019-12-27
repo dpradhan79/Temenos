@@ -51,6 +51,7 @@ namespace AutomatedTest.FunctionalTests
         {        
 
             testRail = new TestRailClient(EngineSetup.TESTRAILURL, EngineSetup.TESTRAILUSERNAME, EngineSetup.TESTRAILPASSWORD);
+            //EngineSetup.TESTRAILRUNID = (int)testRail.GetRunID("Temenos POC", "");
             Applicant = new ApplicantPage();
             LoginPage = new LoginPage();
             HomePage = new HomePage();
@@ -112,6 +113,7 @@ namespace AutomatedTest.FunctionalTests
             //#endregion
 
             this.testException = null;
+            
             this.TESTREPORT.InitTestCase(TestContext.TestName, TestContext.Properties["title"] as String);
             this.LoadBusinessTestData();
             LoginPage.SignIn(EngineSetup.UserName, EngineSetup.DECRYPT(EngineSetup.Password));
