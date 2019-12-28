@@ -82,7 +82,6 @@
     <Compile Include="Selenium\ApplicationSpecific\Temenos\Pages\LoginPage.cs" />
     <Compile Include="Selenium\ApplicationSpecific\Temenos\Pages\PrimaryApplicantAutomationPage.cs" />
     <Compile Include="Selenium\ApplicationSpecific\Temenos\Pages\StipulationsAutomationPage.cs" />
-    <Compile Include="Selenium\ApplicationSpecific\Temenos\Pages\Utility.cs" />
     <Compile Include="Selenium\CommonReUsablePages\AbstractTemplatePage.cs" />
   </ItemGroup>
   <ItemGroup>

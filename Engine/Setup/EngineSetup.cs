@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 using TestReporter;
 using System.IO;
 using Engine.Factories;
-using System.Security.Cryptography;
-using System.IO;
+
 namespace Engine.Setup
 {
     /// <summary>
@@ -43,7 +42,7 @@ namespace Engine.Setup
         private static string runName = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "runName");
         private static string testRailURL = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "testRailURL");
         private static string testRailUserName = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "testRailUserName");
-        private static string testRailPassword = DECRYPT(StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "testRailPassword"));
+        private static string testRailPassword = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "testRailPassword");
         private static string testRailPasswordFromJenkins = Environment.GetEnvironmentVariable("testrailPassword");
         #endregion
 
@@ -252,7 +251,7 @@ namespace Engine.Setup
         /// </value>
         public static string WEBURL
         {
-            get { return EngineSetup.webUrl; }
+            get { return Environment.GetEnvironmentVariable("webUrl") != null ? Environment.GetEnvironmentVariable("webUrl") : EngineSetup.webUrl; }
             set { EngineSetup.webUrl = value;}
         }
 
@@ -261,7 +260,7 @@ namespace Engine.Setup
         /// </summary>
         public static string UserName
         {
-            get { return EngineSetup.userName; }
+            get { return Environment.GetEnvironmentVariable("userName") != null ? Environment.GetEnvironmentVariable("userName") : EngineSetup.userName; }
             set { EngineSetup.userName = value; }
         }
 
@@ -272,7 +271,7 @@ namespace Engine.Setup
         /// </summary>
         public static string Password
         {
-            get { return EngineSetup.password; }
+            get { return Environment.GetEnvironmentVariable("password") != null ? Environment.GetEnvironmentVariable("password") : EngineSetup.password; }
             set { EngineSetup.password = value; }
         }
 
@@ -300,7 +299,7 @@ namespace Engine.Setup
         /// </value>
         public static String ISMAILREQUIRED
         {
-            get { return EngineSetup.sendMail; }
+            get { return Environment.GetEnvironmentVariable("sendMail") != null ? Environment.GetEnvironmentVariable("sendMail") : EngineSetup.sendMail; }
             set { EngineSetup.sendMail = value; }
         }
 
@@ -312,7 +311,7 @@ namespace Engine.Setup
         /// </value>
         public static String ISATTACHMENTREQUIRED
         {
-            get { return EngineSetup.attachExecutionResult; }
+            get { return Environment.GetEnvironmentVariable("attachExecutionResult") != null ? Environment.GetEnvironmentVariable("attachExecutionResult") : EngineSetup.attachExecutionResult; }
             set { EngineSetup.attachExecutionResult = value; }
         }
 
@@ -324,7 +323,7 @@ namespace Engine.Setup
         /// </value>
         public static String SMTPSERVER
         {
-            get { return EngineSetup.smtpServer; }
+            get { return Environment.GetEnvironmentVariable("smtpServer") != null ? Environment.GetEnvironmentVariable("smtpServer") : EngineSetup.smtpServer; }
             set { EngineSetup.smtpServer = value; }
         }
 
@@ -337,7 +336,7 @@ namespace Engine.Setup
         /// </value>
         public static int SMTPPORT
         {
-            get { return EngineSetup.smtpPort; }
+            get { return Environment.GetEnvironmentVariable("smtpPort") != null ? Convert.ToInt16(Environment.GetEnvironmentVariable("smtpPort")) : EngineSetup.smtpPort; }
             set { EngineSetup.smtpPort = value; }
         }
 
@@ -349,7 +348,7 @@ namespace Engine.Setup
         /// </value>
         public static String EMAILFROM
         {
-            get { return EngineSetup.emailFrom; }
+            get { return Environment.GetEnvironmentVariable("emailFrom") != null ? Environment.GetEnvironmentVariable("emailFrom") : EngineSetup.emailFrom; }
             set { EngineSetup.emailFrom = value; }
         }
 
@@ -361,7 +360,7 @@ namespace Engine.Setup
         /// </value>
         public static String EMAILTOLIST
         {
-            get { return EngineSetup.mailToListSeparatedByComma; }
+            get { return Environment.GetEnvironmentVariable("mailToListSeparatedByComma") != null ? Environment.GetEnvironmentVariable("mailToListSeparatedByComma") : EngineSetup.mailToListSeparatedByComma; }
             set { EngineSetup.mailToListSeparatedByComma = value; }
         }
 
@@ -373,7 +372,7 @@ namespace Engine.Setup
         /// </value>
         public static String EMAILSUBJECT
         {
-            get { return EngineSetup.mailSubject; }
+            get { return Environment.GetEnvironmentVariable("mailSubject") != null ? Environment.GetEnvironmentVariable("mailSubject") : EngineSetup.mailSubject; }
             set { EngineSetup.mailSubject = value; }
         }
 
@@ -441,101 +440,15 @@ namespace Engine.Setup
             set { EngineSetup.testRailUserName = value; }
         }
 
-
-        /// <summary>
-        /// Gets or sets the testrailpassword.
-        /// </summary>
-        /// <value>
-        /// The testrailpassword.
-        /// </value>
-        public static string TESTRAILPASSWORDFROMPROPERTYFILE
-        {
-            get
-            {
-                return EngineSetup.testRailPassword;
-            }
-            set { EngineSetup.testRailPassword = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the testrailpassword.
-        /// </summary>
-        /// <value>
-        /// The testrailpassword.
-        /// </value>
-        public static String TESTRAILPASSWORDFROMENVIRONMENT
-        {
-            get
-            {
-                //environment variable will be read in case of Jenkins parameterized build execution
-                return EngineSetup.testRailPasswordFromJenkins;
-            }
-            set { EngineSetup.testRailPasswordFromJenkins = value; }
-        }
-
         public static String TESTRAILPASSWORD
         {
             get
             {
                 //environment variable will be read in case of Jenkins parameterized build execution
-                return TESTRAILPASSWORDFROMENVIRONMENT != null ? TESTRAILPASSWORDFROMENVIRONMENT : TESTRAILPASSWORDFROMPROPERTYFILE;
+                return Environment.GetEnvironmentVariable("testRailPassword") != null ? Environment.GetEnvironmentVariable("testRailPassword") : EngineSetup.testRailPassword;
             }
-            set { TESTRAILPASSWORDFROMPROPERTYFILE = value; }
-
+            set { EngineSetup.testRailPassword = value; }
             
-        }
-
-
-        /// <summary>
-        /// Decrypt is the method to decrypt the password/text
-        /// </summary>
-        /// <param name="milliSecs">cipherText</param>
-        public static string DECRYPT(string cipherText)
-        {
-            string EncryptionKey = "MAKV2SPBNI99212";
-            byte[] cipherBytes = Convert.FromBase64String(cipherText);
-            using (Aes encryptor = Aes.Create())
-            {
-                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
-                encryptor.Key = pdb.GetBytes(32);
-                encryptor.IV = pdb.GetBytes(16);
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateDecryptor(), CryptoStreamMode.Write))
-                    {
-                        cs.Write(cipherBytes, 0, cipherBytes.Length);
-                        cs.Close();
-                    }
-                    cipherText = Encoding.Unicode.GetString(ms.ToArray());
-                }
-            }
-            return cipherText;
-        }
-
-        /// <summary>
-        /// Encrypt is the method to encrypt the password/text
-        /// </summary>
-        /// <param name="milliSecs">encryptedValue</param>
-        public string ENCRYPT(string encryptedValue)
-        {
-            string EncryptionKey = "MAKV2SPBNI99212";
-            byte[] clearBytes = Encoding.Unicode.GetBytes(encryptedValue);
-            using (Aes encryptor = Aes.Create())
-            {
-                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
-                encryptor.Key = pdb.GetBytes(32);
-                encryptor.IV = pdb.GetBytes(16);
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateEncryptor(), CryptoStreamMode.Write))
-                    {
-                        cs.Write(clearBytes, 0, clearBytes.Length);
-                        cs.Close();
-                    }
-                    encryptedValue = Convert.ToBase64String(ms.ToArray());
-                }
-            }
-            return encryptedValue;
         }
 
     }

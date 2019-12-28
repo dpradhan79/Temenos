@@ -36,8 +36,7 @@ namespace AutomatedTest.FunctionalTests
         public PrimaryApplicantAutomationPage PrimaryApplicantAutomationScreen = null;
         public StipulationsAutomationPage StipulationsAutomation = null;
         public DisbursePage Disburse = null;
-        public TemenosBasePage TemenosBasePage = null;
-        public Utility Utility = null;
+        public TemenosBasePage TemenosBasePage = null;        
         #endregion
 
         /// <summary>
@@ -60,8 +59,7 @@ namespace AutomatedTest.FunctionalTests
             LoanTermsAutomation = new LoanTermsAutomationPage();
             StipulationsAutomation = new StipulationsAutomationPage();
             Disburse = new DisbursePage();
-            TemenosBasePage = new TemenosBasePage();
-            Utility = new Utility();
+            TemenosBasePage = new TemenosBasePage();           
         }
 
         [AssemblyInitialize]
@@ -116,7 +114,7 @@ namespace AutomatedTest.FunctionalTests
             
             this.TESTREPORT.InitTestCase(TestContext.TestName, TestContext.Properties["title"] as String);
             this.LoadBusinessTestData();
-            LoginPage.SignIn(EngineSetup.UserName, EngineSetup.DECRYPT(EngineSetup.Password));
+            LoginPage.SignIn(EngineSetup.UserName, EngineSetup.Password);
         }
 
         ////Use TestCleanup to run code after each test has run
