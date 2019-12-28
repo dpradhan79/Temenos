@@ -30,7 +30,7 @@ namespace AutomatedTest.UnitTests
             const String userName = "debasish.pradhan@cigniti.com";
             const String password = "Temp1234";
 
-            int runId = 3;
+            //int runId = 3;
             //this.TESTREPORT.InitTestCase(TestContext.TestName, TestContext.Properties["title"] as String);
             TestRailClient testRail = null;
             testRail = new TestRailClient(testRailUrl, userName, password);
@@ -46,12 +46,12 @@ namespace AutomatedTest.UnitTests
         {
             const String testRailUrl = "http://atllmstestrail.akcelerant.com/";
             const String userName = "kote@cigniti.com";
-            const String password = "Password1";
-            const int runId = 12;
+            const String password = "Password1";            
             this.TESTREPORT.InitTestCase(TestContext.TestName, TestContext.Properties["title"] as String);
 
             TestRailClient testRail = null;
             testRail = new TestRailClient(testRailUrl, userName, password);
+            int runId = (int)testRail.GetRunID(EngineSetup.TESTRAILPROJECTNAME, EngineSetup.TESTRAILRUNNAME);
             ResultStatus testCaseResult = ResultStatus.Failed;
             this.TESTREPORT.UpdateTestCaseStatus(testRail, runId, TestContext.Properties["title"] as String, testCaseResult);
         }

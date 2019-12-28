@@ -50,7 +50,7 @@ namespace AutomatedTest.FunctionalTests
         {        
 
             testRail = new TestRailClient(EngineSetup.TESTRAILURL, EngineSetup.TESTRAILUSERNAME, EngineSetup.TESTRAILPASSWORD);
-            //EngineSetup.TESTRAILRUNID = (int)testRail.GetRunID("Temenos POC", "");
+            EngineSetup.TESTRAILRUNID = (int)testRail.GetRunID(EngineSetup.TESTRAILPROJECTNAME, EngineSetup.TESTRAILRUNNAME);
             Applicant = new ApplicantPage();
             LoginPage = new LoginPage();
             HomePage = new HomePage();
@@ -114,7 +114,7 @@ namespace AutomatedTest.FunctionalTests
             
             this.TESTREPORT.InitTestCase(TestContext.TestName, TestContext.Properties["title"] as String);
             this.LoadBusinessTestData();
-            LoginPage.SignIn(EngineSetup.UserName, EngineSetup.Password);
+            LoginPage.SignIn(EngineSetup.APPUSERNAME, EngineSetup.APPPASSWORD);
         }
 
         ////Use TestCleanup to run code after each test has run

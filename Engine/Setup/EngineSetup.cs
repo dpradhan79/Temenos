@@ -34,16 +34,16 @@ namespace Engine.Setup
         private static int defaultTimeOutForSelenium = Int32.Parse(StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "seleniumDefaultTimeOut"));
         public const int TimeOutConstant = 180;
         private static string webUrl = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "webUrl");
-        private static string userName = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "userName");
-        private static string password = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "password");
+        private static string appUserName = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "appUserName");
+        private static string appPassword = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "appPassword");
         private static string testDataFileName = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "testDataFileName");
         private static int testRailRunId = Convert.ToInt16(StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "runId"));
-        private static string projectName = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "projectName");
-        private static string runName = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "runName");
+        private static string testRailprojectName = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "testRailprojectName");
+        private static string testRailRunName = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "testRailRunName");
         private static string testRailURL = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "testRailURL");
         private static string testRailUserName = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "testRailUserName");
         private static string testRailPassword = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "testRailPassword");
-        private static string testRailPasswordFromJenkins = Environment.GetEnvironmentVariable("testrailPassword");
+        
         #endregion
 
         #region Mail Configuration
@@ -258,10 +258,10 @@ namespace Engine.Setup
         /// <summary>
         /// User Name
         /// </summary>
-        public static string UserName
+        public static string APPUSERNAME
         {
-            get { return Environment.GetEnvironmentVariable("userName") != null ? Environment.GetEnvironmentVariable("userName") : EngineSetup.userName; }
-            set { EngineSetup.userName = value; }
+            get { return Environment.GetEnvironmentVariable("appUserName") != null ? Environment.GetEnvironmentVariable("appUserName") : EngineSetup.appUserName; }
+            set { EngineSetup.appUserName = value; }
         }
 
 
@@ -269,10 +269,10 @@ namespace Engine.Setup
         /// <summary>
         /// User Password
         /// </summary>
-        public static string Password
+        public static string APPPASSWORD
         {
-            get { return Environment.GetEnvironmentVariable("password") != null ? Environment.GetEnvironmentVariable("password") : EngineSetup.password; }
-            set { EngineSetup.password = value; }
+            get { return Environment.GetEnvironmentVariable("appPassword") != null ? Environment.GetEnvironmentVariable("appPassword") : EngineSetup.appPassword; }
+            set { EngineSetup.appPassword = value; }
         }
 
         /// <summary>
@@ -382,14 +382,14 @@ namespace Engine.Setup
         /// <value>
         /// The projectname.
         /// </value>
-        public static string PROJECTNAME
+        public static string TESTRAILPROJECTNAME
         {
             get
             {
                 //environment variable will be read in case of Jenkins parameterized build execution
-                return Environment.GetEnvironmentVariable("projectname") != null ? Environment.GetEnvironmentVariable("projectname") : EngineSetup.projectName;
+                return Environment.GetEnvironmentVariable("testRailprojectName") != null ? Environment.GetEnvironmentVariable("testRailprojectName") : EngineSetup.testRailprojectName;
             }
-            set { EngineSetup.projectName = value; }
+            set { EngineSetup.testRailprojectName = value; }
         }
 
         /// <summary>
@@ -398,14 +398,14 @@ namespace Engine.Setup
         /// <value>
         /// The runname.
         /// </value>
-        public static string RUNNAME
+        public static string TESTRAILRUNNAME
         {
             get
             {
                 //environment variable will be read in case of Jenkins parameterized build execution
-                return Environment.GetEnvironmentVariable("runname") != null ? Environment.GetEnvironmentVariable("runname") : EngineSetup.runName;
+                return Environment.GetEnvironmentVariable("testRailRunName") != null ? Environment.GetEnvironmentVariable("testRailRunName") : EngineSetup.testRailRunName;
             }
-            set { EngineSetup.runName = value; }
+            set { EngineSetup.testRailRunName = value; }
         }
 
         /// <summary>

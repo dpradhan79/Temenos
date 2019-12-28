@@ -50,47 +50,47 @@ namespace TMTFactory
             }
         }
 
-        public long GetProjectID(string projectName)
+        public ulong GetProjectID(string projectName)
         {
-            long projectID = 0;
+            ulong projectID = 0;
             JArray protects = (JArray)apiClient.SendGet("get_projects");
             foreach (JObject test in protects)
             {
                 if ((test["name"].ToString().Equals(projectName, StringComparison.OrdinalIgnoreCase)))
                 {
                   string id = test["id"].ToString();
-                  projectID = long.Parse(id);                   
+                  projectID = ulong.Parse(id);                   
                 }                
             }
             return projectID;
         }
 
-        public long GetSuiteID(string projectName,string suiteName)
+        public ulong GetSuiteID(string projectName,string suiteName)
         {
-            long suiteID = 0;
+            ulong suiteID = 0;
             JArray suites = (JArray)apiClient.SendGet("get_suites/" + GetProjectID(projectName));
             foreach (JObject test in suites)
             {
                 if ((test["name"].ToString().Equals(suiteName, StringComparison.OrdinalIgnoreCase)))
                 {
                     string id = test["id"].ToString();
-                    suiteID = long.Parse(id);
+                    suiteID = ulong.Parse(id);
                 }
             }
             return suiteID;
         }
 
 
-        public long GetRunID(string projectName,string runName)
+        public ulong GetRunID(string projectName,string runName)
         {
-            long runID = 0;
+            ulong runID = 0;
             JArray runNames = (JArray)apiClient.SendGet("get_runs/" + GetProjectID(projectName));
             foreach (JObject test in runNames)
             {
                 if ((test["name"].ToString().Equals(runName, StringComparison.OrdinalIgnoreCase)))
                 {
                     string id = test["id"].ToString();
-                    runID = long.Parse(id);
+                    runID = ulong.Parse(id);
                 }
             }
             return runID;
