@@ -19,7 +19,7 @@ namespace StandardUtilities
         /// Send Email.
         /// </summary>
         /// <returns></returns>
-       public static bool SendEmail(string smtpServer, int smtpPort, string mailFrom, string mailToListSeparatedByComma, string mailCCListSeparatedByComma, string mailSubject, string mailBody, string attachment, bool enableSsl)
+       public static bool SendEmail(string smtpServer, int smtpPort, string mailFrom, string mailPassword, string mailToListSeparatedByComma, string mailCCListSeparatedByComma, string mailSubject, string mailBody, string attachment, bool enableSsl)
        {
            bool isMailSentStatus = false;
            Attachment mailattachment = null;
@@ -48,7 +48,7 @@ namespace StandardUtilities
 
                smtpClient.Port = smtpPort;
                smtpClient.EnableSsl = enableSsl;              
-               smtpClient.Credentials = new NetworkCredential("debasish.gallop@gmail.com", "temp@1234");           
+               smtpClient.Credentials = new NetworkCredential(mailFrom, mailPassword);           
                smtpClient.Send(mail);
                isMailSentStatus = true;
 

@@ -14,6 +14,7 @@ namespace Engine.Setup
     /// </summary>
     public class EngineSetup
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private static string randomString = null;
         private const string FILETESTCONFIGURATION = "TestConfiguration.properties";
         public const string VALIDATIONTESTDATASHEETNAME = "ValidationTestData";
@@ -54,6 +55,7 @@ namespace Engine.Setup
         private static String smtpServer = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "smtpServer");
         private static int smtpPort = Convert.ToInt16(StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "smtpPort"));
         private static String emailFrom = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "emailFrom");
+        private static String emailPassword = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "emailPassword");
         private static String mailToListSeparatedByComma = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "mailToListSeparatedByComma");
         private static String mailSubject = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "mailSubject");
 
@@ -351,9 +353,33 @@ namespace Engine.Setup
         /// </value>
         public static String EMAILFROM
         {
-            get { return Environment.GetEnvironmentVariable("emailFrom") != null ? Environment.GetEnvironmentVariable("emailFrom") : EngineSetup.emailFrom; }
+            get {               
+                log.Debug(String.Format("CI/CD EMailFrom = {0}, Configuration File EMailFrom = {1}", Environment.GetEnvironmentVariable("emailFrom"), EngineSetup.emailFrom));
+                String strEmailFrom = Environment.GetEnvironmentVariable("emailFrom") != null ? Environment.GetEnvironmentVariable("emailFrom") : EngineSetup.emailFrom;
+                log.Debug(String.Format("Finally EMailFrom Selected - {0}", strEmailFrom));
+                return strEmailFrom;
+            }
             set { EngineSetup.emailFrom = value; }
         }
+
+        /// <summary>
+        /// Gets or sets the emailPassword.
+        /// </summary>
+        /// <value>
+        /// emailPassword.
+        /// </value>
+        public static String EMAILPASSWORD
+        {
+            get
+            {
+
+                String strEmailPassord = Environment.GetEnvironmentVariable("emailPassword") != null ? Environment.GetEnvironmentVariable("emailPassword") : EngineSetup.emailPassword;
+
+                return strEmailPassord;
+            }
+            set { EngineSetup.emailFrom = value; }
+        }
+
 
         /// <summary>
         /// Gets or sets the emailFrom.
