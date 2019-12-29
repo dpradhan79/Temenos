@@ -84,8 +84,10 @@ namespace AutomatedTest.FunctionalTests
             TestBaseTemplate.UpdateTestReport();
             if (EngineSetup.ISMAILREQUIRED.Equals("Yes", StringComparison.OrdinalIgnoreCase))
             {
-                String emailBody = EmailSender.CreateHtmlBodyForMail(listTestCases);
-                EmailSender.SendEmail(EngineSetup.SMTPSERVER, EngineSetup.SMTPPORT, EngineSetup.EMAILFROM, EngineSetup.EMAILTOLIST, null, EngineSetup.EMAILSUBJECT, emailBody, null, true);
+                String emailBody = EmailSender.CreateHtmlBodyForMail(TestBaseTemplate.listTestCases);
+                String emailSubject = TestExecutionManagement.GetTotalFailedTestCases(TestBaseTemplate.listTestCases) > 0 ? String.Format("{0} - {1}", EngineSetup.EMAILSUBJECT, "FAILURE") : String.Format("{0} - {1}", EngineSetup.EMAILSUBJECT, "SUCCESS");
+                EmailSender.SendEmail(EngineSetup.SMTPSERVER, EngineSetup.SMTPPORT, EngineSetup.EMAILFROM, EngineSetup.EMAILTOLIST, null, emailSubject, emailBody, null, true);
+                Console.WriteLine(String.Format("Mail Was Successfully Sent From {0} To {1}", EngineSetup.EMAILFROM, EngineSetup.EMAILTOLIST));
             }
             
         }
@@ -158,7 +160,7 @@ namespace AutomatedTest.FunctionalTests
                     break;
 
             }
-            listTestCases.Add(testCase);
+            TestBaseTemplate.listTestCases.Add(testCase);
             
         }
 
