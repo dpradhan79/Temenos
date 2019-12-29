@@ -25,7 +25,7 @@ namespace Engine.Setup
         private static string reportType = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "reportType"); 
         private static string testReportFile = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "testReportFile");
         private static IReporter testReportInternal = null;
-        private static string screenShotFolder = new FileInfo(testReportFile).Directory.FullName + Path.DirectorySeparatorChar + "ScreenShots";
+        private static string screenShotFolder = new FileInfo(EngineSetup.TestReportFileName).Directory.FullName + Path.DirectorySeparatorChar + "ScreenShots";
         private static int lastScreenShotCount = 1;
         
         #endregion
