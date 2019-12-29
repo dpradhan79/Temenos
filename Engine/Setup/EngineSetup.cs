@@ -112,7 +112,10 @@ namespace Engine.Setup
         /// </value>
         public static string TestReportFileName
         {
-            get { return new FileInfo(EngineSetup.testReportFile).FullName; }
+            get {                
+                String testRepFile = Environment.GetEnvironmentVariable("testReportFile") != null ? Environment.GetEnvironmentVariable("testReportFile") : EngineSetup.testReportFile;
+                return new FileInfo(testRepFile).FullName; 
+            }
             set { EngineSetup.testReportFile = value; }
         }
 
