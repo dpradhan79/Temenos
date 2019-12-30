@@ -113,7 +113,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
                     int count = 1;
                     count = count + i;
                     var item = dictError.ElementAt(i);
-                    strInbulitException += "Failue Reason - #" + count + " :- " + String.Format("{0}-{1} \n  ", item.Key, item.Value);
+                    strInbulitException += "#Failue Reason - " + count + " :- " + String.Format("{0}-{1} \n  ", item.Key, item.Value);
                     Console.WriteLine(strInbulitException);
                 }
                 throw new Exception(strInbulitException);
