@@ -61,9 +61,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
                 throw ex;
             }
 
-        }
-
-        #endregion
+        }        
        
          /// <summary>
         /// Navigate to screen
@@ -89,24 +87,43 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
             }
 
         }
-      
+
+        /// <summary>
+        /// To check the failures and form it into string
+        /// </summary>
         public void CheckFailures()
         {
-            string strInbulitException = null;
+            //string strInbulitException = null;
            
+            //if (dictError.Count() > 0)
+            //{
+            //    foreach (var item in dictError)
+            //    {
+            //        strInbulitException += String.Format("{0}-{1};", item.Key, item.Value);
+            //    }
+            //    throw new Exception(strInbulitException);
+            //}
+
+            string strInbulitException = null;
+
             if (dictError.Count() > 0)
             {
-                foreach (var item in dictError)
+                for (int i = 0; i < dictError.Count(); i++)
                 {
-                    strInbulitException += String.Format("{0}-{1};", item.Key, item.Value);
+                    int count = 1;
+                    count = count + i;
+                    var item = dictError.ElementAt(i);
+                    strInbulitException += "Failue Reason - #" + count + " :- " + String.Format("{0}-{1} \n  ", item.Key, item.Value);
+                    Console.WriteLine(strInbulitException);
                 }
                 throw new Exception(strInbulitException);
             }
            
         }
+        #endregion
 
-       #region Private Methods
-         /// <summary>
+        #region Private Methods
+        /// <summary>
         /// Swith to central frame
         /// </summary>
         private void SwitchToCentralFrame()

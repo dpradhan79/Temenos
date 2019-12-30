@@ -16,11 +16,7 @@ using System.Threading;
 namespace AUT.Selenium.ApplicationSpecific.Pages
 {
     public class ApplicantPage : AbstractTemplatePage
-    {
-        //#region Page Object For BasePage
-        //TemenosBasePage temenosBasePage = new TemenosBasePage();
-        //#endregion
-        
+    {        
         #region UI Object Repository
         private By btnAdd = By.XPath("//button[text()='Add']");
         private By dialogAddApplicant = By.XPath("//div[@aria-describedby='aadialogAddApplicant']//span[@class='ui-dialog-title']");

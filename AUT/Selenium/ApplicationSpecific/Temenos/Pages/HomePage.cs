@@ -18,10 +18,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 {
     public class HomePage : AbstractTemplatePage
     {
-        //#region Page Object For BasePage
-        //TemenosBasePage temenosBasePage = new TemenosBasePage();
-        //#endregion
-       
+        
         #region UI Object Repository
         private By btnCreate = By.XPath("//button[contains(@class,'icon-application')]");
         private By dropdownApplicationType = By.Id("ApplicationTypeId");
