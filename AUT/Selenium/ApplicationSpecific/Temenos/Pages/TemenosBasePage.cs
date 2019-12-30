@@ -20,6 +20,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 
         public static Dictionary<String, String> dictError = new Dictionary<string, string>();
 
+
         #region UI Object Repository
         private By loadingSpin = By.XPath("//div[text()='Loading...']");
         #endregion
@@ -114,8 +115,8 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
                     count = count + i;
                     var item = dictError.ElementAt(i);
                     strInbulitException += "#Failue Reason - " + count + " :- " + String.Format("{0}-{1} \n  ", item.Key, item.Value);
-                    Console.WriteLine(strInbulitException);
                 }
+                dictError.Clear();
                 throw new Exception(strInbulitException);
             }
            
