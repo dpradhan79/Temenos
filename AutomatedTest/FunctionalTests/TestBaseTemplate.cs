@@ -113,7 +113,7 @@ namespace AutomatedTest.FunctionalTests
             //#endregion
 
             this.testException = null;
-            
+            TemenosBasePage.dictError.Clear();
             this.TESTREPORT.InitTestCase(TestContext.TestName, TestContext.Properties["title"] as String);
             this.LoadBusinessTestData();
             LoginPage.SignIn(EngineSetup.APPUSERNAME, EngineSetup.APPPASSWORD);
