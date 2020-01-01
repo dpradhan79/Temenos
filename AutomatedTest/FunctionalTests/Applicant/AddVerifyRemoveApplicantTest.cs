@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="AutoDecisionProcess.cs" company="Temenos">
+// <copyright file="AddVerifyRemoveApplicantTest.cs" company="Temenos">
 // Copyright (c) Temenos All rights reserved.
 // </copyright>
 // <author>Cigniti</author>
