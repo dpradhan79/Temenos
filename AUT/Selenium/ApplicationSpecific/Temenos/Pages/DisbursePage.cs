@@ -42,11 +42,10 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         {
             try
             {
-                String date = DateTime.Now.Date.ToString("dd");
-                int day = Convert.ToInt32(date);
-                String dayNumeric = Convert.ToString(day);
-                String Month = DateTime.Now.Month.ToString();
-                String Year = DateTime.Now.Year.ToString();
+                string currentDate = DateTime.Today.ToString("MM/dd/yyyy");
+                string Month = currentDate.Split('/')[0];
+                string dayNumeric = currentDate.Split('/')[1];
+                string Year = currentDate.Split('/')[2];
                 String expectedText = "Transactions will be sent to the Core Processor indicating that the funds were made available as of the Lifecycle Management Suite Disbursement Date, " + Month + "/" + dayNumeric + "/" + Year + ". This date affects interest accrual on your core processor and may require documents to be regenerated. Select Disburse to continue or Cancel to change the Disbursement Date.";
                 driver.ClickElement(btnDisburse, "Disburse");
                 Thread.Sleep(3000);
