@@ -44,6 +44,11 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         {
             try
             {
+                if (!driver.IsWebElementDisplayed(txtUserName))
+                {
+                    HomePage homePage = new HomePage();
+                    homePage.ClickLogOff();
+                }
                 driver.WaitElementPresent(txtUserName);
                 driver.SendKeysToElement(txtUserName, userName, "User Name");
                 driver.SendKeysToElement(txtPassword, password, "Password");
