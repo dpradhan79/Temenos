@@ -78,10 +78,10 @@
     <Compile Include="Selenium\ApplicationSpecific\Temenos\Pages\DecisionProcessAutomationPage.cs" />
     <Compile Include="Selenium\ApplicationSpecific\Temenos\Pages\HomePage.cs" />
     <Compile Include="Selenium\ApplicationSpecific\Temenos\Pages\LoanTermsAutomationPage.cs" />
+    <Compile Include="Selenium\ApplicationSpecific\Temenos\Pages\TemenosBasePage.cs" />
     <Compile Include="Selenium\ApplicationSpecific\Temenos\Pages\LoginPage.cs" />
     <Compile Include="Selenium\ApplicationSpecific\Temenos\Pages\PrimaryApplicantAutomationPage.cs" />
     <Compile Include="Selenium\ApplicationSpecific\Temenos\Pages\StipulationsAutomationPage.cs" />
-    <Compile Include="Selenium\ApplicationSpecific\Temenos\Pages\Utility.cs" />
     <Compile Include="Selenium\CommonReUsablePages\AbstractTemplatePage.cs" />
   </ItemGroup>
   <ItemGroup>

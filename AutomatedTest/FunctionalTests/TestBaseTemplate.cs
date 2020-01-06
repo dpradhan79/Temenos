@@ -36,26 +36,21 @@ namespace AutomatedTest.FunctionalTests
         public PrimaryApplicantAutomationPage PrimaryApplicantAutomationScreen = null;
         public StipulationsAutomationPage StipulationsAutomation = null;
         public DisbursePage Disburse = null;
+        public TemenosBasePage TemenosBasePage = null;        
         #endregion
 
         /// <summary>
         /// Input Test Data
         /// </summary>
-        protected Dictionary<string, string> validationTestData = new Dictionary<String, String>();
+        protected Dictionary<string, string> validationTestData = new Dictionary<String, String>();       
 
         public TestContext TestContext { get; set; }
         
         public TestBaseTemplate()
-        {
-            //const String testRailUrl = "http://atllmstestrail.akcelerant.com/";
-            //const String userName = "kote@cigniti.com";
-            //const String password = "Password1";
+        {        
 
-            const String testRailUrl = "https://cignitipoc.testrail.io/";
-            const String userName = "debasish.pradhan@cigniti.com";
-            const String password = "Temp1234";
-            
-            testRail = new TestRailClient(testRailUrl, userName, password);
+            testRail = new TestRailClient(EngineSetup.TESTRAILURL, EngineSetup.TESTRAILUSERNAME, EngineSetup.TESTRAILPASSWORD);
+            EngineSetup.TESTRAILRUNID = (int)testRail.GetRunID(EngineSetup.TESTRAILPROJECTNAME, EngineSetup.TESTRAILRUNNAME);
             Applicant = new ApplicantPage();
             LoginPage = new LoginPage();
             HomePage = new HomePage();
@@ -64,6 +59,7 @@ namespace AutomatedTest.FunctionalTests
             LoanTermsAutomation = new LoanTermsAutomationPage();
             StipulationsAutomation = new StipulationsAutomationPage();
             Disburse = new DisbursePage();
+            TemenosBasePage = new TemenosBasePage();           
         }
 
         [AssemblyInitialize]
@@ -88,8 +84,10 @@ namespace AutomatedTest.FunctionalTests
             TestBaseTemplate.UpdateTestReport();
             if (EngineSetup.ISMAILREQUIRED.Equals("Yes", StringComparison.OrdinalIgnoreCase))
             {
-                String emailBody = EmailSender.CreateHtmlBodyForMail(listTestCases);
-                EmailSender.SendEmail(EngineSetup.SMTPSERVER, EngineSetup.SMTPPORT, EngineSetup.EMAILFROM, EngineSetup.EMAILTOLIST, null, EngineSetup.EMAILSUBJECT, emailBody, null, true);
+                String emailBody = EmailSender.CreateHtmlBodyForMail(TestBaseTemplate.listTestCases);
+                String emailSubject = TestExecutionManagement.GetTotalFailedTestCases(TestBaseTemplate.listTestCases) > 0 ? String.Format("{0} - {1}", EngineSetup.EMAILSUBJECT, "FAILURE") : String.Format("{0} - {1}", EngineSetup.EMAILSUBJECT, "SUCCESS");
+                EmailSender.SendEmail(EngineSetup.SMTPSERVER, EngineSetup.SMTPPORT, EngineSetup.EMAILFROM, EngineSetup.EMAILPASSWORD, EngineSetup.EMAILTOLIST, null, emailSubject, emailBody, null, true);
+                Console.WriteLine(String.Format("Mail Was Successfully Sent From {0} To {1}", EngineSetup.EMAILFROM, EngineSetup.EMAILTOLIST));
             }
             
         }
@@ -115,9 +113,10 @@ namespace AutomatedTest.FunctionalTests
             //#endregion
 
             this.testException = null;
+            TemenosBasePage.dictError.Clear();
             this.TESTREPORT.InitTestCase(TestContext.TestName, TestContext.Properties["title"] as String);
             this.LoadBusinessTestData();
-            LoginPage.SignIn(EngineSetup.UserName, EngineSetup.Password);
+            LoginPage.SignIn(EngineSetup.APPUSERNAME, EngineSetup.APPPASSWORD);
         }
 
         ////Use TestCleanup to run code after each test has run
@@ -161,7 +160,7 @@ namespace AutomatedTest.FunctionalTests
                     break;
 
             }
-            listTestCases.Add(testCase);
+            TestBaseTemplate.listTestCases.Add(testCase);
             
         }
 

@@ -67,6 +67,9 @@
     <Content Include="cigniti_logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="client_logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="extentConfig.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

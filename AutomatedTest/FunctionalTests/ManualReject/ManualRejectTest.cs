@@ -26,11 +26,8 @@ namespace AutomatedTest.FunctionalTests
     {
         /// <summary>
         /// Test case for Manual Reject.
-        /// </summary>
-        [TestMethod]
-        [TestCategory("ManualReject")]
-        [TestCategory("DecisionProcess")]
-        [TestProperty("title", "Manual Reject")]
+        /// </summary>        
+        [TestMethod, TestCategory("DecisionProcess"), TestCategory("ManualReject"), TestProperty("title", "Manual Reject")]
         public void TestManualReject()        {
            
             #region ManualReject
@@ -40,16 +37,14 @@ namespace AutomatedTest.FunctionalTests
                 HomePage.CreateNewApplication("Approve", this.validationTestData);
                 approveApplicationNumber = HomePage.GetApplicationNumber();
                 HomePage.SwitchAndVerifyHomePageFullyDisplayed();
-                HomePage.NavigateToScreen(Constants.LoanTermsAutomation);
-                HomePage.SwitchToCentralFrame();
-                HomePage.VerifyScreenHeading(Constants.LoanTermsAutomation);
+                TemenosBasePage.NavigateToScreen(Constants.LoanTermsAutomation);
                 LoanTermsAutomation.EnterFieldValuesInLoanTermPanel(this.validationTestData);
                 HomePage.SwitchToParentFrame();
-                HomePage.VerifyDecisioningApplication(Constants.LoRejected, true);
+                HomePage.VerifyDecisioningApplication(Constants.LoRejected, this.validationTestData);
                 HomePage.SwitchToDefaultContent();
                 HomePage.CloseAndVerifyApplication(approveApplicationNumber);
-                HomePage.ClickLogOff();               
-
+                HomePage.ClickLogOff();
+                TemenosBasePage.CheckFailures();
             }
             catch (Exception ex)
             {               

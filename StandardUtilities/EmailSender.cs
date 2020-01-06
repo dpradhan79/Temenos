@@ -19,7 +19,7 @@ namespace StandardUtilities
         /// Send Email.
         /// </summary>
         /// <returns></returns>
-       public static bool SendEmail(string smtpServer, int smtpPort, string mailFrom, string mailToListSeparatedByComma, string mailCCListSeparatedByComma, string mailSubject, string mailBody, string attachment, bool enableSsl)
+       public static bool SendEmail(string smtpServer, int smtpPort, string mailFrom, string mailPassword, string mailToListSeparatedByComma, string mailCCListSeparatedByComma, string mailSubject, string mailBody, string attachment, bool enableSsl)
        {
            bool isMailSentStatus = false;
            Attachment mailattachment = null;
@@ -38,7 +38,8 @@ namespace StandardUtilities
                
                mail.Subject = mailSubject;
                mail.Body = mailBody;
-               mail.IsBodyHtml = true;               
+               mail.IsBodyHtml = true; 
+               
                if(attachment != null)
                {
                    mailattachment = new Attachment(attachment);
@@ -47,7 +48,7 @@ namespace StandardUtilities
 
                smtpClient.Port = smtpPort;
                smtpClient.EnableSsl = enableSsl;              
-               smtpClient.Credentials = new NetworkCredential("debasish.gallop@gmail.com", "temp@1234");           
+               smtpClient.Credentials = new NetworkCredential(mailFrom, mailPassword);           
                smtpClient.Send(mail);
                isMailSentStatus = true;
 
@@ -101,6 +102,7 @@ namespace StandardUtilities
                IList<TestCase> listFailedTestCases = TestExecutionManagement.GetFailedTestCases(listTestCases);
 
                StringBuilder myBuilder = new StringBuilder();
+               myBuilder.AppendFormat("<html><body>");
                myBuilder.AppendFormat("<table border='1'; style='color: Black;width ='1200'; bgcolor='#00b0f0'>");
                //Table For Failed Test Case Details
                myBuilder.AppendFormat("<table border='1'; style='color: Black;width ='1200'; bgcolor='#00b0f0'><col width=\"70%\"><col width=\"30%\"> <tr><th bgcolor=\"#002060\" colspan=\"2\"><font color='white'>" + "Automation Execution Result" + "</font></th></tr><tr><td>Total Test Cases Executed : </td><td style=\"text-align:center\">" + executedTestcases + "</td></tr><tr><td>Total Test Cases Passed : </td><td style=\"text-align:center\">" + Convert.ToString(passedTestcases) + "</td></tr><tr><td>Total Test Cases Failed : </td><td style=\"text-align:center\">" + Convert.ToString(failedTestcases) + "</td></tr></table>");
@@ -213,6 +215,7 @@ namespace StandardUtilities
                    myBuilder.Append("</table>");
                }
                myBuilder.Append("</table>");
+               myBuilder.AppendFormat("</body></html>");
                //form mailBody from myBuilder
                mailbody = myBuilder.ToString();
            }

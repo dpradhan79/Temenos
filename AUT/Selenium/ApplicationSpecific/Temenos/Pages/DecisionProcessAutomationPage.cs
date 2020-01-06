@@ -15,43 +15,11 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 {
     public class DecisionProcessAutomationPage : AbstractTemplatePage
     {
-
         #region UI Object Repository
         private By reviewIndicatorsTableRow = By.XPath("//table[@id='ReviewIndicatorLoanGrid-data-table']//tbody/tr/td[1]");
-
-
         #endregion
 
-        #region Public Methods
-
-        /// <summary>
-        /// Verify review indicators
-        /// <param name="name">The name.</param>
-        /// <param name="description">The description.</param>
-        /// </summary>
-        public void VerifyReviewIndicators(string name, string description)
-        {
-            try
-            {
-                int row = GetReviewIndicatorNamePosition(name);
-                if (row > 0)
-                {
-                    this.TESTREPORT.LogSuccess("Review Indicators Name", String.Format("Name : <mark>{0}</mark> is present under Name column in Review Indicators grid", name));
-                    By nameColumn = By.XPath("//table[@id='ReviewIndicatorLoanGrid-data-table']//tbody/tr[" + row + "]/td[2]/span");
-                    driver.VerifyTextValue(nameColumn, description);
-                }
-                else
-                {
-                    this.TESTREPORT.LogFailure("Review Indicators Name", String.Format("Name : <mark>{0}</mark> is not present under Name column in Review Indicators grid", name));
-                }
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-
-        }
+        #region Public Methods           
 
         /// <summary>
         /// Verify review indicators
@@ -60,23 +28,25 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         /// </summary>
         public void VerifyReviewIndicators(Dictionary<string, string> validationTestData,int index=0)
         {
+            string exception = "";
             try
             {
                 int row = GetReviewIndicatorNamePosition(validationTestData["ReviewIndicatorName" + index]);
                 if (row > 0)
                 {
-                    this.TESTREPORT.LogSuccess("Review Indicators Name", String.Format("Name : <mark>{0}</mark> is present under Name column in Review Indicators grid", validationTestData["ReviewIndicatorName" + index]));
+                    this.TESTREPORT.LogSuccess("Review Indicators Name", String.Format("Name : <mark>{0}<mark> is present under Name column in Review Indicators grid", validationTestData["ReviewIndicatorName" + index]));
                     By nameColumn = By.XPath("//table[@id='ReviewIndicatorLoanGrid-data-table']//tbody/tr[" + row + "]/td[2]/span");
                     driver.VerifyTextValue(nameColumn, validationTestData["ReviewIndicatorDescription" + index]);
                 }
                 else
                 {
-                    this.TESTREPORT.LogFailure("Review Indicators Name", String.Format("Name : <mark>{0}</mark> is not present under Name column in Review Indicators grid", validationTestData["ReviewIndicatorName" + index]));
+                    this.TESTREPORT.LogFailure("Review Indicators Name", String.Format("Name : <mark>{0}<mark> is not present under Name column in Review Indicators grid", validationTestData["ReviewIndicatorName" + index]),this.SCREENSHOTFILE);
+                    TemenosBasePage.dictError.Add("Review Indicators Name - " + validationTestData["ReviewIndicatorName" + index], String.Format("Name : {0} is not present under Name column in Review Indicators grid", validationTestData["ReviewIndicatorName" + index]));
                 }
             }
             catch (Exception ex)
-            {
-
+            {             
+                
                 throw ex;
             }
 

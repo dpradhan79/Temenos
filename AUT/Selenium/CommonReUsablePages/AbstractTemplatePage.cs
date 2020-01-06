@@ -31,7 +31,7 @@ namespace AUT.Selenium.CommonReUsablePages
         protected AbstractTemplatePage()
         {
             this.driver = WebDriverFactory.getWebDriver();
-           
+
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace AUT.Selenium.CommonReUsablePages
             {
                 if (driver.FindElements(bySpinner).Count > 0)
                 {
-                    driver.WaitElementAttrEquals(bySpinner, "style", "display: none;", bySpinner.ToString());                    
+                    driver.WaitElementAttrEquals(bySpinner, "style", "display: none;", bySpinner.ToString());
                 }
                 if (!(driver is InternetExplorerDriver)) // driver not IE
                 {
@@ -140,8 +140,8 @@ namespace AUT.Selenium.CommonReUsablePages
             }
             catch (Exception ex)
             {
-               
-                this.TESTREPORT.LogException(ex,this.SCREENSHOTFILE);
+
+                this.TESTREPORT.LogException(ex, this.SCREENSHOTFILE);
             }
         }
 
@@ -254,13 +254,13 @@ namespace AUT.Selenium.CommonReUsablePages
                         }
                         catch (Exception ex)
                         {
-                           
+
                             this.TESTREPORT.LogException(ex);
                         }
                     }
                     else
                     {
-                       
+
                         this.TESTREPORT.LogFailure("VerifyValuesAgainstByObjects", String.Format("The Element - <mark>{0}</mark> Was Not Found", by.ToString()), this.SCREENSHOTFILE);
                     }
                 }
@@ -288,11 +288,11 @@ namespace AUT.Selenium.CommonReUsablePages
 
                 try
                 {
-                    
+
                     By by = null;
                     if (listItem is string)
                     {
-                        by = By.XPath(String.Format("{0}",listItem));
+                        by = By.XPath(String.Format("{0}", listItem));
                     }
                     else if (listItem is By)
                     {
@@ -301,16 +301,16 @@ namespace AUT.Selenium.CommonReUsablePages
                     }
 
                     //get expected value from keyvalue pair
-                   
+
                     this.WaitTillElementExists(by, by.ToString(), timeOutInSecs);
                     if (this.driver.FindElements(by).Count > 0)
                     {
                         this.driver.Highlight(by);
                         try
                         {
-                            
+
                             //log the result
-                            if (!this.driver.ElementPresent(by,by.ToString()) && isPageRefreshRequired == false) //fail
+                            if (!this.driver.ElementPresent(by, by.ToString()) && isPageRefreshRequired == false) //fail
                             {
 
                                 this.TESTREPORT.LogFailure("VerifyObjectsPresence", String.Format("Object -  <mark>{0}</mark> Was Not Found  Within <mark>{1}</mark> Secs.", by.ToString(), timeOutInSecs), this.SCREENSHOTFILE);
@@ -323,7 +323,7 @@ namespace AUT.Selenium.CommonReUsablePages
                                 {
                                     this.driver.RefreshPage();
                                     this.WaitTillElementExists(by, by.ToString(), timeOutInSecs);
-                                    
+
                                     elapsedTimeout = elapsedTimeout + 1000;
                                 }
                                 if (!this.driver.ElementPresent(by, by.ToString()))
@@ -365,8 +365,8 @@ namespace AUT.Selenium.CommonReUsablePages
         /// <param name="milliSecs">The milli secs.</param>
         protected void SimulateThinkTimeInMilliSecs(int milliSecs)
         {
-            Thread.Sleep(milliSecs);            
-            this.TESTREPORT.LogSuccess("SimulateThinkTimeInMilliSecs", String.Format("Wait Introduced For <mark>{0}</mark> milliseconds", milliSecs));
+            Thread.Sleep(milliSecs);
+            //this.TESTREPORT.LogSuccess("SimulateThinkTimeInMilliSecs", String.Format("Wait Introduced For <mark>{0}</mark> milliseconds", milliSecs));
         }
 
         /// <summary>
@@ -376,21 +376,18 @@ namespace AUT.Selenium.CommonReUsablePages
         protected void SimulateSendKeys(string chars)
         {
             try
-            {                
+            {
                 SendKeys.SendWait(chars);
                 this.TESTREPORT.LogSuccess("SimulateSendKeys", String.Format("Invoked SendKeys.SendWait for input - <mark>{0}</mark>", chars));
             }
 
             catch (Exception ex)
             {
-                
+
                 this.TESTREPORT.LogFailure("SimulateSendKeys", String.Format("Error While Invoking SendKeys.SendWait for input - <mark>{0}</mark>", chars));
                 this.TESTREPORT.LogException(ex, this.SCREENSHOTFILE);
             }
         }
-
-        
     }
-
-   
+         
 }

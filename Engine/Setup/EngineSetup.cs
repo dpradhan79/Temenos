@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TestReporter;
 using System.IO;
 using Engine.Factories;
+
 namespace Engine.Setup
 {
     /// <summary>
@@ -13,6 +14,7 @@ namespace Engine.Setup
     /// </summary>
     public class EngineSetup
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private static string randomString = null;
         private const string FILETESTCONFIGURATION = "TestConfiguration.properties";
         public const string VALIDATIONTESTDATASHEETNAME = "ValidationTestData";
@@ -23,7 +25,7 @@ namespace Engine.Setup
         private static string reportType = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "reportType"); 
         private static string testReportFile = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "testReportFile");
         private static IReporter testReportInternal = null;
-        private static string screenShotFolder = new FileInfo(testReportFile).Directory.FullName + Path.DirectorySeparatorChar + "ScreenShots";
+        private static string screenShotFolder = new FileInfo(EngineSetup.TestReportFileName).Directory.FullName + Path.DirectorySeparatorChar + "ScreenShots";
         private static int lastScreenShotCount = 1;
         
         #endregion
@@ -33,11 +35,16 @@ namespace Engine.Setup
         private static int defaultTimeOutForSelenium = Int32.Parse(StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "seleniumDefaultTimeOut"));
         public const int TimeOutConstant = 180;
         private static string webUrl = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "webUrl");
-        private static string userName = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "userName");
-        private static string password = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "password");
+        private static string appUserName = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "appUserName");
+        private static string appPassword = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "appPassword");
         private static string testDataFileName = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "testDataFileName");
         private static int testRailRunId = Convert.ToInt16(StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "runId"));
-       
+        private static string testRailprojectName = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "testRailprojectName");
+        private static string testRailRunName = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "testRailRunName");
+        private static string testRailURL = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "testRailURL");
+        private static string testRailUserName = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "testRailUserName");
+        private static string testRailPassword = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "testRailPassword");
+        
         #endregion
 
         #region Mail Configuration
@@ -48,6 +55,7 @@ namespace Engine.Setup
         private static String smtpServer = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "smtpServer");
         private static int smtpPort = Convert.ToInt16(StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "smtpPort"));
         private static String emailFrom = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "emailFrom");
+        private static String emailPassword = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "emailPassword");
         private static String mailToListSeparatedByComma = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "mailToListSeparatedByComma");
         private static String mailSubject = StandardUtilities.FileUtilities.readPropertyFile(FILETESTCONFIGURATION, "mailSubject");
 
@@ -106,7 +114,10 @@ namespace Engine.Setup
         /// </value>
         public static string TestReportFileName
         {
-            get { return new FileInfo(EngineSetup.testReportFile).FullName; }
+            get {                
+                String testRepFile = Environment.GetEnvironmentVariable("testReportFile") != null ? Environment.GetEnvironmentVariable("testReportFile") : EngineSetup.testReportFile;
+                return new FileInfo(testRepFile).FullName; 
+            }
             set { EngineSetup.testReportFile = value; }
         }
 
@@ -245,17 +256,17 @@ namespace Engine.Setup
         /// </value>
         public static string WEBURL
         {
-            get { return EngineSetup.webUrl; }
+            get { return Environment.GetEnvironmentVariable("webUrl") != null ? Environment.GetEnvironmentVariable("webUrl") : EngineSetup.webUrl; }
             set { EngineSetup.webUrl = value;}
         }
 
         /// <summary>
         /// User Name
         /// </summary>
-        public static string UserName
+        public static string APPUSERNAME
         {
-            get { return EngineSetup.userName; }
-            set { EngineSetup.userName = value; }
+            get { return Environment.GetEnvironmentVariable("appUserName") != null ? Environment.GetEnvironmentVariable("appUserName") : EngineSetup.appUserName; }
+            set { EngineSetup.appUserName = value; }
         }
 
 
@@ -263,10 +274,10 @@ namespace Engine.Setup
         /// <summary>
         /// User Password
         /// </summary>
-        public static string Password
+        public static string APPPASSWORD
         {
-            get { return EngineSetup.password; }
-            set { EngineSetup.password = value; }
+            get { return Environment.GetEnvironmentVariable("appPassword") != null ? Environment.GetEnvironmentVariable("appPassword") : EngineSetup.appPassword; }
+            set { EngineSetup.appPassword = value; }
         }
 
         /// <summary>
@@ -293,7 +304,7 @@ namespace Engine.Setup
         /// </value>
         public static String ISMAILREQUIRED
         {
-            get { return EngineSetup.sendMail; }
+            get { return Environment.GetEnvironmentVariable("sendMail") != null ? Environment.GetEnvironmentVariable("sendMail") : EngineSetup.sendMail; }
             set { EngineSetup.sendMail = value; }
         }
 
@@ -305,7 +316,7 @@ namespace Engine.Setup
         /// </value>
         public static String ISATTACHMENTREQUIRED
         {
-            get { return EngineSetup.attachExecutionResult; }
+            get { return Environment.GetEnvironmentVariable("attachExecutionResult") != null ? Environment.GetEnvironmentVariable("attachExecutionResult") : EngineSetup.attachExecutionResult; }
             set { EngineSetup.attachExecutionResult = value; }
         }
 
@@ -317,7 +328,7 @@ namespace Engine.Setup
         /// </value>
         public static String SMTPSERVER
         {
-            get { return EngineSetup.smtpServer; }
+            get { return Environment.GetEnvironmentVariable("smtpServer") != null ? Environment.GetEnvironmentVariable("smtpServer") : EngineSetup.smtpServer; }
             set { EngineSetup.smtpServer = value; }
         }
 
@@ -330,7 +341,7 @@ namespace Engine.Setup
         /// </value>
         public static int SMTPPORT
         {
-            get { return EngineSetup.smtpPort; }
+            get { return Environment.GetEnvironmentVariable("smtpPort") != null ? Convert.ToInt16(Environment.GetEnvironmentVariable("smtpPort")) : EngineSetup.smtpPort; }
             set { EngineSetup.smtpPort = value; }
         }
 
@@ -342,9 +353,33 @@ namespace Engine.Setup
         /// </value>
         public static String EMAILFROM
         {
-            get { return EngineSetup.emailFrom; }
+            get {               
+                log.Debug(String.Format("CI/CD EMailFrom = {0}, Configuration File EMailFrom = {1}", Environment.GetEnvironmentVariable("emailFrom"), EngineSetup.emailFrom));
+                String strEmailFrom = Environment.GetEnvironmentVariable("emailFrom") != null ? Environment.GetEnvironmentVariable("emailFrom") : EngineSetup.emailFrom;
+                log.Debug(String.Format("Finally EMailFrom Selected - {0}", strEmailFrom));
+                return strEmailFrom;
+            }
             set { EngineSetup.emailFrom = value; }
         }
+
+        /// <summary>
+        /// Gets or sets the emailPassword.
+        /// </summary>
+        /// <value>
+        /// emailPassword.
+        /// </value>
+        public static String EMAILPASSWORD
+        {
+            get
+            {
+
+                String strEmailPassord = Environment.GetEnvironmentVariable("emailPassword") != null ? Environment.GetEnvironmentVariable("emailPassword") : EngineSetup.emailPassword;
+
+                return strEmailPassord;
+            }
+            set { EngineSetup.emailFrom = value; }
+        }
+
 
         /// <summary>
         /// Gets or sets the emailFrom.
@@ -354,7 +389,7 @@ namespace Engine.Setup
         /// </value>
         public static String EMAILTOLIST
         {
-            get { return EngineSetup.mailToListSeparatedByComma; }
+            get { return Environment.GetEnvironmentVariable("mailToListSeparatedByComma") != null ? Environment.GetEnvironmentVariable("mailToListSeparatedByComma") : EngineSetup.mailToListSeparatedByComma; }
             set { EngineSetup.mailToListSeparatedByComma = value; }
         }
 
@@ -366,8 +401,83 @@ namespace Engine.Setup
         /// </value>
         public static String EMAILSUBJECT
         {
-            get { return EngineSetup.mailSubject; }
+            get { return Environment.GetEnvironmentVariable("mailSubject") != null ? Environment.GetEnvironmentVariable("mailSubject") : EngineSetup.mailSubject; }
             set { EngineSetup.mailSubject = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the projectname.
+        /// </summary>
+        /// <value>
+        /// The projectname.
+        /// </value>
+        public static string TESTRAILPROJECTNAME
+        {
+            get
+            {
+                //environment variable will be read in case of Jenkins parameterized build execution
+                return Environment.GetEnvironmentVariable("testRailprojectName") != null ? Environment.GetEnvironmentVariable("testRailprojectName") : EngineSetup.testRailprojectName;
+            }
+            set { EngineSetup.testRailprojectName = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the runname.
+        /// </summary>
+        /// <value>
+        /// The runname.
+        /// </value>
+        public static string TESTRAILRUNNAME
+        {
+            get
+            {
+                //environment variable will be read in case of Jenkins parameterized build execution
+                return Environment.GetEnvironmentVariable("testRailRunName") != null ? Environment.GetEnvironmentVariable("testRailRunName") : EngineSetup.testRailRunName;
+            }
+            set { EngineSetup.testRailRunName = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the testrailurl.
+        /// </summary>
+        /// <value>
+        /// The runname.
+        /// </value>
+        public static String TESTRAILURL
+        {
+            get
+            {
+                //environment variable will be read in case of Jenkins parameterized build execution
+                return Environment.GetEnvironmentVariable("testrailurl") != null ? Environment.GetEnvironmentVariable("testrailurl") : EngineSetup.testRailURL;
+            }
+            set { EngineSetup.testRailURL = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the testrailusername.
+        /// </summary>
+        /// <value>
+        /// The testrailusername.
+        /// </value>
+        public static String TESTRAILUSERNAME
+        {
+            get
+            {
+                //environment variable will be read in case of Jenkins parameterized build execution
+                return Environment.GetEnvironmentVariable("testrailusername") != null ? Environment.GetEnvironmentVariable("testrailusername") : EngineSetup.testRailUserName;
+            }
+            set { EngineSetup.testRailUserName = value; }
+        }
+
+        public static String TESTRAILPASSWORD
+        {
+            get
+            {
+                //environment variable will be read in case of Jenkins parameterized build execution
+                return Environment.GetEnvironmentVariable("testRailPassword") != null ? Environment.GetEnvironmentVariable("testRailPassword") : EngineSetup.testRailPassword;
+            }
+            set { EngineSetup.testRailPassword = value; }
+            
         }
 
     }

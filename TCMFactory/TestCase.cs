@@ -69,5 +69,11 @@ namespace TCMFactory
             get { return this.strTestExecutionResult; }
             set { this.strTestExecutionResult = value; }
         }
+
+        public ulong TestExecutionTime
+        {
+            get { return this.iTestExecutionTimeinMS; }
+            set{ this.iTestExecutionTimeinMS = value;}
+        }
     }
 }

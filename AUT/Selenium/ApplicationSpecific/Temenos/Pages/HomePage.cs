@@ -18,7 +18,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 {
     public class HomePage : AbstractTemplatePage
     {
-       
+        
         #region UI Object Repository
         private By btnCreate = By.XPath("//button[contains(@class,'icon-application')]");
         private By dropdownApplicationType = By.Id("ApplicationTypeId");
@@ -48,6 +48,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         private By lblDeclineLone = By.XPath("//div[@aria-describedby='ws_Decline_Dialog']//span[@class='ui-dialog-title']");
         private By dropdownDeclineReasonAssigned = By.Id("Decline_DeclineReason_twoboxassigned");
         private By btnMore = By.Id("btnMenuOther");
+        private By ulMenuOther = By.Id("mnuOther");
         private By lnkRemoveDecision = By.Id("btnRemoveDecision");
         private By lblConfirmRemoveDecision = By.XPath("//div[text()='Confirm Remove Decision']");
         private By btnRemoveDecisionYes = By.XPath("//div[text()='Confirm Remove Decision']/../../following-sibling::div//button[text()='Yes']");
@@ -56,6 +57,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         private By lblNewApplication = By.XPath("//span[text()='New Application']");
         private By dialogSelectAplication = By.Id("dialogSelectApplication");
         private By lblReviewActiveAppAndPromotionalOffers = By.XPath("//span[text()='Review Active Applications and/or Promotional Offers']");
+        private By loadingIconRemoveDecision = By.XPath("//div[text()='Removing Decision']");
         #endregion
 
         #region Public Methods
@@ -78,7 +80,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
                 driver.WaitElementPresent(formNewApplication);
                 driver.WaitElementExistsAndVisible(lblNewApplication);
                 driver.SelectDropdownItemByText(dropdownApplicationType, validationTestData["ApplicationType"], "Application Type");
-                SimulateThinkTimeInMilliSecs(1000);
+                    
                 if (applyingfor.Equals("Approve"))
                 {
                     driver.SelectDropdownItemByText(dropdownApplyingFor, validationTestData["ApproveApplyingFor"], "Applying For");
@@ -305,11 +307,12 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
                 driver.ClickElementWithJavascript(closeApplication, "Close the application for" + applicationNumber);
                 if (!driver.IsWebElementDisplayed(closeApplication)) 
                 {
-                this.TESTREPORT.LogSuccess("Close And verify Application", String.Format("Application Number : <mark>{0}</mark> is not present in desktop pages",applicationNumber));
+                this.TESTREPORT.LogSuccess("Close And verify Application", String.Format("Application Number : <mark>{0}</mark> is not present in Home Page",applicationNumber));
                 }
                 else
                 {
-                this.TESTREPORT.LogFailure("Close And verify Application", String.Format("Application Number : <mark>{0}</mark> is present in desktop pages,not closed", applicationNumber));
+                this.TESTREPORT.LogFailure("Close And verify Application", String.Format("Application Number : <mark>{0}</mark> is present in Home Page ,not closed", applicationNumber));
+                TemenosBasePage.dictError.Add("Close And verify Application", String.Format("Application Number : {0} is present in Home Page ,not closed", applicationNumber));
                 }
             }
             catch (Exception ex)
@@ -342,7 +345,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         /// <summary>
         /// Verify Decisioning Application
         /// </summary>
-        public void VerifyDecisioningApplication(string postDecisionStatus,bool removeDecision)
+        public void VerifyDecisioningApplication(string postDecisionStatus, Dictionary<string, string> validationTestData)
         {
             try
             {
@@ -377,13 +380,16 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
             }
 
 
-            if (removeDecision)
+                if (validationTestData["RemoveDecision"].Equals("True"))
             {
                 driver.WaitElementPresent(btnMore);
                 driver.ClickElementWithJavascript(btnMore, "More");
+                Thread.Sleep(7000);
+                driver.WaitElementPresent(ulMenuOther);
                 driver.WaitElementExistsAndVisible(lnkRemoveDecision);
                 driver.WaitElementPresent(lnkRemoveDecision);
                 driver.ClickElement(lnkRemoveDecision, "Remove Decision");
+                WaitTillElementDisappeared(loadingIconRemoveDecision);
                 driver.WaitElementPresent(lblConfirmRemoveDecision);
                 driver.ClickElement(btnRemoveDecisionYes, "Yes");
                 HandleSuccessPopup();

@@ -72,5 +72,20 @@ namespace Engine.Setup
         ////The Liabilities
         ///// </summary>
         public const string Liabilities = "Liabilities";
+
+        ///// <summary>
+        //// Approve
+        ///// </summary>
+        public const string Approve = "Approve";
+
+        ///// <summary>
+        //// Reject
+        ///// </summary>
+        public const string Reject = "Reject";
+
+        ///// <summary>
+        ////The Liabilities
+        ///// </summary>
+        public const string Review = "Review";
       }
 }
