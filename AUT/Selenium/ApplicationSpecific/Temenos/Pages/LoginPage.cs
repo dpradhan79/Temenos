@@ -16,6 +16,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 {
     public class LoginPage : AbstractTemplatePage
     {
+        public LoginPage(IWebDriver wd) : base(wd) { }        
         //#region Page Object For BasePage
         //TemenosBasePage temenosBasePage = new TemenosBasePage();
         //#endregion
@@ -44,19 +45,19 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         {
             try
             {
-                if (!driver.IsWebElementDisplayed(txtUserName))
+                if (!this.driver.IsWebElementDisplayed(txtUserName))
                 {
-                    HomePage homePage = new HomePage();
+                    HomePage homePage = new HomePage(this.driver);
                     homePage.ClickLogOff();
 
                 }
-                driver.WaitElementPresent(txtUserName);
-                driver.SendKeysToElement(txtUserName, userName, "User Name");
-                driver.SendKeysToElement(txtPassword, password, "Password");
-                driver.ClickElement(btnLogin, "Login Button");
-                if (driver.IsWebElementDisplayed(btnContinue))
+                this.driver.WaitElementPresent(txtUserName);
+                this.driver.SendKeysToElement(txtUserName, userName, "User Name");
+                this.driver.SendKeysToElement(txtPassword, password, "Password");
+                this.driver.ClickElement(btnLogin, "Login Button");
+                if (this.driver.IsWebElementDisplayed(btnContinue))
                 {
-                    driver.ClickElement(btnContinue, "Continue");
+                    this.driver.ClickElement(btnContinue, "Continue");
                 }
                 WaitForHomePage();
             }
@@ -74,9 +75,9 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
         {
             try
             {
-                driver.wait(ExpectedConditions.TitleContains("LMS.Automation/Core/Desktop/Desktop"), 20, "Waiting for home page");
-                driver.WaitElementExistsAndVisible(spanHomePageLabel);
-                driver.WaitElementPresent(lblCreate);
+                this.driver.wait(ExpectedConditions.TitleContains("LMS.Automation/Core/Desktop/Desktop"), 20, "Waiting for home page");
+                this.driver.WaitElementExistsAndVisible(spanHomePageLabel);
+                this.driver.WaitElementPresent(lblCreate);
                 this.TESTREPORT.LogSuccess("Home Page", "Sucessfully login to the application");
             }
             catch (Exception ex)

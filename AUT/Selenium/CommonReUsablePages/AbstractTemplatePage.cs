@@ -28,9 +28,9 @@ namespace AUT.Selenium.CommonReUsablePages
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractTemplatePage"/> class.
         /// </summary>
-        protected AbstractTemplatePage()
+        protected AbstractTemplatePage(IWebDriver wd)
         {
-            this.driver = WebDriverFactory.getWebDriver();
+            this.driver = wd;
 
         }
 

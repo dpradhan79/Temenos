@@ -15,7 +15,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 {
     public class StipulationsAutomationPage : AbstractTemplatePage
     {
-
+        public StipulationsAutomationPage(IWebDriver wd) : base(wd) { }
         //#region Page Object For BasePage
         //TemenosBasePage temenosBasePage = new TemenosBasePage();
         //#endregion

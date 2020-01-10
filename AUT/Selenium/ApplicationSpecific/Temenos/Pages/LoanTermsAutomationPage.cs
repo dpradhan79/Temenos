@@ -16,6 +16,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 {
     public class LoanTermsAutomationPage : AbstractTemplatePage
     {
+        public LoanTermsAutomationPage(IWebDriver wd) : base(wd) { }
 
         #region UI Object Repository
         private By dropdownSolveFor = By.Name("Field-SolveForId");

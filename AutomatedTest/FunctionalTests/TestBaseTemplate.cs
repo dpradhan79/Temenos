@@ -15,16 +15,17 @@ using System.Linq;
 using TMTFactory;
 using TCMFactory;
 using AUT.Selenium.ApplicationSpecific.Pages;
+using System.Threading;
 namespace AutomatedTest.FunctionalTests
 {
     [TestClass]
     public class TestBaseTemplate
     {
         private String dataFileName = null;
-        private int currentFileRowPointer = 1;
-        protected static IWebDriver driver = null;
+        private int currentFileRowPointer = 1;        
         protected Exception testException = null;
         protected static IList<TestCase> listTestCases = new List<TestCase>();
+        protected static ThreadLocal<IWebDriver> threadLocalWebDriver = new ThreadLocal<IWebDriver>();
 
         #region PageObject
         public ApplicantPage Applicant = null;
@@ -49,37 +50,27 @@ namespace AutomatedTest.FunctionalTests
         public TestBaseTemplate()
         {        
 
-            testRail = new TestRailClient(EngineSetup.TESTRAILURL, EngineSetup.TESTRAILUSERNAME, EngineSetup.TESTRAILPASSWORD);
-            EngineSetup.TESTRAILRUNID = (int)testRail.GetRunID(EngineSetup.TESTRAILPROJECTNAME, EngineSetup.TESTRAILRUNNAME);
-            Applicant = new ApplicantPage();
-            LoginPage = new LoginPage();
-            HomePage = new HomePage();
-            PrimaryApplicantAutomationScreen = new PrimaryApplicantAutomationPage();
-            DecisionProcessAutomation = new DecisionProcessAutomationPage();
-            LoanTermsAutomation = new LoanTermsAutomationPage();
-            StipulationsAutomation = new StipulationsAutomationPage();
-            Disburse = new DisbursePage();
-            TemenosBasePage = new TemenosBasePage();           
+            //testRail = new TestRailClient(EngineSetup.TESTRAILURL, EngineSetup.TESTRAILUSERNAME, EngineSetup.TESTRAILPASSWORD);
+            //EngineSetup.TESTRAILRUNID = (int)testRail.GetRunID(EngineSetup.TESTRAILPROJECTNAME, EngineSetup.TESTRAILRUNNAME);
+            //Applicant = new ApplicantPage(threadLocalWebDriver.Value);
+            //LoginPage = new LoginPage(threadLocalWebDriver.Value);
+            //HomePage = new HomePage(threadLocalWebDriver.Value);
+            //PrimaryApplicantAutomationScreen = new PrimaryApplicantAutomationPage(threadLocalWebDriver.Value);
+            //DecisionProcessAutomation = new DecisionProcessAutomationPage(threadLocalWebDriver.Value);
+            //LoanTermsAutomation = new LoanTermsAutomationPage(threadLocalWebDriver.Value);
+            //StipulationsAutomation = new StipulationsAutomationPage(threadLocalWebDriver.Value);
+            //Disburse = new DisbursePage(threadLocalWebDriver.Value);
+            //TemenosBasePage = new TemenosBasePage(threadLocalWebDriver.Value);           
         }
 
         [AssemblyInitialize]
         public static void BeforeAllTestsExecution(TestContext testContext)
         {
-            /****TODO - MultiThreading ****/
-            #region WebApplication - Launch
-            driver = WebDriverFactory.getWebDriver(EngineSetup.BROWSER);
-            driver.Navigate().GoToUrl(EngineSetup.WEBURL);
-            #endregion
+           
         }
         [AssemblyCleanup]
         public static void AfterAllTestsExecution()
-        {
-            /****TODO - MultiThreading ****/
-            //after execution, update extent report with gallop logo 
-            /*driver can not be initialized in static method as driver is instance variable*/
-            WebDriverFactory.getWebDriver().Close();
-            WebDriverFactory.getWebDriver().Quit();
-            WebDriverFactory.Free();
+        {            
             EngineSetup.TestReport.Close();
             TestBaseTemplate.UpdateTestReport();
             if (EngineSetup.ISMAILREQUIRED.Equals("Yes", StringComparison.OrdinalIgnoreCase))
@@ -107,16 +98,47 @@ namespace AutomatedTest.FunctionalTests
         public void BeforeEachTestCaseExecution()
         {
             /****TODO - MultiThreading ****/
-            //#region WebApplication - Launch
-            //driver = WebDriverFactory.getWebDriver(EngineSetup.BROWSER);
-            //driver.Navigate().GoToUrl(EngineSetup.WEBURL);
-            //#endregion
+            #region Test Rail Initialization
+           
+            testRail = new TestRailClient(EngineSetup.TESTRAILURL, EngineSetup.TESTRAILUSERNAME, EngineSetup.TESTRAILPASSWORD);
+            EngineSetup.TESTRAILRUNID = (int)testRail.GetRunID(EngineSetup.TESTRAILPROJECTNAME, EngineSetup.TESTRAILRUNNAME);
+            
+            #endregion
+
+            #region WebDriver Initialization
+            
+            threadLocalWebDriver.Value = WebDriverFactory.getWebDriver(EngineSetup.BROWSER);
+            
+            #endregion           
+
+            #region AUT Pages Initialization            
+            Applicant = new ApplicantPage(threadLocalWebDriver.Value);
+            LoginPage = new LoginPage(threadLocalWebDriver.Value);
+            HomePage = new HomePage(threadLocalWebDriver.Value);
+            PrimaryApplicantAutomationScreen = new PrimaryApplicantAutomationPage(threadLocalWebDriver.Value);
+            DecisionProcessAutomation = new DecisionProcessAutomationPage(threadLocalWebDriver.Value);
+            LoanTermsAutomation = new LoanTermsAutomationPage(threadLocalWebDriver.Value);
+            StipulationsAutomation = new StipulationsAutomationPage(threadLocalWebDriver.Value);
+            Disburse = new DisbursePage(threadLocalWebDriver.Value);
+            TemenosBasePage = new TemenosBasePage(threadLocalWebDriver.Value);         
+
+            #endregion
+           
+            #region WebApplication - Launch
+
+            threadLocalWebDriver.Value.Navigate().GoToUrl(EngineSetup.WEBURL);
+           
+            #endregion
+
+            #region Test Case Initialization/Application Login
 
             this.testException = null;
             TemenosBasePage.dictError.Clear();
             this.TESTREPORT.InitTestCase(TestContext.TestName, TestContext.Properties["title"] as String);
             this.LoadBusinessTestData();
             LoginPage.SignIn(EngineSetup.APPUSERNAME, EngineSetup.APPPASSWORD);
+
+            #endregion
         }
 
         ////Use TestCleanup to run code after each test has run
@@ -124,11 +146,10 @@ namespace AutomatedTest.FunctionalTests
         public void AfterEachTestCaseExecution()
         {
             /****TODO - MultiThreading ****/
-            //#region Close WebDriver
-            //WebDriverFactory.getWebDriver().Close();
-            //WebDriverFactory.getWebDriver().Quit();
-            //WebDriverFactory.Free();
-            //#endregion
+            #region Close WebDriver
+            threadLocalWebDriver.Value.Close();
+            threadLocalWebDriver.Value.Quit();            
+            #endregion
             TestCase testCase = new TestCase();
             testCase.TestCaseName = TestContext.TestName;
             testCase.TestCaseDescription = TestContext.Properties["title"] as String;

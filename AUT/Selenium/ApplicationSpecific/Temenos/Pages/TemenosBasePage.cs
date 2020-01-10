@@ -17,7 +17,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 {
     public class TemenosBasePage : AbstractTemplatePage
     {
-
+        public TemenosBasePage(IWebDriver wd) : base(wd) { }
         public static Dictionary<String, String> dictError = new Dictionary<string, string>();
 
 

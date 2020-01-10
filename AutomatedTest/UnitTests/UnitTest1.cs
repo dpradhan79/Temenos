@@ -64,7 +64,7 @@ namespace AutomatedTest.UnitTests
             #region ManualReject
             try
             {
-               string title =  driver.CurrentWindowHandle;
+               //string title =  driver.CurrentWindowHandle;
 
             }
             catch (Exception ex)

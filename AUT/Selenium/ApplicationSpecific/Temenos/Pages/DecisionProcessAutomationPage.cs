@@ -15,6 +15,8 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 {
     public class DecisionProcessAutomationPage : AbstractTemplatePage
     {
+        public DecisionProcessAutomationPage(IWebDriver wd) : base(wd) { }
+
         #region UI Object Repository
         private By reviewIndicatorsTableRow = By.XPath("//table[@id='ReviewIndicatorLoanGrid-data-table']//tbody/tr/td[1]");
         #endregion

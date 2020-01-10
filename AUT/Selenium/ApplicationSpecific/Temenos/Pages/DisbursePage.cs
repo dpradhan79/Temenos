@@ -17,6 +17,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 {
     public class DisbursePage : AbstractTemplatePage
     {
+        public DisbursePage(IWebDriver wd) : base(wd) { }
 
         #region UI Object Repository
         private By btnDisburse = By.Id("btnDisburse");

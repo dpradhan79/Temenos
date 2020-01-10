@@ -17,6 +17,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
 {
     public class PrimaryApplicantAutomationPage : AbstractTemplatePage
     {
+        public PrimaryApplicantAutomationPage(IWebDriver wd) : base(wd) { }
 
         #region UI Object Repository
         private By txtMembershipStartDate = By.Name("edit-PA-Field-MembershipStartDate");

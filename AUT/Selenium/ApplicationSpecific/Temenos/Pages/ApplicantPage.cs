@@ -16,7 +16,8 @@ using System.Threading;
 namespace AUT.Selenium.ApplicationSpecific.Pages
 {
     public class ApplicantPage : AbstractTemplatePage
-    {        
+    {
+        public ApplicantPage(IWebDriver wd) : base(wd) { }
         #region UI Object Repository
         private By btnAdd = By.XPath("//button[text()='Add']");
         private By dialogAddApplicant = By.XPath("//div[@aria-describedby='aadialogAddApplicant']//span[@class='ui-dialog-title']");
@@ -93,7 +94,7 @@ namespace AUT.Selenium.ApplicationSpecific.Pages
             {
                 driver.WaitElementExistsAndVisible(btnAdd);
                 driver.ClickElement(btnAdd, "Add Appliciant");
-                HomePage homePage = new HomePage();
+                HomePage homePage = new HomePage(this.driver);
                 homePage.SwitchToParentFrame();
                 driver.WaitElementTextEquals(dialogAddApplicant, "Add Applicant");
                 driver.WaitElementPresent(txtAccountNumber);
